@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Donor = require("./donor");
-const Image = require("./image");
 const Ngo = require("./ngo");
 
 const foodDonationSchema = new mongoose.Schema({

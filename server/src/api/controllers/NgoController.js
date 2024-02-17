@@ -58,7 +58,7 @@ module.exports.createNgo = async (req, res) => {
   }
 };
 
-// ngo controller to see all donation requests along with donor details
+// ngo controller to see all pending donation requests along with donor details
 // req body : {}
 // res : { status:boolean, list:[] }
 module.exports.getAllDonationRequests = async (req, res) => {
@@ -249,10 +249,10 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
     const handlebarOptions = {
       viewEngine: {
         extName: ".handlebars",
-        partialsDir: path.resolve("../src/api/view"),
+        partialsDir: path.resolve("../src/api/views"),
         defaultLayout: false,
       },
-      viewPath: path.resolve("../src/api/view"),
+      viewPath: path.resolve("../src/api/views"),
       extName: ".handlebars",
     };
     transporter.use("compile", hbs(handlebarOptions));
@@ -266,7 +266,6 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
         email: donorEmailId,
         ngoName: ngos[0].name,
         name: donors[0].name,
-        url: process.env.BASEURL,
       },
       template: "index",
     };

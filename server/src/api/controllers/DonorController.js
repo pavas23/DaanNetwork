@@ -1,5 +1,8 @@
 const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
+const UploadImage = require("../models/uploadImage");
+const router = require("../routes");
+const path = require("path");
 
 // donor controller to create donor
 // req body : { name, emailId, contactNumber, address, password }
@@ -125,3 +128,38 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
   }
 };
 
+// donor controller to render image upload page
+// req body : {}
+// res : renders ejs page
+module.exports.renderUploadImageTemplate = async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .render(path.resolve("../src/api/views/uploadImage.ejs"));
+  } catch (error) {
+    if (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .send({ status: false, desc: "Internal Server Error Occured" });
+    }
+  }
+};
+
+// donor controller to upload images for donation items
+// req body : {}
+// res : { status:boolean, desc:string }
+module.exports.uploadDonationImages = async (req, res) => {
+  try {
+    let image = await UploadImage.create({
+      imageName: Date.now() + path.extname(req.file.originalname),
+    });
+    console.log(image);
+    return res.status(200).json({ status: true, desc: "Image uploaded !!" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .send({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
