@@ -36,7 +36,7 @@ module.exports.createDonor = async (req, res) => {
 
 // donor controller to create food donation request
 // req body : { quantity, numberDaysBeforeExpiry, description, pickUpLocation, donorEmailId }
-// res : {status:boolean,desc:string}
+// res : { status:boolean, desc:string }
 module.exports.createDonationRequest = async (req, res) => {
   try {
     const {
@@ -82,3 +82,46 @@ module.exports.createDonationRequest = async (req, res) => {
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
+
+// donor controller to see my all accepted donation requests
+// req body { donorEmailId }
+// res : { status:boolean, desc:string }
+module.exports.getAllAcceptedDonationRequests = async (req, res) => {
+  try {
+    const { donorEmailId } = req.body;
+
+    // finding donor by email id
+    const donors = await Donor.find({ emailId: donorEmailId });
+    if (donors.length == 0) {
+      // no valid donor exists
+      return res.status(400).json({
+        status: false,
+        desc: "No valid donor exists with this mail id !!",
+      });
+    }
+
+    var foodDonations = await FoodDonation.find({ accepted: true })
+      .populate("donor")
+      .populate("ngo")
+      .exec();
+    foodDonations = (await foodDonations).map((donation) => {
+      if (donation.donor.emailId == donorEmailId) return donation.toJSON();
+    });
+
+    // empty list
+    if (foodDonations[0] == null) {
+      return res
+        .status(200)
+        .json({ status: false, foodDonations: foodDonations });
+    }
+    return res.status(200).json({ status: true, foodDonations: foodDonations });
+  } catch (error) {
+    if (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ status: false, desc: "Internal Server Error Occured" });
+    }
+  }
+};
+
