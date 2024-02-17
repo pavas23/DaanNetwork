@@ -3,6 +3,6 @@ const router = express.Router();
 
 console.log("Router loaded");
 
-router.use('/user',require("./user"));
+router.use('/donor',require("./donor"));
 
 module.exports = router;
