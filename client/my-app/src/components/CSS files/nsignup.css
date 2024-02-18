@@ -1,0 +1,72 @@
+html, body {
+    background-image: url('../images/signup_bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+}
+
+.signup_box{
+    background-color: white;
+    position : absolute;
+    width:45%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 4px #213F17;
+    padding: 1.5% 2% 1.5% 2%;
+    border-radius: 2rem;
+    opacity: 0.75;
+}
+
+.opac{
+    opacity: 1;
+
+}
+
+.signup_title{
+    font-size: 2.1rem;
+    color: #213F17;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.signup_form{
+    margin-top: 2%;
+    padding: 1% 2% 1% 2%;
+    width: 100%;
+    overflow: hidden;
+
+}
+.row{
+    margin-top: 2.5%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.signup_text{
+    font-size: 1.2rem;
+    display: inline-block;
+    font-weight: bold;
+    color: #0b7731;
+    width: 50%;
+}
+
+.signup_input_element{
+    width: 50%;
+    display: inline-block;
+}
+
+.signup_input{
+    border: solid 0.125rem black;
+    height: 1.5rem;
+    width: 70%;
+    margin-left: 6%;
+    border-radius: 0.5rem;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+}
