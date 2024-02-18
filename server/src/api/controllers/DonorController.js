@@ -163,3 +163,41 @@ module.exports.uploadDonationImages = async (req, res) => {
       .send({ status: false, desc: "Internal Server Error Occured" });
   }
 };
+
+// donor controller to see my all accepted donation requests
+// req body { donorEmailId }
+// res : { status:boolean, desc:string | foodDonations: List }
+module.exports.getAllDonations = async (req, res) => {
+  const { donorEmailId } = req.body;
+
+  try {
+    const donors = await Donor.find({ emailId: donorEmailId });
+    //no donor with given email
+    if (donors.length == 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No donor with email ${donorEmailId}` });
+    }
+
+    var foodDonations = await FoodDonation.find({})
+      .populate("donor")
+      .populate("ngo")
+      .exec();
+
+    foodDonations = (await foodDonations).map((donation) => {
+      if (donation.donor.emailId == donorEmailId) return donation.toJSON();
+    });
+
+    if (foodDonations[0] == null) {
+      return res
+        .status(200)
+        .json({ status: false, foodDonations: foodDonations });
+    }
+    return res.status(200).json({ status: true, foodDonations: foodDonations });
+  } catch (err) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};

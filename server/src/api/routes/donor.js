@@ -184,6 +184,33 @@ router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonat
 router.get("/render-upload-page", donorController.renderUploadImageTemplate);
 
 /**
+  * @swagger
+ * /donor/get-donation-history:
+ *   post:
+ *     summary: Donor can see all donations requests raised by them
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                 donorEmailId: "rohit@gmail.com"
+ *     responses:
+ *       200:
+ *         description: Will get list of all donation requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ 
+                    
+ */
+
+router.post('/get-donation-history',donorController.getAllDonations)
+
+/**
  * @swagger
  * /donor/upload-images:
  *   post:

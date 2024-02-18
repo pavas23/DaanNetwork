@@ -266,6 +266,9 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
         email: donorEmailId,
         ngoName: ngos[0].name,
         name: donors[0].name,
+        ngo_address: ngos[0].address,
+        ngo_contact: ngos[0].contactNumber,
+        ngo_website: ngos[0].website,
       },
       template: "index",
     };
