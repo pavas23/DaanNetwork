@@ -3,10 +3,73 @@ const router = express.Router();
 
 const ngoController = require("../controllers/NgoController");
 
+/**
+ * @swagger
+ * components:
+ *      schemas:
+ *          Ngo:
+ *           type: object
+ *           required:
+ *              - name
+ *              - panNumber
+ *              - nameOfHead
+ *              - gender
+ *              - emailId
+ *              - password
+ *              - contactNumber
+ *              - website
+ *              - address
+ *           properties:
+ *              name:
+ *                  type: string
+ *                  description: The name of ngo
+ *              panNumber:
+ *                  type: string
+ *                  descripton: The pan number of ngo
+ *              nameOfHead:
+ *                  type: string
+ *                  description: The name of head of ngo
+ *              gender:
+ *                  type: string
+ *                  description: The gender of head of ngo
+ *              emailId:
+ *                  type: string
+ *                  description: The official mail id of ngo
+ *              password:
+ *                  type: string
+ *                  description: The password of ngo stored after encrypting using bcrypt js
+ *              contactNumber:
+ *                  type: Number
+ *                  description: The contact number of ngo
+ *              website:    
+ *                  type: string
+ *                  description: The link to official website of ngo
+ *              address:
+ *                  type: string
+ *                  description: The address where ngo is located
+ *           example:
+ *               name: "Gabvine"
+ *               panNumber: "52-113-5428"
+ *               nameOfHead: "Aarushi"
+ *               gender: "Female"
+ *               emailId: "amerkle0@disqus.com"
+ *               password: "$2a$04$e6eKKqTu1GA1/Kni6drYz.aHFFqVUJLYul4d5aagugJvzfHEN7JVC"
+ *               contactNumber: 7890380534
+ *               website: "abc@gmail.com"
+ *               address: "Suite 70"
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: NGO
+ *   description: The APIs for NGO
+ */
+
 router.post("/create-ngo", ngoController.createNgo);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
-router.post("/send-confirmation-mail",ngoController.sendConfirmationMailToDonor);
+router.post("/send-confirmation-mail", ngoController.sendConfirmationMailToDonor);
 
 module.exports = router;

@@ -12,7 +12,7 @@ module.exports.createDonor = async (req, res) => {
     const { name, emailId, contactNumber, address, password } = req.body;
 
     // check if donor with this email already exists or not
-    const donors = await Donor.find({ emailId: donorEmailId });
+    const donors = await Donor.find({ emailId: emailId });
     if (donors.length != 0) {
       return res.status(400).json({
         status: false,

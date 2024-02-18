@@ -4,10 +4,13 @@ const app = express();
 const connectToMongo = require("./config/DatabaseConfig");
 connectToMongo();
 const cors = require("cors");
+const swaggerUI = require("swagger-ui-express");
+const specs = require("../src/config/swagger/index");
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs));
 
 app.set("view engine","ejs");
 
