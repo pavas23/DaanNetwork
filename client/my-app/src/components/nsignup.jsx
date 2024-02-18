@@ -10,6 +10,7 @@ function NGOsignup() {
 		ngo_head:"",
 		email:"",
 		password:"",
+		gender:"Male",
 		contact:"",
 		website:"",
 		address:"",
@@ -83,10 +84,10 @@ function NGOsignup() {
 					<div className='row'>
 						<div className='signup_text'>Gender:<span style={{color:'red' }}>*</span> </div>
 						<div className='signup_input_element'>
-							<select className='signup_input'>
-								<option >Male</option>
-								<option >Female</option>
-								<option >Others</option>
+							<select name='gender' className='signup_input' value={formValues.gender} onChange={handleChange} defaultValue="">
+								<option value='Male'>Male</option>
+								<option value='Female' >Female</option>
+								<option value='Others' >Others</option>
 							</select>
 						</div>	
 					</div>
