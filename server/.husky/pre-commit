@@ -1,0 +1,1 @@
+echo "npx --no -- eslint --edit \$1" > .husky/commit-msg
