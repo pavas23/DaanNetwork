@@ -159,10 +159,7 @@ router.post("/donation-request", donorController.createDonationRequest);
  *               type: array
  *               items:
  */
-router.post(
-  "/my-accepted-donation-requests",
-  donorController.getAllAcceptedDonationRequests
-);
+router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonationRequests);
 
 /**
  * @swagger
