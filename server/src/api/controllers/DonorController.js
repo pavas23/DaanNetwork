@@ -252,3 +252,18 @@ module.exports.applyForDonationDrive = async (req, res) => {
       .json({ status: false, msg: "Internal Server Error" });
   }
 };
+
+//view all donation drives
+//returns whole thing but pls remove ngo password and donors fields later
+module.exports.getAllDrives = async (req,res) => {
+  try{
+    var donation_drives = await NgoDonationRequest.find({}).populate("ngo").exec()
+    if(donation_drives.length==0) return res.status(200).json({status:true,drives:[]})
+    console.log(donation_drives)
+    res.status(200).json({status:true,
+      drives:donation_drives
+    })
+  }catch (err){
+    return res.send(500).json({status:false,msg:"Internal Server Error"})
+  }
+}

@@ -265,5 +265,10 @@ router.post('/apply-for-donation-drive',donorController.applyForDonationDrive)
  *               items:
  */
 router.post("/upload-images", upload.single("image"), donorController.uploadDonationImages);
+/**
+ * 
+ * 
+ */
 
+router.get("/all-donation-drives",donorController.getAllDrives)
 module.exports = router;
