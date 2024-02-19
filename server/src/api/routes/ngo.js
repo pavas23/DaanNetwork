@@ -61,6 +61,40 @@ const ngoController = require("../controllers/NgoController");
 
 /**
  * @swagger
+ * components:
+ *      schemas:
+ *          NgoDonationRequest:
+ *           type: object
+ *           required:
+ *              - createdAt
+ *              - startDate 
+ *              - endDate 
+ *              - description
+ *              - ngo
+ *              - donors
+ *           properties:
+ *              createdAt:
+ *                  type: date
+ *                  description: Defaults to current date
+ *              startDate:
+ *                  type: date
+ *                  descripton: start date of donation drive (Defaults to current date)
+ *              endDate:
+ *                  type: date
+ *                  description: End date of donation drive
+ *              description:
+ *                  type: object
+ *                  description: object          
+ *              ngo:
+ *                  type: id
+ *                  description: ngo details 
+ *              donors:
+ *                  type: array
+ *                  description: array of donors who signedup for drive.
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: NGO
  *   description: The APIs for NGO
@@ -71,5 +105,6 @@ router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post("/send-confirmation-mail", ngoController.sendConfirmationMailToDonor);
-
+router.post("/create-donation-request",ngoController.createDonationRequest)
+router.post("/get-all-drives",ngoController.getAllDonationDrives)
 module.exports = router;

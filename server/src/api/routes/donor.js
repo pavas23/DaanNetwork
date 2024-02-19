@@ -184,6 +184,67 @@ router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonat
 router.get("/render-upload-page", donorController.renderUploadImageTemplate);
 
 /**
+  * @swagger
+ * /donor/get-donation-history:
+ *   post:
+ *     summary: Donor can see all donations requests raised by them
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                 donorEmailId: "rohit@gmail.com"
+ *     responses:
+ *       200:
+ *         description: Will get list of all donation requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ 
+                    
+ */
+
+router.post('/get-donation-history',donorController.getAllDonations)
+
+/**
+  * @swagger
+ * /donor/appy-drive:
+ *   post:
+ *     summary: Donor can see all donations requests raised by them
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                 donorEmailId: "rohit@gmail.com"
+ *                 donationRequestId: "65d39e352afc2a8626d64180"
+ *                 donationDetails:
+ *                    items: 
+ *                      name: "Curry Powder"  
+ *                      quantity: 100
+ *                    pickUpDate: "2024-02-28T18:07:59.741Z"
+ *                    pickUpAddress: "BITS GOA"
+ *                    description: "Timepass"
+                            
+                      
+ *     responses:
+ *       200:
+ *         description: Will get list of all donation requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/NgoDonationRequest'
+ */
+router.post('/apply-for-donation-drive',donorController.applyForDonationDrive)
+/**
  * @swagger
  * /donor/upload-images:
  *   post:
@@ -204,5 +265,10 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
  *               items:
  */
 router.post("/upload-images", upload.single("image"), donorController.uploadDonationImages);
+/**
+ * 
+ * 
+ */
 
+router.get("/all-donation-drives",donorController.getAllDrives)
 module.exports = router;

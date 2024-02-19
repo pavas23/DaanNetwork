@@ -1,10 +1,11 @@
 const Donor = require("../models/donor");
 const Ngo = require("../models/ngo");
 const FoodDonation = require("../models/foodDonation");
+const NgoDonationRequest = require("../models/ngoDonationRequest");
+
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
-
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 // ngo controller to create ngo
@@ -266,6 +267,9 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
         email: donorEmailId,
         ngoName: ngos[0].name,
         name: donors[0].name,
+        ngo_address: ngos[0].address,
+        ngo_contact: ngos[0].contactNumber,
+        ngo_website: ngos[0].website,
       },
       template: "index",
     };
@@ -288,3 +292,96 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
   }
 };
 
+/**
+ * req:{
+ * body:{
+ *  created,end,description,ngoEmail,
+ *  }
+ * }
+
+ res:{description} 
+ */
+module.exports.createDonationRequest = async (req, res) => {
+  const { end, description, ngoEmail } = req.body;
+  console.log(description);
+  //for now end is an int which will be added to current date
+  var someDate = new Date();
+  var numberOfDaysToAdd = end;
+  var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+  var endDate = new Date(result);
+
+  try {
+    var ngo = await Ngo.find({ emailId: ngoEmail });
+    if (ngo.length == 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No ngo with email ${ngoEmail} found` });
+    }
+    var count = (await NgoDonationRequest.find({ ngo: ngo[0]._id })).length;
+
+    var newDonation = await NgoDonationRequest.create({
+      donationRequestNum: count + 1,
+      endDate: endDate,
+      description: {
+        name: description.name,
+        items: description.items,
+        images: description.images,
+      },
+      ngo: ngo[0]._id,
+      donors: [],
+      startDate: Date.now(),
+    });
+    console.log(newDonation);
+    res
+      .status(201)
+      .json({ status: true, desc: "Request created successfully" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
+/**
+ * req = {ngoEmail}
+ *
+ *
+ */
+module.exports.getAllDonationDrives = async (req, res) => {
+  const { ngoEmail } = req.body;
+  try {
+    var ngo = await Ngo.find({ emailId: ngoEmail });
+    if (ngo.length == 0)
+      return res
+        .status(400)
+        .json({ status: false, msg: "No ngo with this email" });
+    //lean() is used to convert it to normal object rather than mongo doc
+    var donation_drives = await NgoDonationRequest.find({ ngo: ngo[0]._id })
+      .lean()
+      .exec();
+    if (donation_drives.length == 0)
+      return res
+        .status(200)
+        .json({ status: false, msg: "No current donation drives!" });
+
+    for (let i = 0; i < donation_drives.length; i++) {
+      for (let j = 0; j < donation_drives[i].donors.length; j++) {
+        var donor_details = await Donor.findById(
+          donation_drives[i].donors[j].donor
+        );
+        donation_drives[i].donors[j]["donor_details"] = {
+          name: donor_details.name,
+          emailId: donor_details.emailId,
+          contactNumber: donor_details.contactNumber,
+          address: donor_details.address,
+        };
+      }
+    }
+    console.log(donation_drives);
+    res.status(200).json({ status: true, drives: donation_drives });
+  } catch (err) {
+    return res.status(500).json({ status: false, msg: err });
+  }
+};
+
+//send email to Donor and NGO about applied donation drive
