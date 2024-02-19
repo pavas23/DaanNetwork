@@ -41,7 +41,16 @@ const donationSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref:'donor'
         },
-        ītems:Array,
+        donation_ītems:[
+            {
+                name:{
+                    type:String
+                },
+                quantity:{
+                    type:Number
+                }
+            }
+        ],
         pickUpDate: {
             type:Date,
             required:true
@@ -52,7 +61,12 @@ const donationSchema = new mongoose.Schema({
         description:{
             type:String
         }
-    }]
+    }],
+    // active:{
+    //     type:Boolean,
+    //     required:true,
+    //     defualt:true
+    // }
     
 
 });

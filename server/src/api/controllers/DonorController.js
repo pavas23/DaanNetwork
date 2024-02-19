@@ -1,6 +1,7 @@
 const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
 const UploadImage = require("../models/uploadImage");
+const NgoDonationRequest = require("../models/ngoDonationRequest");
 const router = require("../routes");
 const path = require("path");
 
@@ -199,5 +200,55 @@ module.exports.getAllDonations = async (req, res) => {
     return res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
+
+/**
+ * 
+ *req : {donorEmailId , donationDetails, donationRequestId (i think this will be enough as we dont need ngo id 
+  we can extract ngo id from the donation request)}
+
+    donationDetails: {
+      items: Array,
+      pickUpDate: Date,
+      pickUpAddress:String,
+      description: String
+    }
+ */
+module.exports.applyForDonationDrive = async (req, res) => {
+  const { donorEmailId, donationDetails, donationRequestId } = req.body;
+  console.log(donationDetails);
+  try {
+    var donor = await Donor.find({ emailId: donorEmailId });
+    if (donor.length == 0)
+      return res
+        .status(400)
+        .json({ status: true, msg: "No donor with this email" });
+
+    var donationRequest = await NgoDonationRequest.findById(donationRequestId);
+    if (donationRequest == null)
+      return res.status(400).json({ status: true, msg: "Invalid donationID" });
+    var ngo = donationRequest.ngo;
+
+    const donor_obj = {
+      donor: donor[0]._id,
+      donation_items: donationDetails.items,
+      pickUpDate: donationDetails.pickUpDate,
+      pickUpAddress: donationDetails.pickUpAddress,
+      description: donationDetails.description,
+    };
+    console.log(donor_obj);
+    donationRequest.donors = [...donationRequest.donors, donor_obj];
+    //idk why this is like this :(
+    donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
+      donor_obj.donation_items;
+    console.log(donationRequest);
+    var upDatedReq = await donationRequest.save();
+    console.log(upDatedReq);
+    res.status(200).json({ status: true, msg: upDatedReq });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ status: false, msg: "Internal Server Error" });
   }
 };
