@@ -1,0 +1,171 @@
+body {
+    background-image: url('../images/signup_bg_1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    height: 100vh;
+    padding: 5%;
+}
+html{
+    margin: 0;
+    padding: 2%;
+}
+
+.signup_box{
+    background-color: rgba(248, 247, 247, 0.8);
+    position : absolute;
+    width:45%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 7%;
+    margin-bottom: 6%;
+    border: solid 4px #213F17;
+    padding: 1.5% 2% 1.5% 2%;
+    border-radius: 2rem;
+}
+
+.upload_btn{
+    height: 2rem;
+    width: 5rem;
+    font-weight: bold;
+    background-color: #195406;
+    color: white;
+}
+
+.submit_btn{
+    margin-top: 3%;
+    height: 2rem;
+    width: 5rem;
+    font-weight: bold;
+    background-color: #195406;
+    color: white;
+    transition: box-shadow 0.3s, border-radius 0.3s;
+}
+
+.submit_btn:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 0 0.2rem #f8faf7;
+    background-color: black;
+    border-radius: 0.5rem;
+}
+
+.signup_title{
+    font-size: 2.1rem;
+    color: #213F17;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.signup_form{
+    margin-top: 2%;
+    padding: 1% 2% 1% 2%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.row{
+    margin-top: 2.5%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.signup_text{
+    font-size: 1.2rem;
+    display: inline-block;
+    font-weight: bold;
+    color: #0b7731;
+    width: 50%;
+}
+
+.signup_input_element{
+    width: 50%;
+    display: inline-block;
+}
+
+.signup_input{
+    border: solid 0.125rem black;
+    height: 1.5rem;
+    width: 70%;
+    margin-left: 6%;
+    border-radius: 0.5rem;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+}
+
+.signup_select{
+    border: solid 0.125rem black;
+    height: 2rem;
+    width: 50%;
+    margin-left: 6%;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+}
+
+.signup_textarea{
+    border: solid 0.125rem black;
+    height: 1.5rem;
+    width: 70%;
+    margin-left: 6%;
+    border-radius: 0.5rem;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+    resize: none;
+    height: 4rem;
+}
+
+.input_file{
+    height: 2rem;
+    width: 70%;
+    margin-left: 6%;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color:#0b7731
+}
+
+.input_file::file-selector-button{
+    background-color: #195406;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+}
+
+.input_file::file-selector-button:hover{
+    background-color: black;
+}
+
+@media (max-width: 600px) {
+    .signup_box{
+        width: 85%;
+    }
+    .signup_title{
+        font-size: 1.5rem;
+    }
+    .signup_text{
+        font-size: 0.8rem;
+    }
+    .signup_input{
+        height: 1.2rem;
+        font-size: 0.8rem;
+    }
+    .signup_select{
+        height: 1.5rem;
+        font-size: 0.8rem;
+    }
+    .input_file{
+        height: 1.5rem;
+        font-size: 0.8rem;
+    }
+    .input_file::file-selector-button{
+        padding:0.4rem;
+    }
+
+}
