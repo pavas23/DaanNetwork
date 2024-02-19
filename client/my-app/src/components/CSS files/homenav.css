@@ -1,0 +1,39 @@
+.navbar{
+    background-color: #F8F8F8;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+.nav_opt{
+    color:#7BB108;
+    font-weight: semi-bold;
+    font-size: 110%;
+}
+.nav_opt:hover{
+    color: #078534;
+    font-weight: bolder;
+}
+
+.nav_opt.active{
+    color: #078534;
+    font-weight: bolder;
+}
+
+.kaushan-script-regular {
+    font-family: "Kaushan Script", cursive;
+    font-style: normal;
+}
+
+
+.login_btn{
+    background-color: #078534;
+    color: white;
+}
+
+#basic-nav-dropdown::after{
+    display: none;
+}
+
+.a.nav_opt.nav-link:active{
+    color: #078534;
+    font-weight: bolder;
+}
+  

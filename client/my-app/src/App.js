@@ -1,10 +1,10 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
-import NGOsignup from './components/nsignup';
+import Home from './components/Home';
 
 function App() {
     return (
-        <NGOsignup/>
+        <Home/>
     );
 }
 
