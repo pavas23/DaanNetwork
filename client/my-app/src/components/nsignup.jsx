@@ -1,5 +1,5 @@
 import './CSS files/nsignup.css';
-import React, { useState , useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 function NGOsignup() {
@@ -15,12 +15,14 @@ function NGOsignup() {
 		website:"",
 		address:"",
 		gst:"",
-		reg_no:"",		
+		reg_no:"",
+		file:0	
 	}
 
 	const [formValues,setFormValues]=useState(initialValues);
 	const [formErrors,setFormErrors]=useState({});
 	const [isSubmit,setIsSubmit]=useState(false);
+	const [file,setFile]=useState();
 
 	const handleChange=(e)=>{
 		setFormValues({...formValues,[e.target.name]:e.target.value});
@@ -32,15 +34,21 @@ function NGOsignup() {
 		setIsSubmit(true);
 	}
 
-	useEffect(()=>{
-		console.log(formErrors);
-	},[formErrors]);
-
+	const handleUpload=(e)=>{
+		e.preventDefault();
+		setFile(e.target.files[0]);
+		formValues.file+=1;
+	}
+	
 	const validateForm=(values)=>{
 		const errors={};
 		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/i;
+		if(!values.file){
+			errors["error"]="Please upload the registration certificate!";
+			return errors;
+		}
 		for(let item in values){
-			if(!values[item] && item!=="website" && item!=="gst"){
+			if(!values[item] && item!=="website" && item!=="gst" && item!=="file"){
 				errors["error"]="Please fill out all the required details!";
 				return errors;
 			}
@@ -84,10 +92,10 @@ function NGOsignup() {
 					<div className='row'>
 						<div className='signup_text'>Gender:<span style={{color:'red' }}>*</span> </div>
 						<div className='signup_input_element'>
-							<select name='gender' className='signup_input' value={formValues.gender} onChange={handleChange} defaultValue="">
-								<option value='Male'>Male</option>
-								<option value='Female' >Female</option>
-								<option value='Others' >Others</option>
+							<select name='gender' className='signup_select' value={formValues.gender} onChange={handleChange} defaultValue="">
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="others">Others</option>
 							</select>
 						</div>	
 					</div>
@@ -118,7 +126,7 @@ function NGOsignup() {
 					<div className='row'>
 						<div className='signup_text'>Address:<span style={{color:'red' }}>*</span> </div>
 						<div className='signup_input_element'>
-							<textarea type='text' name='address' className='signup_input' value={formValues.address} onChange={handleChange}/>
+							<textarea  style={{fontFamily:"sans-serif"}} type='text' name='address' maxLength="500" className='signup_textarea' value={formValues.address} onChange={handleChange}/>
 						</div>	
 					</div>
 					<div className='row'>
@@ -134,9 +142,11 @@ function NGOsignup() {
 						</div>	
 					</div>
 					<div className='row'>
-						<div className='signup_text'>Upload Registration Certificate for Verification:<span style={{color:'red' }}>*</span> </div>
-						<div className='signup_input_element' style={{display:'flex',justifyContent:'center'}}>
-							<button className='upload_btn'>Upload</button>
+						<div className='signup_text'>Upload Registration Certificate for Verification: (pdf/jpg)<span style={{color:'red' }}>*</span> </div>
+						<div className='signup_input_element'>
+							<label for='reg_certificate' className='input_file_label'>
+								<input type='file' name='reg_certificate' className='input_file' onChange={handleUpload} accept='.pdf,.jpg'/>
+							</label>	
 						</div>	
 					</div>
 				</div>
