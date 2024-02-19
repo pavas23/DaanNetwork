@@ -141,7 +141,7 @@ module.exports.renderUploadImageTemplate = async (req, res) => {
       console.log(error);
       return res
         .status(500)
-        .send({ status: false, desc: "Internal Server Error Occured" });
+        .json({ status: false, desc: "Internal Server Error Occured" });
     }
   }
 };
@@ -160,6 +160,6 @@ module.exports.uploadDonationImages = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .send({ status: false, desc: "Internal Server Error Occured" });
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
