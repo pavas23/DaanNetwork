@@ -137,6 +137,29 @@ router.post("/create-donor", donorController.createDonor);
  */
 router.post("/donation-request", donorController.createDonationRequest);
 
+/** 
+ * @swagger
+ * /donor/delete-donation-request:
+ *  delete:
+ *     summary: Allows donor to delete donation requests which are not accepted by ngo yet
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FoodDonation'
+ *     responses:
+ *       200:
+ *         description: Donation request deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               items:
+ *                 $ref: '#/components/schemas/FoodDonation'
+ */
+router.delete("/delete-donation-request",donorController.deleteDonationRequest);
+
 /**
  * @swagger
  * /donor/my-accepted-donation-requests:
@@ -184,7 +207,7 @@ router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonat
 router.get("/render-upload-page", donorController.renderUploadImageTemplate);
 
 /**
-  * @swagger
+ * @swagger
  * /donor/get-donation-history:
  *   post:
  *     summary: Donor can see all donations requests raised by them
@@ -203,15 +226,12 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- 
-                    
+ *               items:                   
  */
-
-router.post('/get-donation-history',donorController.getAllDonations)
+router.post('/get-donation-history',donorController.getAllDonations);
 
 /**
-  * @swagger
+ * @swagger
  * /donor/appy-drive:
  *   post:
  *     summary: Donor can see all donations requests raised by them
@@ -230,9 +250,7 @@ router.post('/get-donation-history',donorController.getAllDonations)
  *                      quantity: 100
  *                    pickUpDate: "2024-02-28T18:07:59.741Z"
  *                    pickUpAddress: "BITS GOA"
- *                    description: "Timepass"
-                            
-                      
+ *                    description: "Timepass"                 
  *     responses:
  *       200:
  *         description: Will get list of all donation requests
@@ -243,7 +261,8 @@ router.post('/get-donation-history',donorController.getAllDonations)
  *               items:
  *                  $ref: '#/components/schemas/NgoDonationRequest'
  */
-router.post('/apply-for-donation-drive',donorController.applyForDonationDrive)
+router.post('/apply-for-donation-drive',donorController.applyForDonationDrive);
+
 /**
  * @swagger
  * /donor/upload-images:
@@ -265,10 +284,11 @@ router.post('/apply-for-donation-drive',donorController.applyForDonationDrive)
  *               items:
  */
 router.post("/upload-images", upload.single("image"), donorController.uploadDonationImages);
+
 /**
  * 
  * 
  */
+router.get("/all-donation-drives",donorController.getAllDrives);
 
-router.get("/all-donation-drives",donorController.getAllDrives)
 module.exports = router;
