@@ -8,9 +8,11 @@ import './CSS files/homenav.css'
 function HomeNav() {
   return (
     <>
-        <Navbar >
+        <Navbar collapseOnSelect expand="lg">
             <Container>
             <Navbar.Brand className="kaushan-script-regular" style={{color:"#078534",fontWeight:"bold",fontSize:"160%",paddingRight:"2%"}}>DaanNetwork</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id='dekho_zara'>
                 <Nav.Link className='nav_opt'>About Us</Nav.Link>
                 <Nav.Link className='nav_opt'>Impact</Nav.Link>
@@ -27,6 +29,7 @@ function HomeNav() {
                     <NavDropdown.Item>Login as a Donor</NavDropdown.Item>
                 </NavDropdown>
             </Nav>
+            </Navbar.Collapse>
             </Container>
         </Navbar>
     </>
