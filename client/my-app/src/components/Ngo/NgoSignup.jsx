@@ -1,4 +1,4 @@
-import './CSS files/nsignup.css';
+import '../../css/Ngo/NgoSignup.css';
 import React, { useState } from 'react';
 
 

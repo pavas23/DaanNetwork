@@ -256,7 +256,8 @@ module.exports.applyForDonationDrive = async (req, res) => {
   }
 };
 
-/** view all donation drives
+/** donor controller to get all ngo donation drives
+ * view all donation drives
  * returns whole thing but pls remove ngo password and donors fields later
  */
 module.exports.getAllDrives = async (req, res) => {
@@ -273,7 +274,7 @@ module.exports.getAllDrives = async (req, res) => {
   }
 };
 
-/**
+/** donor controller to delete donation request
  * req body : { donorEmailId, donationRequestNum }
  * res: res : { status:boolean, desc:string }
  */
