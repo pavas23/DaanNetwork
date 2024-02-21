@@ -51,7 +51,7 @@ const foodDonationSchema = new mongoose.Schema({
 });
 
 // will make combination of donationRequestNum and donor object as unique
-foodDonationSchema.index({"donationRequestNum":1,"donor":1},{unique:true});
+foodDonationSchema.index({ donationRequestNum: 1, donor: 1 }, { unique: true });
 
 const FoodDonation = mongoose.model("foodDonation", foodDonationSchema);
 module.exports = FoodDonation;

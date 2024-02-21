@@ -41,7 +41,7 @@ const ngoController = require("../controllers/NgoController");
  *              contactNumber:
  *                  type: Number
  *                  description: The contact number of ngo
- *              website:    
+ *              website:
  *                  type: string
  *                  description: The link to official website of ngo
  *              address:
@@ -67,8 +67,8 @@ const ngoController = require("../controllers/NgoController");
  *           type: object
  *           required:
  *              - createdAt
- *              - startDate 
- *              - endDate 
+ *              - startDate
+ *              - endDate
  *              - description
  *              - ngo
  *              - donors
@@ -84,10 +84,10 @@ const ngoController = require("../controllers/NgoController");
  *                  description: End date of donation drive
  *              description:
  *                  type: object
- *                  description: object          
+ *                  description: object
  *              ngo:
  *                  type: id
- *                  description: ngo details 
+ *                  description: ngo details
  *              donors:
  *                  type: array
  *                  description: array of donors who signedup for drive.
@@ -105,8 +105,8 @@ router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post("/send-confirmation-mail", ngoController.sendConfirmationMailToDonor);
-router.post("/create-donation-request",ngoController.createDonationRequest);
-router.post("/get-all-drives",ngoController.getAllDonationDrives);
-router.delete("/delete-donation-drive",ngoController.deleteDonationDrive)
+router.post("/create-donation-request", ngoController.createDonationRequest);
+router.post("/get-all-drives", ngoController.getAllDonationDrives);
+router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
 
 module.exports = router;

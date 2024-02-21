@@ -12,33 +12,38 @@
     {{donor.name}},
     <br />
     <h3>
-      You have successfully applied to Drive: 
-      <br/>
+      You have successfully applied to Drive:
+      <br />
       {{drive.description.name}}
     </h3>
     <h3>
-        Organising NGO: {{drive.ngo.name}}
+      Organising NGO:
+      {{drive.ngo.name}}
     </h3>
     <h3>
-        Your Donated Items: 
+      Your Donated Items:
     </h3>
     <ul>
-        {{#each application.donation_items}}
-            <li>Item: <strong>{{this.name}}</strong> Quantity: <strong>{{this.quantity}}</strong></li>
-        {{/each}}
+      {{#each application.donation_items}}
+        <li>Item:
+          <strong>{{this.name}}</strong>
+          Quantity:
+          <strong>{{this.quantity}}</strong></li>
+      {{/each}}
     </ul>
-<h3>
-    Pickup Details:       
-</h3>
+    <h3>
+      Pickup Details:
+    </h3>
     <ul>
-        <li>Pickup Address: {{application.pickUpAddress}}</li>
-        <li>Pickup Date: {{application.pickUpDate}}</li>
+      <li>Pickup Address: {{application.pickUpAddress}}</li>
+      <li>Pickup Date: {{application.pickUpDate}}</li>
     </ul>
     <h4>
       You can reach the NGO at
       <ol>
         <li>
-            Email: {{drive.ngo.emailId}}
+          Email:
+          {{drive.ngo.emailId}}
         </li>
         <br />
         <li>Address: {{drive.ngo.address}}</li>

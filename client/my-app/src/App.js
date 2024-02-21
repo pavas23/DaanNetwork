@@ -1,14 +1,13 @@
-import React from 'react';
-import NGOsignup from './components/Ngo/NgoSignup';
-import Home from './components/Home/Home';
+import React from "react";
+import NGOsignup from "./components/Ngo/NgoSignup";
+import Home from "./components/Home/Home";
 
 function App() {
-    return (
-        <>
-        
-        <Home/>
-        </>
-    );
+  return (
+    <>
+      <Home />
+    </>
+  );
 }
 
 export default App;
