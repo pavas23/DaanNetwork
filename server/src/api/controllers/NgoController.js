@@ -2,15 +2,16 @@ const Donor = require("../models/donor");
 const Ngo = require("../models/ngo");
 const FoodDonation = require("../models/foodDonation");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
-
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
-// ngo controller to create ngo
-// req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address}
-// res : { status:boolean, desc:string }
+/**
+ * ngo controller to create ngo
+ * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address }
+ * res : { status:boolean, desc:string }
+ */
 module.exports.createNgo = async (req, res) => {
   try {
     const {
@@ -59,9 +60,10 @@ module.exports.createNgo = async (req, res) => {
   }
 };
 
-// ngo controller to see all pending donation requests along with donor details
-// req body : {}
-// res : { status:boolean, list:[] }
+/** ngo controller to see all pending donation requests along with donor details
+ * req body : {}
+ * res : { status:boolean, list:[] }
+ */
 module.exports.getAllDonationRequests = async (req, res) => {
   try {
     // this will show donation requests which are not accepted yet, along with donor details
@@ -78,9 +80,10 @@ module.exports.getAllDonationRequests = async (req, res) => {
   }
 };
 
-// ngo controller to accept donation requests which have not been accepted yet
-// req body : { ngoEmailId, donorEmailId, donationRequestNum}
-// res : { status:boolean, desc:String }
+/** ngo controller to accept donation requests which have not been accepted yet
+ * req body : { ngoEmailId, donorEmailId, donationRequestNum}
+ * res : { status:boolean, desc:String }
+ */
 module.exports.acceptDonationRequest = async (req, res) => {
   try {
     const { ngoEmailId, donorEmailId, donationRequestNum } = req.body;
@@ -147,9 +150,10 @@ module.exports.acceptDonationRequest = async (req, res) => {
   }
 };
 
-// ngo controller to get list of donation requests accepted by ngo
-// req body { ngoEmailId }
-// res : { status:boolean, list:[] }
+/** ngo controller to get list of donation requests accepted by ngo
+ * req body : { ngoEmailId }
+ * res : { status:boolean, list:[] }
+ */
 module.exports.getMyDonationRequests = async (req, res) => {
   try {
     const { ngoEmailId } = req.body;
@@ -190,9 +194,10 @@ module.exports.getMyDonationRequests = async (req, res) => {
   }
 };
 
-// ngo controller to send mail to donor that it has accepted the donation request
-// req body {ngoEmailId, donorEmailId, donationRequestNum}
-// res : { status:boolean, desc:String}
+/** ngo controller to send mail to donor that it has accepted the donation request
+ * req body {ngoEmailId, donorEmailId, donationRequestNum}
+ * res : { status:boolean, desc:String }
+ */
 module.exports.sendConfirmationMailToDonor = async (req, res) => {
   try {
     const { ngoEmailId, donorEmailId, donationRequestNum } = req.body;
@@ -293,13 +298,9 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
 };
 
 /**
- * req:{
- * body:{
- *  created,end,description,ngoEmail,
- *  }
- * }
-
- res:{description} 
+ * ngo controller to create request for donation drive
+ * req body:{ created, end, description, ngoEmail }
+ * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
   const { end, description, ngoEmail } = req.body;
@@ -342,10 +343,11 @@ module.exports.createDonationRequest = async (req, res) => {
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
+
 /**
+ * ngo controller to show all donation requests created by a given ngo
  * req = {ngoEmail}
- *
- *
+ * res : { status:boolean, desc:String}
  */
 module.exports.getAllDonationDrives = async (req, res) => {
   const { ngoEmail } = req.body;
@@ -355,6 +357,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
       return res
         .status(400)
         .json({ status: false, msg: "No ngo with this email" });
+
     //lean() is used to convert it to normal object rather than mongo doc
     var donation_drives = await NgoDonationRequest.find({ ngo: ngo[0]._id })
       .lean()

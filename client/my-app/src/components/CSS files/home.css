@@ -1,0 +1,36 @@
+.main_body{
+    background-color: #F5F5F5;
+}
+
+.aboutUs{
+    padding-top: 4%;
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 3%;
+}
+
+.writeUp{
+    padding-top: 2.2%;
+    font-size: 120%;
+    color: #0D2F1B;
+}
+
+.line{
+    border-top: solid 0.2rem black;
+    width: 90%;
+    margin: 0 auto 0 auto;
+}
+
+.impact{
+    padding-top: 3%;
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 3%;
+}
+
+.contact{
+    padding-top: 3%;
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 3%;
+}

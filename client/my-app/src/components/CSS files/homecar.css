@@ -1,0 +1,55 @@
+.carousel_body{
+    height: 91.2vh;
+    display: flex;
+    align-items: right;
+}
+
+.carousel_img1{
+    width:65%;
+    background-image: url('../images/Daan.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.carousel_img2{
+    width:65%;
+    background-image: url('../images/childrenSmiling.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(1.1px);
+}
+.carousel_text{
+    width: 45%;
+    background-color:#b2ed9e;
+}
+
+.slideTextOne{
+    font-size: 240%;
+    color: #0D2F1B;
+    margin-top: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.slideTextTwo{
+    font-size: 220%;
+    color: #0D2F1B;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+}
+
+#carousel_button{
+    background-color: #0D2F1B;
+    color: white;
+    padding: 2%;
+    font-size: 150%;
+    border-radius: 0.7rem;    
+    cursor: pointer;
+}
