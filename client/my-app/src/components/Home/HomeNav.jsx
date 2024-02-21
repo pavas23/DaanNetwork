@@ -4,9 +4,10 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import styles from '../../css/Home/HomeNav.module.css'
+import { Link } from 'react-router-dom';
 
 function HomeNav() {
-    const x="#basic-nav-dropdown::after{ display: none; }"
+    const x="#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}"
   return (
     <>  
         <style>{x}</style>
@@ -16,9 +17,9 @@ function HomeNav() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id='dekho_zara'>
-                <Nav.Link className={styles.nav_opt}>About Us</Nav.Link>
-                <Nav.Link className={styles.nav_opt}>Impact</Nav.Link>
-                <Nav.Link className={styles.nav_opt}>Contact Us</Nav.Link>
+                <Nav.Link href='#aboutUsPage' className={styles.nav_opt}>About Us</Nav.Link>
+                <Nav.Link href='#impactPage' className={styles.nav_opt}>Impact</Nav.Link>
+                <Nav.Link href='#contactPage' className={styles.nav_opt}>Contact Us</Nav.Link>
             </Nav>
             <Nav>
                 <NavDropdown id="basic-nav-dropdown" className={styles.dropdown} display="none" title={

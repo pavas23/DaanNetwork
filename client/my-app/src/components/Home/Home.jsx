@@ -12,7 +12,7 @@ export default function Home() {
             <HomeNav/>
             <HomeCarousel/>
             <div className={styles.main_body}>
-                <div className={styles.aboutUs}>
+                <div className={styles.aboutUs} id='aboutUsPage'>
                     <h2 style={{color:"#078534",fontWeight:"bold", fontSize:"240%"}}>About Us</h2>
                     
                     <div className={styles.writeUp}>
@@ -51,11 +51,11 @@ export default function Home() {
                     
                 </div>
                 <div className={styles.line}></div>
-                <div className={styles.impact}>
+                <div className={styles.impact} id='impactPage'>
                     <h2 style={{color:"#078534",fontWeight:"bold", fontSize:"240%"}}>Impact Stories</h2>
                 </div>
                 <div className={styles.line}></div>
-                <div className={styles.contact}>
+                <div className={styles.contact} id='contactPage'>
                     <h2 style={{color:"#078534",fontWeight:"bold", fontSize:"240%"}}>Contact Us</h2>
                     <div className={styles.contact_info}>
                         <div className={styles.contact_info1}>

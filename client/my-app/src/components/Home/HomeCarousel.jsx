@@ -1,5 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styles from '../../css/Home/HomeCar.module.css'
+import { Link } from 'react-router-dom';
 
 function HomeCarousel() {
   return (
@@ -13,9 +14,11 @@ function HomeCarousel() {
                     <div className={styles.slideTextOne}>Partner with us in our attempt to change the world.</div>
                     <div className={styles.slideTextTwo}>Register your NGO today.</div>
                 </div>
-                <form className={styles.button}>
-                    <button className='btn btn-lg' type='submit' id={styles.carousel_button}>Get Started</button>
-                </form>
+                <Link to='/ngo-signup' style={{textDecoration:"none"}}>
+                  <form className={styles.button}>
+                      <button className='btn btn-lg' type='submit' id={styles.carousel_button}>Get Started</button>
+                  </form>
+                </Link>
             </div>
         </div>
       </Carousel.Item>
