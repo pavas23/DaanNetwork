@@ -1,6 +1,5 @@
-import '../../css/Ngo/NgoSignup.css';
+import styles from "../../css/Ngo/NgoSignup.css"
 import React, { useState } from 'react';
-
 
 function NGOsignup() {
 

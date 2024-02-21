@@ -6,14 +6,14 @@
 
 .carousel_img1{
     width:65%;
-    background-image: url('../images/Daan.jpeg');
+    background-image: url('../../images/childrenSmiling.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .carousel_img2{
     width:65%;
-    background-image: url('../images/childrenSmiling.jpg');
+    background-image: url('../../images/Daan.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     filter: blur(1.1px);

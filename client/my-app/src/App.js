@@ -1,9 +1,11 @@
 import React from 'react';
-import Home from './components/Home';
+// import Home from "../src/components/Home/Home"
+import NgoSignUp from "../src/components/Ngo/NgoSignup"
 
 function App() {
     return (
-        <Home/>
+        // <Home/>
+        <NgoSignUp/>
     );
 }
 
