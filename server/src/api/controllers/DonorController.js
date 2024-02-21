@@ -267,3 +267,6 @@ module.exports.getAllDrives = async (req,res) => {
     return res.send(500).json({status:false,msg:"Internal Server Error"})
   }
 }
+
+//delete application to donation drive
+

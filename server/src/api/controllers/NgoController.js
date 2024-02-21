@@ -385,3 +385,9 @@ module.exports.getAllDonationDrives = async (req, res) => {
 };
 
 //send email to Donor and NGO about applied donation drive
+
+//delete donation drive
+//req = {ngoEmail,donationDriveId}
+module.exports.deleteDonationDrive = async (req,res) =>{
+  
+}
