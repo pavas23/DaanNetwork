@@ -74,10 +74,10 @@ export default function Home() {
                             <p>+91 6304614464</p>
                         </div>
                         <div className={styles.contact_info3}>
-                            <FontAwesomeIcon icon={faFacebook} size='2xl'style={{marginRight:"6%",cursor:'pointer'}}/>
-                            <FontAwesomeIcon icon={faTwitter} size='2xl' style={{marginRight:"6%",cursor:'pointer'}}/>
-                            <FontAwesomeIcon icon={faInstagram} size='2xl' style={{marginRight:"6%",cursor:'pointer'}}/>
-                            <FontAwesomeIcon icon={faLinkedin} size='2xl' style={{cursor:'pointer'}} />
+                            <a href='https://www.facebook.com/profile.php?id=100005953308850' style={{color:'inherit'}} target='_blank'> <FontAwesomeIcon icon={faFacebook} size='2xl'style={{marginRight:"6%",cursor:'pointer'}}/></a> 
+                            <a href='https://twitter.com/mahithctr360' style={{color:'inherit'}} target='_blank'><FontAwesomeIcon icon={faTwitter} size='2xl' style={{marginRight:"6%",cursor:'pointer'}}/></a>
+                            <a href='https://www.instagram.com/_sakshambajaj_?igsh=aGt4MmYxYndiYnBy' style={{color:'inherit'}} target='_blank'><FontAwesomeIcon icon={faInstagram} size='2xl' style={{marginRight:"6%",cursor:'pointer'}}/></a>
+                            <a href='https://www.linkedin.com/in/pavas-garg-606535223/' style={{color:'inherit'}} target='_blank'><FontAwesomeIcon icon={faLinkedin} size='2xl' style={{cursor:'pointer'}} /></a>
                         </div>
                     </div>
                 </div>
