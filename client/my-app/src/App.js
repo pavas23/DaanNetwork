@@ -1,9 +1,13 @@
 import React from 'react';
-import Home from './components/Home';
+import NGOsignup from './components/Ngo/NgoSignup';
+import Home from './components/Home/Home';
 
 function App() {
     return (
+        <>
+        
         <Home/>
+        </>
     );
 }
 

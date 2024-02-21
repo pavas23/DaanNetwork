@@ -1,42 +1,38 @@
-import Carousel from "react-bootstrap/Carousel";
+import Carousel from 'react-bootstrap/Carousel';
+import styles from '../../css/Home/HomeCar.module.css'
 
 function HomeCarousel() {
   return (
-    <Carousel data-bs-theme="dark">
+    <Carousel data-bs-theme="light">
       <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=First slide&bg=f5f5f5"
-          alt="First slide"
-        />
-        <Carousel.Caption>
-          <h5>First slide label</h5>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
+        <div className={styles.carousel_body}>
+            <div className={styles.carousel_img1}>
+            </div>
+            <div className={styles.carousel_text}>
+                <div>
+                    <div className={styles.slideTextOne}>Partner with us in our attempt to change the world.</div>
+                    <div className={styles.slideTextTwo}>Register your NGO today.</div>
+                </div>
+                <form className={styles.button}>
+                    <button className='btn btn-lg' type='submit' id={styles.carousel_button}>Get Started</button>
+                </form>
+            </div>
+        </div>
       </Carousel.Item>
       <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=eee"
-          alt="Second slide"
-        />
-        <Carousel.Caption>
-          <h5>Second slide label</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=e5e5e5"
-          alt="Third slide"
-        />
-        <Carousel.Caption>
-          <h5>Third slide label</h5>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
+        <div className={styles.carousel_body}>
+            <div className={styles.carousel_img2}>
+            </div>
+            <div className={styles.carousel_text}>
+                <div>
+                    <div className={styles.slideTextOne}>Your Extra Food is Someone's Daily Meal.</div>
+                    <div className={styles.slideTextTwo}>Join Us Now!</div>
+                </div>
+                <form className={styles.button}>
+                    <button className='btn btn-lg' type='submit' id={styles.carousel_button}>Donate Now</button>
+                </form>
+            </div>
+        </div>
       </Carousel.Item>
     </Carousel>
   );

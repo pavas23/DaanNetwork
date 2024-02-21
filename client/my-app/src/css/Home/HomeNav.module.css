@@ -12,12 +12,7 @@
     font-weight: bolder;
 }
 
-.a.nav_opt.nav-link:active{
-    color: #078534 !important;
-    font-weight: bolder;
-}
-
-.kaushan-script-regular {
+.kaushan_script_regular {
     font-family: "Kaushan Script", cursive;
     font-style: normal;
 }
@@ -28,12 +23,5 @@
     color: white;
 }
 
-#basic-nav-dropdown::after{
-    display: none;
-}
 
-.a.nav_opt.nav-link:active{
-    color: #078534;
-    font-weight: bolder;
-}
   
