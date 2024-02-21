@@ -275,6 +275,7 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
         ngo_address: ngos[0].address,
         ngo_contact: ngos[0].contactNumber,
         ngo_website: ngos[0].website,
+        ngo_email:ngos[0].emailId
       },
       template: "index",
     };
@@ -405,3 +406,4 @@ module.exports.deleteDonationDrive = async (req,res) =>{
     return res.status(500).json({ status: false, msg: err });
   }
 }
+

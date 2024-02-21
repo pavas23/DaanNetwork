@@ -6,6 +6,10 @@ const router = require("../routes");
 const path = require("path");
 const { monitorEventLoopDelay } = require("perf_hooks");
 const { builtinModules } = require("module");
+const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
+const Ngo = require("../models/ngo");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 /** donor controller to create donor
  * req body : { name, emailId, contactNumber, address, password }
@@ -220,6 +224,55 @@ module.exports.getAllDonations = async (req, res) => {
  *      description: String
  *   }
  */
+
+var notifyNewDonorForDrive = async (drive, donor) => {
+
+}
+
+var notifySuccessfulDriveApplication = async (drive, application, donor) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  const handlebarOptions = {
+    viewEngine: {
+      extName: ".handlebars",
+      partialsDir: path.resolve("../src/api/views"),
+      defaultLayout: false,
+    },
+    viewPath: path.resolve("../src/api/views"),
+    extName: ".handlebars",
+  };
+  transporter.use("compile", hbs(handlebarOptions));
+
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: donor.emailId,
+    subject: "Congratulations! Your application to donation drive was successful",
+    context: {
+      title: "Successfully Applied to Donation Drive",
+      email: donor.emailId,
+      donor: donor,
+      drive: drive,
+      application: application
+    },
+    template: "donor_donation_drive",
+  };
+
+  transporter.sendMail(mailOptions, (err, success) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("Email sent successfully!!");
+  });
+}
 module.exports.applyForDonationDrive = async (req, res) => {
   const { donorEmailId, donationDetails, donationRequestId } = req.body;
   console.log(donationDetails);
@@ -233,7 +286,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     var donationRequest = await NgoDonationRequest.findById(donationRequestId);
     if (donationRequest == null)
       return res.status(400).json({ status: true, msg: "Invalid donationID" });
-    var ngo = donationRequest.ngo;
+    var ngoID = donationRequest.ngo;
 
     const donor_obj = {
       donor: donor[0]._id,
@@ -245,11 +298,21 @@ module.exports.applyForDonationDrive = async (req, res) => {
     console.log(donor_obj);
     donationRequest.donors = [...donationRequest.donors, donor_obj];
     //idk why this is like this :(
-    donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
-      donor_obj.donation_items;
+    donationRequest.donors[donationRequest.donors.length - 1].donation_ītems = donor_obj.donation_items;
     console.log(donationRequest);
-    var upDatedReq = await donationRequest.save();
+    var upDatedReq = await donationRequest.save()
+    var ngo = await Ngo.findById(ngoID)
+    if (ngo == null) return res
+      .status(500)
+      .json({ status: false, msg: "Internal Server Error" });
+
+
     console.log(upDatedReq);
+    donor_obj.emailId = donorEmailId;
+    var tempDriveObj = upDatedReq.toObject()
+    tempDriveObj.ngo = ngo.toObject()
+    donor_obj.pickUpDate = new Date(donor_obj.pickUpDate.toString()).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
+    notifySuccessfulDriveApplication(tempDriveObj, donor_obj, donor[0].toObject())
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
     return res
@@ -375,17 +438,17 @@ module.exports.getAllAppliedDrives = async (req, res) => {
       //     myDons.push(donation_drives[i].donors[j])
       //   }
 
-      
 
-      if(myDons.length>0){
+
+      if (myDons.length > 0) {
         myDonationDrives.push({
-          donationRequestNum:donation_drives[i].donationRequestNum,
-          createdAt:donation_drives[i].createdAt,
-          startDate:donation_drives[i].startDate,
-          endDate:donation_drives[i].endDate,
-          description:donation_drives[i].description,
-          ngo:donation_drives[i].ngo,
-          donors:myDons
+          donationRequestNum: donation_drives[i].donationRequestNum,
+          createdAt: donation_drives[i].createdAt,
+          startDate: donation_drives[i].startDate,
+          endDate: donation_drives[i].endDate,
+          description: donation_drives[i].description,
+          ngo: donation_drives[i].ngo,
+          donors: myDons
         })
       }
     }
@@ -397,20 +460,20 @@ module.exports.getAllAppliedDrives = async (req, res) => {
 
 //delete application to donation drive
 //req{donorEmailId,donationDriveId}
-module.exports.deleteApplicationToDrive = async (req,res)=>{
-  const { donorEmailId , donationDriveId} = req.body
+module.exports.deleteApplicationToDrive = async (req, res) => {
+  const { donorEmailId, donationDriveId } = req.body
   try {
     var donor = await Donor.find({ emailId: donorEmailId })
     if (donor.length == 0) return res.status(400).json({ status: false, msg: "No donor with this email" })
 
-    var donation_drives = await NgoDonationRequest.find({_id:donationDriveId})
+    var donation_drives = await NgoDonationRequest.find({ _id: donationDriveId })
       .populate("ngo")
       .exec();
     if (donation_drives.length == 0)
       return res.status(200).json({ status: false, msg: "no donation req exists" });
     var message = ""
-    var newDonors = donation_drives[0].donors.filter((item)=>!item.donor.equals(donor[0]._id))
-    if(newDonors.length===donation_drives[0].donors.length) message="You have no donations in this drive"
+    var newDonors = donation_drives[0].donors.filter((item) => !item.donor.equals(donor[0]._id))
+    if (newDonors.length === donation_drives[0].donors.length) message = "You have no donations in this drive"
     else message = "deleted successfully"
     donation_drives[0].donors = newDonors
     console.log(donation_drives[0].donors);
