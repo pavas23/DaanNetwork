@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Daan Network</title>
+    <style>
+      input{ border: none; padding: 15px 32px; text-align: center;
+      text-decoration: none; display: inline-block; font-size: 15px; cursor:
+      pointer; }
+    </style>
+  </head>
+  <body>
+    Dear
+    {{donor.name}},
+    <br />
+    <h3>
+      You have successfully applied to Drive: 
+      <br/>
+      {{drive.description.name}}
+    </h3>
+    <h3>
+        Organising NGO: {{drive.ngo.name}}
+    </h3>
+    <h3>
+        Your Donated Items: 
+    </h3>
+    <ul>
+        {{#each application.donation_items}}
+            <li>Item: <strong>{{this.name}}</strong> Quantity: <strong>{{this.quantity}}</strong></li>
+        {{/each}}
+    </ul>
+<h3>
+    Pickup Details:       
+</h3>
+    <ul>
+        <li>Pickup Address: {{application.pickUpAddress}}</li>
+        <li>Pickup Date: {{application.pickUpDate}}</li>
+    </ul>
+    <h4>
+      You can reach the NGO at
+      <ol>
+        <li>
+            Email: {{drive.ngo.emailId}}
+        </li>
+        <br />
+        <li>Address: {{drive.ngo.address}}</li>
+        <br />
+        <li>Contact Number: {{drive.ngo.contactNumber}}</li>
+        <br />
+        <li>
+          Website:
+          <a href="{{drive.ngo.website}}">{{drive.ngo.website}}</a>
+        </li>
+      </ol>
+    </h4>
+    <br />
+    <br />
+    <div style="color: red;">
+      Note: Please do not reply directly to this e-mail. This e-mail was sent
+      from a notification-only address that cannot accept incoming e-mail.
+    </div>
+  </body>
+</html>
