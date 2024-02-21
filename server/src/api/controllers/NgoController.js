@@ -275,6 +275,7 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
         ngo_address: ngos[0].address,
         ngo_contact: ngos[0].contactNumber,
         ngo_website: ngos[0].website,
+        ngo_email:ngos[0].emailId
       },
       template: "index",
     };
@@ -387,6 +388,22 @@ module.exports.getAllDonationDrives = async (req, res) => {
   }
 };
 
-/** send email to Donor and NGO about applied donation drive
- *
- */
+//send email to Donor and NGO about applied donation drive
+
+//delete donation drive
+//req = {ngoEmail,donationDriveId}
+module.exports.deleteDonationDrive = async (req,res) =>{
+  const {ngoEmail,donationDriveId} = req.body
+  try{
+    var ngo = await Ngo.find({ emailId: ngoEmail });
+    if (ngo.length == 0)
+      return res
+        .status(400)
+        .json({ status: false, msg: "No ngo with this email" });
+    await NgoDonationRequest.deleteOne({_id:donationDriveId})
+    return res.status(200).json({status:true,msg:"successfully deleted"})
+  }catch(err){
+    return res.status(500).json({ status: false, msg: err });
+  }
+}
+

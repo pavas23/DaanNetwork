@@ -1,50 +1,39 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import "../../css/Home/homenav.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import styles from '../../css/Home/HomeNav.module.css'
 
 function HomeNav() {
+    const x="#basic-nav-dropdown::after{ display: none; }"
   return (
-    <>
-      <Navbar>
-        <Container>
-          <Navbar.Brand
-            className="kaushan-script-regular"
-            style={{
-              color: "#078534",
-              fontWeight: "bold",
-              fontSize: "160%",
-              paddingRight: "2%",
-            }}
-          >
-            DaanNetwork
-          </Navbar.Brand>
-          <Nav className="me-auto" id="dekho_zara">
-            <Nav.Link className="nav_opt">About Us</Nav.Link>
-            <Nav.Link className="nav_opt">Impact</Nav.Link>
-            <Nav.Link className="nav_opt">Contact Us</Nav.Link>
-          </Nav>
-          <Nav>
-            <NavDropdown
-              id="basic-nav-dropdown"
-              title={<span className="login_btn">Login</span>}
-              style={{
-                width: "5rem",
-                backgroundColor: "#078534",
-                borderRadius: "1rem",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <NavDropdown.Item>Login as a NGO</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>Login as a Donor</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Container>
-      </Navbar>
+    <>  
+        <style>{x}</style>
+        <Navbar collapseOnSelect expand="lg">
+            <Container>
+            <Navbar.Brand className={styles.kaushan_script_regular} style={{color:"#078534",fontWeight:"bold",fontSize:"160%",paddingRight:"2%"}}>DaanNetwork</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto" id='dekho_zara'>
+                <Nav.Link className={styles.nav_opt}>About Us</Nav.Link>
+                <Nav.Link className={styles.nav_opt}>Impact</Nav.Link>
+                <Nav.Link className={styles.nav_opt}>Contact Us</Nav.Link>
+            </Nav>
+            <Nav>
+                <NavDropdown id="basic-nav-dropdown" className={styles.dropdown} display="none" title={
+                    <span className={styles.login_btn}>
+                        Login
+                    </span>
+                } style={{width:"5rem",backgroundColor:"#078534", borderRadius: "1rem", display:'flex',justifyContent:'center'}}>
+                    <NavDropdown.Item>Login as a NGO</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item>Login as a Donor</NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+            </Navbar.Collapse>
+            </Container>
+        </Navbar>
     </>
   );
 }

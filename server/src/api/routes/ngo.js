@@ -107,5 +107,6 @@ router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post("/send-confirmation-mail", ngoController.sendConfirmationMailToDonor);
 router.post("/create-donation-request",ngoController.createDonationRequest);
 router.post("/get-all-drives",ngoController.getAllDonationDrives);
+router.delete("/delete-donation-drive",ngoController.deleteDonationDrive)
 
 module.exports = router;
