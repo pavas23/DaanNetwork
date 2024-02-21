@@ -1,11 +1,10 @@
-import React from "react";
-import NGOsignup from "./components/Ngo/NgoSignup";
-import Home from "./components/Home/Home";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      <Home />
+      <Outlet />
     </>
   );
 }
