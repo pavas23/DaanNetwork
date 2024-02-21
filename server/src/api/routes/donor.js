@@ -291,4 +291,54 @@ router.post("/upload-images", upload.single("image"), donorController.uploadDona
  */
 router.get("/all-donation-drives",donorController.getAllDrives);
 
+
+
+/**
+ * @swagger
+ * /donor/my-donation-drives:
+ *   post:
+ *     summary: Donor can see all drives they have applied for
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                 donorEmailId: "rohit@gmail.com"
+ *     responses:
+ *       200:
+ *         description: Will get list of all donation drives they have applied to
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:                   
+ */
+router.post("/my-donation-drives",donorController.getAllAppliedDrives)
+
+/**
+ * @swagger
+ * /donor/delete-drive-application:
+ *   post:
+ *     summary: Donor can see all drives they have applied for
+ *     tags: [Donor]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                 donorEmailId: "rohit@gmail.com"
+ *                 donationDriveId: "65d39e352afc2a8626d64180"
+ *     responses:
+ *       200:
+ *         description: Will get list of all donation drives they have applied to
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:                   
+ */
+router.post("/delete-drive-application",donorController.deleteApplicationToDrive)
 module.exports = router;

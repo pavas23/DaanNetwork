@@ -392,5 +392,16 @@ module.exports.getAllDonationDrives = async (req, res) => {
 //delete donation drive
 //req = {ngoEmail,donationDriveId}
 module.exports.deleteDonationDrive = async (req,res) =>{
-  
+  const {ngoEmail,donationDriveId} = req.body
+  try{
+    var ngo = await Ngo.find({ emailId: ngoEmail });
+    if (ngo.length == 0)
+      return res
+        .status(400)
+        .json({ status: false, msg: "No ngo with this email" });
+    await NgoDonationRequest.deleteOne({_id:donationDriveId})
+    return res.status(200).json({status:true,msg:"successfully deleted"})
+  }catch(err){
+    return res.status(500).json({ status: false, msg: err });
+  }
 }

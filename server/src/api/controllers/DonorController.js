@@ -4,6 +4,8 @@ const UploadImage = require("../models/uploadImage");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
 const router = require("../routes");
 const path = require("path");
+const { monitorEventLoopDelay } = require("perf_hooks");
+const { builtinModules } = require("module");
 
 /** donor controller to create donor
  * req body : { name, emailId, contactNumber, address, password }
@@ -270,7 +272,7 @@ module.exports.getAllDrives = async (req, res) => {
     console.log(donation_drives);
     res.status(200).json({ status: true, drives: donation_drives });
   } catch (err) {
-    return res.send(500).json({ status: false, msg: "Internal Server Error" });
+    return res.status(500).json({ status: false, msg: "Internal Server Error" });
   }
 };
 
@@ -348,4 +350,73 @@ module.exports.deleteDonationRequest = async (req, res) => {
 }
 
 //delete application to donation drive
+//get donation drives donor has applied to 
+//req ={donorEmailId}
+module.exports.getAllAppliedDrives = async (req, res) => {
+  const { donorEmailId } = req.body
+  try {
+    var donor = await Donor.find({ emailId: donorEmailId })
+    if (donor.length == 0) return res.status(400).json({ status: false, msg: "No donor with this email" })
 
+    var donation_drives = await NgoDonationRequest.find({})
+      .populate("ngo")
+      .exec();
+    if (donation_drives.length == 0)
+      return res.status(200).json({ status: false, drives: [] });
+    //  console.log(donor[0]._id);
+    var myDonationDrives = []
+    for (let i = 0; i < donation_drives.length; i++) {
+      var myDons = donation_drives[i].donors.filter((item) => item.donor.equals(donor[0]._id))
+      // for (let j = 0; j < donation_drives[i].donors.length; j++) {
+      //   // console.log(donation_drives[i].donors[j].donor)
+
+      //   // console.log(donation_drives[i].donors[j].donor.equals(donor[0]._id))
+      //   if () {
+      //     myDons.push(donation_drives[i].donors[j])
+      //   }
+
+      
+
+      if(myDons.length>0){
+        myDonationDrives.push({
+          donationRequestNum:donation_drives[i].donationRequestNum,
+          createdAt:donation_drives[i].createdAt,
+          startDate:donation_drives[i].startDate,
+          endDate:donation_drives[i].endDate,
+          description:donation_drives[i].description,
+          ngo:donation_drives[i].ngo,
+          donors:myDons
+        })
+      }
+    }
+    res.status(200).json({ status: true, donationDrives: myDonationDrives })
+  } catch (err) {
+    return res.status(500).json({ status: false, msg: err });
+  }
+}
+
+//delete application to donation drive
+//req{donorEmailId,donationDriveId}
+module.exports.deleteApplicationToDrive = async (req,res)=>{
+  const { donorEmailId , donationDriveId} = req.body
+  try {
+    var donor = await Donor.find({ emailId: donorEmailId })
+    if (donor.length == 0) return res.status(400).json({ status: false, msg: "No donor with this email" })
+
+    var donation_drives = await NgoDonationRequest.find({_id:donationDriveId})
+      .populate("ngo")
+      .exec();
+    if (donation_drives.length == 0)
+      return res.status(200).json({ status: false, msg: "no donation req exists" });
+    var message = ""
+    var newDonors = donation_drives[0].donors.filter((item)=>!item.donor.equals(donor[0]._id))
+    if(newDonors.length===donation_drives[0].donors.length) message="You have no donations in this drive"
+    else message = "deleted successfully"
+    donation_drives[0].donors = newDonors
+    console.log(donation_drives[0].donors);
+    await donation_drives[0].save()
+    res.status(200).json({ status: true, msg: message })
+  } catch (err) {
+    return res.status(500).json({ status: false, msg: err });
+  }
+}
