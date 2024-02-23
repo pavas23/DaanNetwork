@@ -1,0 +1,19 @@
+#bg1{
+  background-image: url("../../images/donation.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 25vh;
+  padding: 8% 6% 4% 6%;
+  box-sizing: content-box;
+}
+
+.textwhite{
+    color: #fff;
+    font-size: 3.25rem;
+    line-height: 1.2;
+    text-transform: capitalize!important;
+    margin-bottom: 1.5rem!important;
+    font-family: "Bitter", serif;
+    font-weight: 900;
+}
+
