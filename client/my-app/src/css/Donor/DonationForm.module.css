@@ -1,0 +1,63 @@
+.form-container {
+    width: 80%;
+    margin: 8% auto auto 20%;
+    padding: 30px;
+    background-color: #e8e3e3;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container label {
+    display: inline-block;
+    padding: 1.5%;
+    margin: auto auto 10px auto;
+    font-weight: bold;
+    width: 50%;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
+
+.form-container input[name="description"] {
+    width: 200%;
+    height: 200px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
+
+.form-container button {
+    display: block;
+    width: 35%;
+    margin: auto;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+.form-header {
+    margin: 0% 2% 5% 2%;
+    text-align: center;
+}
