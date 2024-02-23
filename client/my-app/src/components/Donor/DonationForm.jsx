@@ -14,11 +14,49 @@ const DonationForm = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+    async function submitDonationRequest(formData) {
+        try {
+            const response = await fetch('/createDonationRequest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-    const handleSubmit = (e) => {
+            if (!response.ok) {
+                throw new Error('Failed to submit donation request');
+            }
+
+            const responseData = await response.json();
+            console.log(responseData);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    const createDonationRequestObject = (formData) => {
+        return {
+            donationRequestNum: 1, //TODO
+            quantity: formData.quantity,
+            numberDaysBeforeExpiry: formData.numberDaysBeforeExpiry,
+            createdAt: new Date().toISOString(),
+            description: formData.description,
+            images: [], //TODO
+            pickUpLocation: formData.pickUpLocation,
+            donor: {},   //TODO
+            accepted: false,
+            ngo: 'ngoId',   //TODO
+        };
+    };
+
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Do stuff
-        console.log(formData);
+        const donationRequestObject = createDonationRequestObject(formData);
+        console.log(donationRequestObject);
+        await submitDonationRequest(donationRequestObject);
     };
 
     return (
