@@ -1,0 +1,20 @@
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+.flex-child-form {
+    flex: 2;
+}
+
+.flex-child-text {
+    flex: 1;
+    margin: 5% 5% auto 5%
+}
+
+.donor-img {
+    width: 100%;
+    max-height: 50%;
+    object-fit: contain;
+}
