@@ -7,8 +7,11 @@ import styles from '../../css/Ngo/NgoNav.module.css'
 import { Link } from 'react-router-dom';
 const x="#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}"
 const NgoNavBar = () =>{
+    const logout = ()=>{
+        console.log("Logout clicked")
+    }
     return (
-        <>  
+        <div style={{backgroundColor:"#f6f6f6"}}>  
         <style>{x}</style>
         <Navbar collapseOnSelect expand="lg">
             <Container>
@@ -21,14 +24,14 @@ const NgoNavBar = () =>{
                 {/* <Nav.Link href='#contactPage' className={styles.nav_opt}></Nav.Link> */}
             </Nav>
             <Nav>
-            <Link className={styles.logout_btn} onClick={()=>{console.log("Hello")}}>
+            <Link className={styles.logout_btn} onClick={logout}>
                         Logout
                     </Link>
             </Nav>
             </Navbar.Collapse>
             </Container>
         </Navbar>
-    </>
+    </div >
     );
 }
 

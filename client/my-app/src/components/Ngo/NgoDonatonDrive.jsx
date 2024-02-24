@@ -3,18 +3,19 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
+// require("dotenv").config();
 
 let image = require("../../images/ddi.jpg");
-
+const baseUrl = "http://localhost:5004/"
 const NgoDonationDrive = () => {
   const [startDate, setStartDate] = useState();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    startDate: '',
-    endDate: '',
+    startDate: "",
+    endDate: "",
   });
-
+  const [flag, setFlag] = useState(0);
   const [items, setItems] = useState([{ item: "", quantity: 0 }]);
 
   const handleChange = (e) => {
@@ -52,33 +53,80 @@ const NgoDonationDrive = () => {
   const addItems = () => {
     setItems([...items, { item: "", quantity: 0 }]);
   };
-  const deleteItems = (index)=>{
-    let data = [...items]
-    if(data.length==1) return
-    data.splice(index,1)
-    setItems(data)
-  }
+  const deleteItems = (index) => {
+    let data = [...items];
+    if (data.length == 1) return;
+    data.splice(index, 1);
+    setItems(data);
+  };
   const handleItemChange = (index, event) => {
     let data = [...items];
     data[index][event.target.name] = event.target.value;
     setItems(data);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
+    if (
+      formData.startDate == null ||
+      formData.endDate == null ||
+      formData.name == "" ||
+      formData.endDate <= formData.startDate
+    ) {
+        console.log('idhar');
+      setFlag(1);
+      return;
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        console.log(typeof items[i].quantity);
+        if(typeof items[i].quantity===typeof "5")
+        items[i].quantity = parseInt(items[i].quantity)
+        console.log(typeof items[i].quantity);
+      if (items[i].name === "" || items[i].quantity === 0) {
+        console.log(items[i].name,items[i].quantity);
+        setFlag(1);
+        return;
+      }
+    }
     console.log(formData);
     var req = {
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        description:{
-            name:formData.name,
-            items: items,  
-            images:[],
-            brief : formData.description
-        },
-        ngoEmail: "pavas@kammo.com"
-    }
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      description: {
+        name: formData.name,
+        items: items,
+        images: [],
+        brief: formData.description,
+      },
+      ngoEmail: "pavasaahar@kammo.com",
+    };
     console.log(req);
+   try{
+    var resp  = await fetch(baseUrl+"ngo/create-donation-request", {
+        method: "POST",
+        body: JSON.stringify(req),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      });
+      var data = await resp.json()
+      console.log(data)
+   }catch(err){
+        console.log(err)
+   }
+
+    setFlag(0)
+    setItems([{
+        item: "", 
+        quantity:0
+    }])
+    setFormData({
+    name: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    })
   };
   return (
     <div>
@@ -101,7 +149,7 @@ const NgoDonationDrive = () => {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="name" className={styles.form_label}>
-                      Drive Name
+                      Drive Name *
                     </label>
                     <input
                       type="text"
@@ -118,7 +166,7 @@ const NgoDonationDrive = () => {
                       <div className="row mb-3">
                         <div className="col">
                           <label htmlFor="name" className={styles.form_label}>
-                            Item
+                            Item *
                           </label>
                           <input
                             type="text"
@@ -131,10 +179,10 @@ const NgoDonationDrive = () => {
                         </div>
                         <div className="col">
                           <label htmlFor="name" className={styles.form_label}>
-                            Quantity
+                            Quantity *
                           </label>
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             id="name"
                             name="quantity"
@@ -148,7 +196,9 @@ const NgoDonationDrive = () => {
                           style={{
                             width: "10%",
                             marginTop: "1.5rem",
-                            backgroundColor: "red",
+                            backgroundColor: "white",
+                            color:"red",
+                            fontSize:"1.2rem"
                           }}
                           onClick={deleteItems}
                         >
@@ -171,27 +221,21 @@ const NgoDonationDrive = () => {
 
                   <div className="row mb-3">
                     <div className="col">
-                      <label className="form-label">Start Date</label>
+                      <label className="form-label">Start Date *</label>
                       <Form.Control
                         type="date"
                         name="startDate"
-                        value={
-                          formData.startDate
-                           
-                        }
+                        value={formData.startDate}
                         onChange={handleStartDateChange}
                         min={new Date().toISOString().slice(0, 10)}
                       />
                     </div>
                     <div className="col">
-                      <label className="form-label">End Date</label>
+                      <label className="form-label">End Date *</label>
                       <Form.Control
                         type="date"
                         name="endDate"
-                        value={
-                          formData.endDate
-                         
-                        }
+                        value={formData.endDate}
                         onChange={handleEndDateChange}
                         min={new Date().toISOString().slice(0, 10)}
                       />
@@ -199,7 +243,7 @@ const NgoDonationDrive = () => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="message" className={styles.form_label}>
-                      Message
+                      Description
                     </label>
                     <textarea
                       className="form-control"
@@ -214,6 +258,9 @@ const NgoDonationDrive = () => {
                     Submit
                   </button>
                 </form>
+                {(flag) ? <div className="mb-3">
+                    <p style={{color:"red",fontWeight:"bold"}}>Please Fill all required fields</p>
+                </div> : <></>}
               </div>
             </div>
           </div>
