@@ -33,6 +33,9 @@ const donationSchema = new mongoose.Schema({
       },
     ],
     images: Array,
+    brief : {
+      type: String,
+    }
   },
   ngo: {
     type: mongoose.Schema.Types.ObjectId,
