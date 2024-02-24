@@ -63,7 +63,7 @@ const DonationForm = () => {
         <Fragment>
             <form className={styles['form-container']} onSubmit={handleSubmit}>
                 <h1 className={styles["form-header"]}>Donation Details</h1>
-                <label className={styles['form-label']}>
+                <label className={styles['form-label-half']}>
                     First Name:
                     <input
                         type="text"
@@ -74,7 +74,7 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
+                <label className={styles['form-label-half']}>
                     Last Name:
                     <input
                         type="text"
@@ -85,7 +85,7 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
+                <label className={styles['form-label-half']}>
                     Phone Number:
                     <input
                         type="text"
@@ -96,7 +96,18 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
+                <label className={styles['form-label-half']}>
+                    Email ID:
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={styles['form-input']}
+                        required
+                    />
+                </label>
+                <label className={styles['form-label-half']}>
                     Donation Quantity (in kg):
                     <input
                         type="text"
@@ -107,8 +118,8 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
-                    Number of Days Before Expiry:
+                <label className={styles['form-label-half']}>
+                    Weeks Before Expiry:
                     <input
                         type="number"
                         name="numberDaysBeforeExpiry"
@@ -118,7 +129,7 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
+                <label className={styles['form-label-full']}>
                     Pick Up Location:
                     <input
                         type="text"
@@ -129,16 +140,15 @@ const DonationForm = () => {
                         required
                     />
                 </label>
-                <label className={styles['form-label']}>
+                <button type="button" className={styles['form-address-button']}>Detect</button>
+                <label className={styles['form-label-full']}>
                     Donation Description:
-                    <input
-                        type="text"
+                    <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
                         className={styles['form-input']}
-                        required
-                    />
+                        required />
                 </label>
                 <button type="submit" className={styles['form-button']}>Submit Donation Request</button>
             </form>
