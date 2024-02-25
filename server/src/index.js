@@ -12,8 +12,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-app.set("view engine", "ejs");
-
 const PORT = process.env.PORT || 5004;
 
 // use express router

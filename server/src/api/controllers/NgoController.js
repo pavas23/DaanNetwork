@@ -6,59 +6,92 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+const bcrypt = require("bcrypt");
+
+
+var notifyNGORegistration = async (ngoName,emailId) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+  
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: emailId,
+    subject: "Welcome to Daan Network!!",
+    ngo: ngoName,
+    html: '<div><br /><div><div style="text-align: center; color: rgb(56, 80, 56)"><h1>Welcome to DaanNetwork!!</h1></div><div style="text-align: center; color: rgb(66, 103, 66)"><h2>Thank you for joining us in our mission to make the world a better place. We are excited to have you as a part of our community. We are looking forward to working with you and making a difference in the society.     </h2></div><div style="text-align: center; color: rgb(66, 103, 66)"><h3>At DaanNetwork, we understand the vital role NGOs play in addressing food insecurity and supporting vulnerable populations. That\'s why we\'re committed to providing you with a user-friendly platform that streamlines the process of securing food donations, enabling you to focus more of your time and resources on your invaluable work. As you embark on this journey with us, please know that our team is here to support you every step of the way. Whether you have questions, need assistance, or simply want to share your successes, we\'re just a message away.</h3></div><div><img src="cid:myimg" alt="DaanNetwork" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top:3%; margin-bottom:2%;"/></div></div><div style="margin-top:6%;"><h3 style="color: rgb(66, 103, 66);">Regards<br/>DaanNetwork Family<h3/><a href="" style="cursor: pointer; color:blue;">Click here to go to website.</a></div><br /><br /><br /><div style="color: red;">Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.</div></div>',
+    attachments: [{
+      filename: 'email_pic.jpg',
+      path: path.resolve(__dirname, '../../api/views/email_pic.jpg'),
+      cid: 'myimg'
+    }]
+  };
+
+  transporter.sendMail(mailOptions, (err, success) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
 
 /**
  * ngo controller to create ngo
- * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address }
+ * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address, gstnumber, regnumber}
  * res : { status:boolean, desc:string }
  */
-module.exports.createNgo = async (req, res) => {
-  try {
-    const {
-      name,
-      panNumber,
-      nameOfHead,
-      gender,
-      emailId,
-      password,
-      contactNumber,
-      website,
-      address,
-    } = req.body;
 
-    // check if ngo with this mail exists or not
-    const ngos = await Ngo.find({ emailId: emailId });
-    if (ngos.length != 0) {
-      return res
-        .status(400)
-        .json({ status: false, desc: "NGO with this email id already exists" });
+module.exports.addNGO = async (req, res) => {
+  const { name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address, gstnumber, regnumber }=req.body;
+
+  try{
+    var exists=await Ngo.find({emailId:emailId});
+    if(exists.length>0){
+      return res.status(400).json({status:false,desc:"Email is already being used!!"});
+    }
+    var exists=await Ngo.find({contactNumber:contactNumber});
+    if(exists.length>0){
+      return res.status(400).json({status:false,desc:"Contact Number is already being used!!"});
+    }
+    var exists=await Ngo.find({regnumber:regnumber});
+    if(exists.length>0){
+      return res.status(400).json({status:false,desc:"Please enter a valid registration number."});
     }
 
-    let ngo = await Ngo.create({
-      name: name,
-      panNumber: panNumber,
-      nameOfHead: nameOfHead,
-      gender: gender,
-      emailId: emailId,
-      password: password,
-      contactNumber: contactNumber,
-      website: website,
-      address: address,
-    });
+    var salt = await bcrypt.genSalt(10);
+    var hashPassword = await bcrypt.hash(password, salt);
+  
+    var newNGO=await Ngo.create({
+      name:name, 
+      panNumber:panNumber,
+      nameOfHead:nameOfHead,
+      gender:gender,
+      emailId:emailId,
+      password: hashPassword,
+      contactNumber:contactNumber,
+      website:website,
+      address:address,
+      gstnumber:gstnumber,
+      regnumber:regnumber});
 
-    console.log(ngo);
-    return res
-      .status(200)
-      .json({ status: true, desc: "NGO created successfully" });
-  } catch (error) {
-    if (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json({ status: false, desc: "Internal Server Error Occured" });
-    }
+    //send mail to ngo
+    notifyNGORegistration(name,emailId);
+    return res.status(201).json({status:true,desc:"NGO added successfully"});
   }
-};
+  catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
 
 /** ngo controller to see all pending donation requests along with donor details
  * req body : {}
@@ -304,13 +337,13 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
  * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
-  const { end, description, ngoEmail } = req.body;
+  const { startDate,endDate, description, ngoEmail } = req.body;
   console.log(description);
   //for now end is an int which will be added to current date
-  var someDate = new Date();
-  var numberOfDaysToAdd = end;
-  var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
-  var endDate = new Date(result);
+  // var someDate = new Date();
+  // var numberOfDaysToAdd = end;
+  // var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+  // var endDate = new Date(result);
 
   try {
     var ngo = await Ngo.find({ emailId: ngoEmail });
@@ -323,6 +356,7 @@ module.exports.createDonationRequest = async (req, res) => {
 
     var newDonation = await NgoDonationRequest.create({
       donationRequestNum: count + 1,
+      startDate:startDate,
       endDate: endDate,
       description: {
         name: description.name,
@@ -331,7 +365,7 @@ module.exports.createDonationRequest = async (req, res) => {
       },
       ngo: ngo[0]._id,
       donors: [],
-      startDate: Date.now(),
+      createdAt: Date.now(),
     });
     console.log(newDonation);
     res

@@ -20,25 +20,31 @@ const ngoSchema = new mongoose.Schema({
   emailId: {
     type: String,
     required: true,
-    unique: true,
-    match: /.+\@.+\..+/,
   },
   password: {
     type: String,
     required: true,
   },
   contactNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   website: {
     type: String,
-    required: true,
+    required: false,
   },
   address: {
     type: String,
     required: true,
   },
+  gstnumber:{
+    type: String,
+    required: false,
+  },
+  regnumber:{
+    type: String,
+    required: true,
+  }
 });
 
 const Ngo = mongoose.model("ngo", ngoSchema);
