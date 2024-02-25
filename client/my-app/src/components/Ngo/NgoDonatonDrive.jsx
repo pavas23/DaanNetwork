@@ -54,17 +54,20 @@ const NgoDonationDrive = () => {
   const addItems = () => {
     setItems([...items, { item: "", quantity: 0 }]);
   };
+
   const deleteItems = (index) => {
     let data = [...items];
     if (data.length == 1) return;
     data.splice(index, 1);
     setItems(data);
   };
+
   const handleItemChange = (index, event) => {
     let data = [...items];
     data[index][event.target.name] = event.target.value;
     setItems(data);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
@@ -112,7 +115,7 @@ const NgoDonationDrive = () => {
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-        },
+        }
       );
       var data = await resp.json();
       console.log(data);
@@ -134,6 +137,7 @@ const NgoDonationDrive = () => {
       endDate: "",
     });
   };
+
   return (
     <div>
       <NgoNavBar />
@@ -147,7 +151,7 @@ const NgoDonationDrive = () => {
               className="col-lg-6 col-md-8 col-sm-10"
               style={{ margin: "7% 0% 7% 0%" }}
             >
-              <img src={image} alt="placeholder" className={styles.img_fluid} />
+              {/* <img src={image} alt="placeholder" className={styles.img_fluid} /> */}
             </div>
             <div className="col-lg-6 col-md-8 col-sm-10">
               <div className={styles.form_container}>
@@ -164,6 +168,11 @@ const NgoDonationDrive = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      onKeyPress={(event) => {
+                        if (event.key === "Enter") {
+                          event.preventDefault();
+                        }
+                      }}
                     />
                   </div>
 
@@ -181,6 +190,11 @@ const NgoDonationDrive = () => {
                             name="item"
                             value={i.item}
                             onChange={(event) => handleItemChange(index, event)}
+                            onKeyPress={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                         </div>
                         <div className="col">
@@ -194,6 +208,11 @@ const NgoDonationDrive = () => {
                             name="quantity"
                             value={i.quantity}
                             onChange={(event) => handleItemChange(index, event)}
+                            onKeyPress={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                         </div>
                         <button
@@ -234,6 +253,11 @@ const NgoDonationDrive = () => {
                         value={formData.startDate}
                         onChange={handleStartDateChange}
                         min={new Date().toISOString().slice(0, 10)}
+                        onKeyPress={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                          }
+                        }}
                       />
                     </div>
                     <div className="col">
@@ -244,6 +268,11 @@ const NgoDonationDrive = () => {
                         value={formData.endDate}
                         onChange={handleEndDateChange}
                         min={new Date().toISOString().slice(0, 10)}
+                        onKeyPress={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                          }
+                        }}
                       />
                     </div>
                   </div>

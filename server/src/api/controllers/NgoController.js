@@ -42,12 +42,10 @@ var notifyNGORegistration = async (ngoName, emailId) => {
   });
 };
 
-/**
- * ngo controller to create ngo
+/** ngo controller to create ngo
  * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address, gstnumber, regnumber}
  * res : { status:boolean, desc:string }
  */
-
 module.exports.addNGO = async (req, res) => {
   const {
     name,

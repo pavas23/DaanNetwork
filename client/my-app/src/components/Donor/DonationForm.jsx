@@ -27,6 +27,26 @@ const DonationForm = () => {
     donorEmailId: mailId,
   });
 
+  const [flag, setFlag] = useState(0);
+  const [items, setItems] = useState([{ name: "", quantity: 0 }]);
+
+  const addItems = () => {
+    setItems([...items, { name: "", quantity: 0 }]);
+  };
+
+  const deleteItems = (index) => {
+    let data = [...items];
+    if (data.length == 1) return;
+    data.splice(index, 1);
+    setItems(data);
+  };
+
+  const handleItemChange = (index, event) => {
+    let data = [...items];
+    data[index][event.target.name] = event.target.value;
+    setItems(data);
+  };
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -36,6 +56,23 @@ const DonationForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (items.length === 0 || (items.length === 1 && items[0].quantity === 0)) {
+      setModalMessage(
+        `Could not send donation request: Item list can not be empty`
+      );
+      setShowModal(true);
+      return;
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      if (typeof items[i].quantity === typeof "1")
+        items[i].quantity = parseInt(items[i].quantity);
+      if (items[i].name === "" || items[i].quantity === 0) {
+        setFlag(1);
+        return;
+      }
+    }
 
     const response = await fetch(`${REACT_APP_APIURL}/donor/donation-request`, {
       method: "POST",
@@ -48,6 +85,7 @@ const DonationForm = () => {
         description: formData.description,
         pickUpLocation: formData.pickUpLocation,
         donorEmailId: formData.donorEmailId,
+        items: items,
       }),
     });
 
@@ -65,6 +103,7 @@ const DonationForm = () => {
         pickUpLocation: "",
         donorEmailId: mailId,
       });
+      setItems([{ name: "", quantity: 0 }]);
     }
   };
 
@@ -114,6 +153,11 @@ const DonationForm = () => {
                           value={formData.quantity}
                           onChange={handleChange}
                           required
+                          onKeyPress={(event) => {
+                            if (event.key === "Enter") {
+                              event.preventDefault();
+                            }
+                          }}
                         />
                       </div>
                       <div className="col-md-6">
@@ -125,11 +169,93 @@ const DonationForm = () => {
                           className="form-control"
                           id="numberDaysBeforeExpiry"
                           name="numberDaysBeforeExpiry"
+                          min="0"
                           value={formData.numberDaysBeforeExpiry}
                           onChange={handleChange}
                           required
+                          onKeyPress={(event) => {
+                            if (event.key === "Enter") {
+                              event.preventDefault();
+                            }
+                          }}
                         />
                       </div>
+                    </div>
+                    {items.map((i, index) => {
+                      return (
+                        <div className="row mb-3">
+                          <div className="col">
+                            <label htmlFor="name" className={styles.form_label}>
+                              Item
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="name"
+                              name="name"
+                              value={i.name}
+                              onChange={(event) =>
+                                handleItemChange(index, event)
+                              }
+                              onKeyPress={(event) => {
+                                if (event.key === "Enter") {
+                                  event.preventDefault();
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="col">
+                            <label htmlFor="name" className={styles.form_label}>
+                              Quantity (in kg)
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              id="quantity"
+                              name="quantity"
+                              min="0"
+                              value={i.quantity}
+                              onChange={(event) =>
+                                handleItemChange(index, event)
+                              }
+                              onKeyPress={(event) => {
+                                if (event.key === "Enter") {
+                                  event.preventDefault();
+                                }
+                              }}
+                            />
+                          </div>
+                          <button
+                            className={"btn " + styles.btn_secondary}
+                            type="button"
+                            style={{
+                              width: "10%",
+                              marginTop: "1.5rem",
+                              backgroundColor: "white",
+                              color: "red",
+                              fontSize: "1.2rem",
+                            }}
+                            onClick={deleteItems}
+                          >
+                            X
+                          </button>
+                        </div>
+                      );
+                    })}
+                    <div
+                      className="row mt-1 mb-1"
+                      style={{ justifyContent: "flex-end" }}
+                    >
+                      <button
+                        className={"btn " + styles.btn_secondary}
+                        id="button"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          addItems();
+                        }}
+                      >
+                        Add New Item
+                      </button>
                     </div>
                     <div className="mb-3">
                       <label htmlFor="message" className={styles.form_label}>

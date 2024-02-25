@@ -23,6 +23,16 @@ const foodDonationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  items:[
+    {
+      name:{
+        type: String,
+      },
+      quantity:{
+        type: Number,
+      }
+    }
+  ],
   // images:[
   //     {
   //         type:mongoose.Schema.Types.ObjectId,

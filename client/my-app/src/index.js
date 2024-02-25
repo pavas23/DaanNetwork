@@ -18,6 +18,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="ngo-signup" element={<NGOsignup />} />
       <Route path="donor-post" element={<DonationForm />} />
+      <Route path="ngo-drive" element={<NgoDonationDrive />} />
     </Route>,
   ),
 );

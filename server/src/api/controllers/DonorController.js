@@ -57,6 +57,7 @@ module.exports.createDonationRequest = async (req, res) => {
       description,
       pickUpLocation,
       donorEmailId,
+      items
     } = req.body;
 
     // finding donor by email id
@@ -83,6 +84,7 @@ module.exports.createDonationRequest = async (req, res) => {
       pickUpLocation: pickUpLocation,
       donor: donors[0]._id,
       accepted: false,
+      items: items,
     });
 
     console.log(foodDonation);
@@ -215,7 +217,7 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => {};
+var notifyNewDonorForDrive = async (drive, donor) => { };
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
