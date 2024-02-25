@@ -1,4 +1,4 @@
-import styles from '../../css/Ngo/NgoSignup.module.css';
+import styles from '../../css/Donor/DonorSignup.module.css';
 import React, { useState } from 'react';
 
 

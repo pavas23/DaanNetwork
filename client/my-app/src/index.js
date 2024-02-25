@@ -4,9 +4,9 @@ import App from './App';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './components/Home/Home';
 import NGOsignup from './components/Ngo/NgoSignup';
-import Donor from './components/Donor/Donor'
 import NgoDonationDrive from './components/Ngo/NgoDonatonDrive'
 import DonorSignup from './components/Donor/DonorSignup'
+import Donor from './components/Donor/DonationForm'
 
 
 const router = createBrowserRouter(
