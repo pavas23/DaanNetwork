@@ -1,88 +1,58 @@
-.form-container {
-    width: 80%;
-    margin: 8% auto auto 20%;
-    padding: 30px;
-    background-color: #6c6a6a58;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.333);
+.main_body {
+  background-color: #ffffff;
+  background-image: url("../../images/food-donor.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
 }
 
-.form-label-half {
-    padding: 1.5%;
-    margin: auto auto 10px auto;
-    font-weight: bold;
-    width: 50%;
+.container {
+  max-width: 90%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 30px;
 }
 
-.form-label-full {
-    padding: 1.5%;
-    margin: auto auto 10px auto;
-    font-weight: bold;
-    width: 75%;
+.form_label {
+  font-weight: bold;
 }
 
-.form-container input[type="text"],
-.form-container input[type="number"],
-.form-container input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #a3a3a3;
-    border-radius: 3px;
-    box-sizing: border-box;
-    border-radius: 10px;
-
+.btn_primary {
+  width: 100%;
+  background-color: #078534;
+  color: white;
 }
 
-.form-container textarea {
-    display: block;
-    width: 135%;
-    height: 200px;
-    padding: 2%;
-    margin-bottom: 15px;
-    border: 1px solid #a3a3a3;
-    border-radius: 3px;
-    box-sizing: border-box;
-    border-radius: 10px;
+.btn_primary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
 }
 
-.form-button {
-    display: block;
-    width: 45%;
-    margin: auto;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 10px;
-    border: 1px solid #888888;
+.form_container {
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.form-address-button {
-    display: inline;
-    width: 20%;
-    margin: auto auto auto 2%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 10px;
-    border: 1px solid #888888;
+.img_fluid {
+  max-width: 100%;
+  height: auto;
 }
 
-.form-container button:hover {
-    background-color: #45a049;
+.btn_secondary {
+  width: 30%;
+  background-color: #078534;
+  color: white;
+  text-align: center;
+  padding: 0;
 }
 
-.form-header {
-    margin: 0% 2% 5% 2%;
-    text-align: center;
+.btn_secondary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
 }
