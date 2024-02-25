@@ -337,13 +337,13 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
  * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
-  const { end, description, ngoEmail } = req.body;
+  const { startDate,endDate, description, ngoEmail } = req.body;
   console.log(description);
   //for now end is an int which will be added to current date
-  var someDate = new Date();
-  var numberOfDaysToAdd = end;
-  var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
-  var endDate = new Date(result);
+  // var someDate = new Date();
+  // var numberOfDaysToAdd = end;
+  // var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+  // var endDate = new Date(result);
 
   try {
     var ngo = await Ngo.find({ emailId: ngoEmail });
@@ -356,6 +356,7 @@ module.exports.createDonationRequest = async (req, res) => {
 
     var newDonation = await NgoDonationRequest.create({
       donationRequestNum: count + 1,
+      startDate:startDate,
       endDate: endDate,
       description: {
         name: description.name,
@@ -364,7 +365,7 @@ module.exports.createDonationRequest = async (req, res) => {
       },
       ngo: ngo[0]._id,
       donors: [],
-      startDate: Date.now(),
+      createdAt: Date.now(),
     });
     console.log(newDonation);
     res
