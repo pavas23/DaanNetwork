@@ -1,55 +1,59 @@
-.main_body{
-    background-color: #ffffff;
-    
+.main_body {
+  background-color: #ffffff;
 }
 
 .container {
-    max-width: 90%;
-    margin: auto;
-    border-radius: 10px;
-    padding: 30px;    
-    /* margin: 2rem; */
-    /* margin-bottom: 3rem; */
-  }
-  
-  .form_label {
-    font-weight: bold;
-  }
-  
-  .btn_primary {
-    width: 100%;
-    background-color: #078534;
-    color: white;
-  }
+  max-width: 90%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 30px;
+  /* margin: 2rem; */
+  /* margin-bottom: 3rem; */
+}
 
-  .btn_primary:hover{
-    background-color: rgb(27, 197, 86);
-    color: white;
-  }
+.form_label {
+  font-weight: bold;
+}
 
-  .form_container {
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
-    backdrop-filter: blur(10px); /* Apply blur effect */
-    padding: 20px; /* Adjust padding as needed */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  .img_fluid {
-    max-width: 100%;
-    height: auto;
-  }
+.btn_primary {
+  width: 100%;
+  background-color: #078534;
+  color: white;
+}
 
-  .btn_secondary {
-    width: 30%;
-    background-color: #078534;
-    color: white;
-    text-align: center;
-    padding: 0;
-  }
-  .btn_secondary:hover{
-    background-color: rgb(27, 197, 86);
-    color: white;
-  }
+.btn_primary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
+}
+
+.form_container {
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Semi-transparent white background */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  padding: 20px; /* Adjust padding as needed */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.img_fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn_secondary {
+  width: 30%;
+  background-color: #078534;
+  color: white;
+  text-align: center;
+  padding: 0;
+}
+.btn_secondary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
+}

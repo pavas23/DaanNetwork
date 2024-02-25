@@ -426,7 +426,7 @@ module.exports.deleteDonationRequest = async (req, res) => {
 /** delete application to donation drive
  * get donation drives donor has applied to
  * req = { donorEmailId }
- */ 
+ */
 module.exports.getAllAppliedDrives = async (req, res) => {
   const { donorEmailId } = req.body;
   try {
@@ -475,7 +475,7 @@ module.exports.getAllAppliedDrives = async (req, res) => {
 
 /** delete application to donation drive
  * req{ donorEmailId, donationDriveId }
- */ 
+ */
 module.exports.deleteApplicationToDrive = async (req, res) => {
   const { donorEmailId, donationDriveId } = req.body;
   try {

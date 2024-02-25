@@ -104,7 +104,10 @@ router.post("/create-ngo", ngoController.addNGO);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
-router.post("/send-confirmation-mail", ngoController.sendConfirmationMailToDonor);
+router.post(
+  "/send-confirmation-mail",
+  ngoController.sendConfirmationMailToDonor,
+);
 router.post("/create-donation-request", ngoController.createDonationRequest);
 router.post("/get-all-drives", ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
