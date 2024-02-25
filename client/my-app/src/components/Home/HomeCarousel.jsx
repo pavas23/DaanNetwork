@@ -31,9 +31,11 @@ function HomeCarousel() {
                     <div className={styles.slideTextOne}>Your Extra Food is Someone's Daily Meal.</div>
                     <div className={styles.slideTextTwo}>Join Us Now!</div>
                 </div>
+                <Link to='/donor-signup' style={{textDecoration:"none"}}>
                 <form className={styles.button}>
                     <button className='btn btn-lg' type='submit' id={styles.carousel_button}>Donate Now</button>
                 </form>
+                </Link>
             </div>
         </div>
       </Carousel.Item>

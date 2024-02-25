@@ -6,12 +6,16 @@ import Home from './components/Home/Home';
 import NGOsignup from './components/Ngo/NgoSignup';
 import Donor from './components/Donor/Donor'
 import NgoDonationDrive from './components/Ngo/NgoDonatonDrive'
+import DonorSignup from './components/Donor/DonorSignup'
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index element={<Home />} />
       <Route path='ngo-signup' element={<NGOsignup />} />
       <Route path='donor-post' element={<Donor />} />
+      <Route path='donor-signup' element={<DonorSignup />} />
     </Route>
   )
 )
