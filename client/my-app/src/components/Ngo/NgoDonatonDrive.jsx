@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
-// require("dotenv").config();
 
 let image = require("../../images/ddi.jpg");
-const baseUrl = "http://localhost:5004/"
+const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
 const NgoDonationDrive = () => {
   const [startDate, setStartDate] = useState();
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ const NgoDonationDrive = () => {
     startDate: "",
     endDate: "",
   });
+
   const [flag, setFlag] = useState(0);
   const [items, setItems] = useState([{ item: "", quantity: 0 }]);
 
@@ -53,17 +54,20 @@ const NgoDonationDrive = () => {
   const addItems = () => {
     setItems([...items, { item: "", quantity: 0 }]);
   };
+
   const deleteItems = (index) => {
     let data = [...items];
     if (data.length == 1) return;
     data.splice(index, 1);
     setItems(data);
   };
+
   const handleItemChange = (index, event) => {
     let data = [...items];
     data[index][event.target.name] = event.target.value;
     setItems(data);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
@@ -73,18 +77,18 @@ const NgoDonationDrive = () => {
       formData.name == "" ||
       formData.endDate <= formData.startDate
     ) {
-        console.log('idhar');
+      console.log("idhar");
       setFlag(1);
       return;
     }
 
     for (let i = 0; i < items.length; i++) {
-        console.log(typeof items[i].quantity);
-        if(typeof items[i].quantity===typeof "5")
-        items[i].quantity = parseInt(items[i].quantity)
-        console.log(typeof items[i].quantity);
+      console.log(typeof items[i].quantity);
+      if (typeof items[i].quantity === typeof "5")
+        items[i].quantity = parseInt(items[i].quantity);
+      console.log(typeof items[i].quantity);
       if (items[i].name === "" || items[i].quantity === 0) {
-        console.log(items[i].name,items[i].quantity);
+        console.log(items[i].name, items[i].quantity);
         setFlag(1);
         return;
       }
@@ -102,32 +106,38 @@ const NgoDonationDrive = () => {
       ngoEmail: "pavasaahar@kammo.com",
     };
     console.log(req);
-   try{
-    var resp  = await fetch(baseUrl+"ngo/create-donation-request", {
-        method: "POST",
-        body: JSON.stringify(req),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
+    try {
+      var resp = await fetch(
+        `${REACT_APP_APIURL}/ngo/create-donation-request`,
+        {
+          method: "POST",
+          body: JSON.stringify(req),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
         }
-      });
-      var data = await resp.json()
-      console.log(data)
-   }catch(err){
-        console.log(err)
-   }
+      );
+      var data = await resp.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
 
-    setFlag(0)
-    setItems([{
-        item: "", 
-        quantity:0
-    }])
+    setFlag(0);
+    setItems([
+      {
+        item: "",
+        quantity: 0,
+      },
+    ]);
     setFormData({
-    name: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-    })
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+    });
   };
+
   return (
     <div>
       <NgoNavBar />
@@ -141,7 +151,7 @@ const NgoDonationDrive = () => {
               className="col-lg-6 col-md-8 col-sm-10"
               style={{ margin: "7% 0% 7% 0%" }}
             >
-              <img src={image} alt="placeholder" className={styles.img_fluid} />
+              {/* <img src={image} alt="placeholder" className={styles.img_fluid} /> */}
             </div>
             <div className="col-lg-6 col-md-8 col-sm-10">
               <div className={styles.form_container}>
@@ -158,6 +168,11 @@ const NgoDonationDrive = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      onKeyPress={(event) => {
+                        if (event.key === "Enter") {
+                          event.preventDefault();
+                        }
+                      }}
                     />
                   </div>
 
@@ -175,6 +190,11 @@ const NgoDonationDrive = () => {
                             name="item"
                             value={i.item}
                             onChange={(event) => handleItemChange(index, event)}
+                            onKeyPress={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                         </div>
                         <div className="col">
@@ -188,6 +208,11 @@ const NgoDonationDrive = () => {
                             name="quantity"
                             value={i.quantity}
                             onChange={(event) => handleItemChange(index, event)}
+                            onKeyPress={(event) => {
+                              if (event.key === "Enter") {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                         </div>
                         <button
@@ -197,8 +222,8 @@ const NgoDonationDrive = () => {
                             width: "10%",
                             marginTop: "1.5rem",
                             backgroundColor: "white",
-                            color:"red",
-                            fontSize:"1.2rem"
+                            color: "red",
+                            fontSize: "1.2rem",
                           }}
                           onClick={deleteItems}
                         >
@@ -228,6 +253,11 @@ const NgoDonationDrive = () => {
                         value={formData.startDate}
                         onChange={handleStartDateChange}
                         min={new Date().toISOString().slice(0, 10)}
+                        onKeyPress={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                          }
+                        }}
                       />
                     </div>
                     <div className="col">
@@ -238,6 +268,11 @@ const NgoDonationDrive = () => {
                         value={formData.endDate}
                         onChange={handleEndDateChange}
                         min={new Date().toISOString().slice(0, 10)}
+                        onKeyPress={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -258,9 +293,15 @@ const NgoDonationDrive = () => {
                     Submit
                   </button>
                 </form>
-                {(flag) ? <div className="mb-3">
-                    <p style={{color:"red",fontWeight:"bold"}}>Please Fill all required fields</p>
-                </div> : <></>}
+                {flag ? (
+                  <div className="mb-3">
+                    <p style={{ color: "red", fontWeight: "bold" }}>
+                      Please Fill all required fields
+                    </p>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

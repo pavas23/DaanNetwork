@@ -37,14 +37,14 @@ const ngoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gstnumber:{
+  gstnumber: {
     type: String,
     required: false,
   },
-  regnumber:{
+  regnumber: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const Ngo = mongoose.model("ngo", ngoSchema);

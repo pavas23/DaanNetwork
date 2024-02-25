@@ -11,7 +11,7 @@ import DonorSignup from './components/Donor/DonorSignup'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App />}>
+    <Route path="/" element={<App />}>
       <Route index element={<Home />} />
       <Route path='ngo-signup' element={<NGOsignup />} />
       <Route path='donor-post' element={<Donor />} />
@@ -20,7 +20,5 @@ const router = createBrowserRouter(
   )
 )
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <RouterProvider router={router} />
-);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<RouterProvider router={router} />);

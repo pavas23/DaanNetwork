@@ -1,77 +1,78 @@
-.carousel_body{
-    height: 91.2vh;
-    display: flex;
-    align-items: right;
+.carousel_body {
+  height: 91.2vh;
+  display: flex;
+  align-items: right;
 }
 
-.carousel_img1{
-    width:65%;
-    background-image: url('../../images/Daan.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
+.carousel_img1 {
+  width: 65%;
+  background-image: url("../../images/Daan.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.carousel_img2{
-    width:65%;
-    background-image: url('../../images/childrenSmiling.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    filter: blur(1px);
-}
-.carousel_text{
-    width: 45%;
-    background-color:#b2ed9e;
+.carousel_img2 {
+  width: 65%;
+  background-image: url("../../images/childrenSmiling.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(1px);
 }
 
-.slideTextOne{
-    font-size: 240%;
-    color: #0D2F1B;
-    margin-top: 15%;
-    margin-left: 10%;
-    margin-right: 10%;
-}
-.slideTextTwo{
-    font-size: 220%;
-    color: #0D2F1B;
-    margin-top: 3%;
-    margin-left: 10%;
-    margin-right: 10%;
+.carousel_text {
+  width: 45%;
+  background-color: #b2ed9e;
 }
 
-.button{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20%;
+.slideTextOne {
+  font-size: 240%;
+  color: #0d2f1b;
+  margin-top: 15%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-#carousel_button{
-    background-color: #0D2F1B;
-    color: white;
-    padding: 2%;
-    font-size: 180%;
-    border-radius: 0.7rem;    
-    cursor: pointer;
+.slideTextTwo {
+  font-size: 220%;
+  color: #0d2f1b;
+  margin-top: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20%;
+}
+
+#carousel_button {
+  background-color: #0d2f1b;
+  color: white;
+  padding: 2%;
+  font-size: 180%;
+  border-radius: 0.7rem;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
-    .carousel_body{
-        height: 40vh;
-        display: flex;
-        align-items: right;
-    }
-    .slideTextOne{
-        font-size: 105%;
-    }
-    .slideTextTwo{
-        font-size: 105%;
-    }
-    .button{
-        margin-top: 15%;
-    }
-    #carousel_button{
-        font-size: 120%;
-        border-radius: 0.5rem;
-    }
+  .carousel_body {
+    height: 40vh;
+    display: flex;
+    align-items: right;
+  }
+  .slideTextOne {
+    font-size: 105%;
+  }
+  .slideTextTwo {
+    font-size: 105%;
+  }
+  .button {
+    margin-top: 15%;
+  }
+  #carousel_button {
+    font-size: 120%;
+    border-radius: 0.5rem;
+  }
 }
-

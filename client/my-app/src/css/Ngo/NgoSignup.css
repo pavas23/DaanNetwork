@@ -1,15 +1,16 @@
 body {
-  margin: 0;
-}
-
-.background_box {
   background-image: url("../../images/signup_bg_1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 115vh;
-  padding: 8% 6% 4% 6%;
-  box-sizing: content-box;
+  margin: 0;
+  height: 100vh;
+  padding: 5%;
+}
+
+html {
+  margin: 0;
+  padding: 2%;
 }
 
 .signup_box {
@@ -19,11 +20,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 10%;
+  margin-top: 7%;
+  margin-bottom: 6%;
   border: solid 4px #213f17;
   padding: 1.5% 2% 1.5% 2%;
   border-radius: 2rem;
-  box-sizing: content-box;
 }
 
 .upload_btn {
@@ -32,7 +33,6 @@ body {
   font-weight: bold;
   background-color: #195406;
   color: white;
-  box-sizing: content-box;
 }
 
 .submit_btn {
@@ -45,7 +45,6 @@ body {
   transition:
     box-shadow 0.3s,
     border-radius 0.3s;
-  box-sizing: content-box;
 }
 
 .submit_btn:hover {
@@ -57,12 +56,10 @@ body {
 
 .signup_title {
   font-size: 2.1rem;
-  font-family: "Times New Roman", Times, serif;
   color: #213f17;
   width: 100%;
   text-align: center;
   font-weight: bold;
-  box-sizing: content-box;
 }
 
 .signup_form {
@@ -72,7 +69,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-sizing: content-box;
 }
 .row {
   margin-top: 2.5%;
@@ -80,23 +76,19 @@ body {
   overflow: hidden;
   display: flex;
   justify-content: space-evenly;
-  box-sizing: content-box;
 }
 
 .signup_text {
   font-size: 1.2rem;
   display: inline-block;
-  font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   color: #0b7731;
   width: 50%;
-  box-sizing: content-box;
 }
 
 .signup_input_element {
   width: 50%;
   display: inline-block;
-  box-sizing: content-box;
 }
 
 .signup_input {
@@ -107,9 +99,6 @@ body {
   border-radius: 0.5rem;
   padding: 1% 2% 1% 2%;
   font-size: 0.9rem;
-  box-sizing: content-box;
-  line-height: normal;
-  line-height: normal;
 }
 
 .signup_select {
@@ -119,7 +108,6 @@ body {
   margin-left: 6%;
   padding: 1% 2% 1% 2%;
   font-size: 0.9rem;
-  box-sizing: content-box;
 }
 
 .signup_textarea {
@@ -132,20 +120,16 @@ body {
   font-size: 0.9rem;
   resize: none;
   height: 4rem;
-  box-sizing: content-box;
-  line-height: normal;
 }
 
 .input_file {
   height: 2rem;
-  width: 80%;
+  width: 70%;
   margin-left: 6%;
   padding: 1% 2% 1% 2%;
   font-size: 0.9rem;
   font-weight: bold;
   color: #0b7731;
-  box-sizing: content-box;
-  line-height: normal;
 }
 
 .input_file::file-selector-button {
@@ -155,35 +139,15 @@ body {
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: 0.5rem;
   font-weight: bold;
-  box-sizing: content-box;
-  line-height: normal;
 }
 
 .input_file::file-selector-button:hover {
   background-color: black;
 }
 
-.errormessage {
-  box-sizing: content-box;
-  line-height: normal;
-  margin-top: 1%;
-  color: red;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
 @media (max-width: 600px) {
   .signup_box {
     width: 85%;
-  }
-  .submit_btn {
-    margin-top: 2%;
-    height: 1.7rem;
-    width: 3.5rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-bottom: 2%;
   }
   .signup_title {
     font-size: 1.5rem;
@@ -194,25 +158,16 @@ body {
   .signup_input {
     height: 1.2rem;
     font-size: 0.8rem;
-    box-sizing: content-box;
-    line-height: normal;
   }
   .signup_select {
     height: 1.5rem;
     font-size: 0.8rem;
-    box-sizing: content-box;
-    line-height: normal;
   }
   .input_file {
     height: 1.5rem;
-    font-size: 0.7rem;
-    box-sizing: content-box;
-    line-height: normal;
+    font-size: 0.8rem;
   }
   .input_file::file-selector-button {
-    font-size: 0.7rem;
     padding: 0.4rem;
-    box-sizing: content-box;
-    line-height: normal;
   }
 }

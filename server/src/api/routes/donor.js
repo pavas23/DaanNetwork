@@ -137,7 +137,7 @@ router.post("/create-donor", donorController.createDonor);
  */
 router.post("/donation-request", donorController.createDonationRequest);
 
-/** 
+/**
  * @swagger
  * /donor/delete-donation-request:
  *  delete:
@@ -158,7 +158,10 @@ router.post("/donation-request", donorController.createDonationRequest);
  *               items:
  *                 $ref: '#/components/schemas/FoodDonation'
  */
-router.delete("/delete-donation-request",donorController.deleteDonationRequest);
+router.delete(
+  "/delete-donation-request",
+  donorController.deleteDonationRequest,
+);
 
 /**
  * @swagger
@@ -182,7 +185,10 @@ router.delete("/delete-donation-request",donorController.deleteDonationRequest);
  *               type: array
  *               items:
  */
-router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonationRequests);
+router.post(
+  "/my-accepted-donation-requests",
+  donorController.getAllAcceptedDonationRequests,
+);
 
 /**
  * @swagger
@@ -226,9 +232,9 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
  *           application/json:
  *             schema:
  *               type: array
- *               items:                   
+ *               items:
  */
-router.post('/get-donation-history',donorController.getAllDonations);
+router.post("/get-donation-history", donorController.getAllDonations);
 
 /**
  * @swagger
@@ -245,12 +251,12 @@ router.post('/get-donation-history',donorController.getAllDonations);
  *                 donorEmailId: "rohit@gmail.com"
  *                 donationRequestId: "65d39e352afc2a8626d64180"
  *                 donationDetails:
- *                    items: 
- *                      name: "Curry Powder"  
+ *                    items:
+ *                      name: "Curry Powder"
  *                      quantity: 100
  *                    pickUpDate: "2024-02-28T18:07:59.741Z"
  *                    pickUpAddress: "BITS GOA"
- *                    description: "Timepass"                 
+ *                    description: "Timepass"
  *     responses:
  *       200:
  *         description: Will get list of all donation requests
@@ -261,7 +267,7 @@ router.post('/get-donation-history',donorController.getAllDonations);
  *               items:
  *                  $ref: '#/components/schemas/NgoDonationRequest'
  */
-router.post('/apply-for-donation-drive',donorController.applyForDonationDrive);
+router.post("/apply-for-donation-drive", donorController.applyForDonationDrive);
 
 /**
  * @swagger
@@ -283,15 +289,17 @@ router.post('/apply-for-donation-drive',donorController.applyForDonationDrive);
  *               type: array
  *               items:
  */
-router.post("/upload-images", upload.single("image"), donorController.uploadDonationImages);
+router.post(
+  "/upload-images",
+  upload.single("image"),
+  donorController.uploadDonationImages,
+);
 
 /**
- * 
- * 
+ *
+ *
  */
-router.get("/all-donation-drives",donorController.getAllDrives);
-
-
+router.get("/all-donation-drives", donorController.getAllDrives);
 
 /**
  * @swagger
@@ -313,9 +321,9 @@ router.get("/all-donation-drives",donorController.getAllDrives);
  *           application/json:
  *             schema:
  *               type: array
- *               items:                   
+ *               items:
  */
-router.post("/my-donation-drives",donorController.getAllAppliedDrives)
+router.post("/my-donation-drives", donorController.getAllAppliedDrives);
 
 /**
  * @swagger
@@ -338,7 +346,10 @@ router.post("/my-donation-drives",donorController.getAllAppliedDrives)
  *           application/json:
  *             schema:
  *               type: array
- *               items:                   
+ *               items:
  */
-router.post("/delete-drive-application",donorController.deleteApplicationToDrive)
+router.post(
+  "/delete-drive-application",
+  donorController.deleteApplicationToDrive,
+);
 module.exports = router;
