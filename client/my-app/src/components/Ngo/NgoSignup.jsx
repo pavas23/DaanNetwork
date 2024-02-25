@@ -1,8 +1,9 @@
 import styles from '../../css/Ngo/NgoSignup.module.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 function NGOsignup() {
+	
 
 	const initialValues={
 		ngo_name:"",
@@ -16,34 +17,63 @@ function NGOsignup() {
 		address:"",
 		gst:"",
 		reg_no:"",
-		file:0	
+		file:""	
 	}
 
 	const [formValues,setFormValues]=useState(initialValues);
-	const [formErrors,setFormErrors]=useState({});
+	const [formErrors,setFormErrors]=useState({error:" "});
 	const [isSubmit,setIsSubmit]=useState(false);
-	const [file,setFile]=useState();
 
 	const handleChange=(e)=>{
 		setFormValues({...formValues,[e.target.name]:e.target.value});
 	}
 
-	const handleSubmit=(e)=>{
+	useEffect(()=>{submitRequest()},[formErrors]);
+
+	const handleSubmit=async (e)=>{
 		e.preventDefault();
 		setFormErrors(validateForm(formValues));
-		setIsSubmit(true);
+	}
+
+	const submitRequest=async()=>{
+		if(formErrors.error===""){
+		var res=await fetch('http://localhost:5004/ngo/create-ngo',{
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				body:JSON.stringify({name:formValues.ngo_name, 
+				panNumber:formValues.ngo_pan, 
+				nameOfHead:formValues.ngo_head,
+				gender:formValues.gender, 
+				emailId:formValues.email,
+				password:formValues.password, 
+				contactNumber:formValues.contact, 
+				website:formValues.website, 
+				address:formValues.address, 
+				gstnumber:formValues.gst, 
+				regnumber:formValues.reg_no})
+			}
+			);
+			res=await res.json();
+			if(!res.status){
+				setFormErrors({error:res.desc});
+			}else{
+				setFormValues(initialValues);
+			}
+		}
 	}
 
 	const handleUpload=(e)=>{
 		e.preventDefault();
-		setFile(e.target.files[0]);
-		formValues.file+=1;
+		formValues.file=e.target.files[0];
 	}
 	
 	const validateForm=(values)=>{
-		const errors={};
+		const errors={error:""};
 		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/i;
-		if(!values.file){
+		if(values.file===""){
+			console.log("file");
 			errors["error"]="Please upload the registration certificate!";
 			return errors;
 		}
