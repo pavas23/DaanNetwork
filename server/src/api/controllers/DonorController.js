@@ -12,32 +12,121 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const Ngo = require("../models/ngo");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+const bcrypt = require("bcrypt");
+
+
+var notifyDonorRegistration = async (name, emailId) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: emailId,
+    name: name,
+    subject: "Welcome to Daan Network!!",
+    html: `<div>
+    <br/>
+    <h3 style="color:rgb(56, 80, 56);">Dear ${name},</h3>
+    </div>
+    <div style="text-align: center; color: rgb(56, 80, 56)">
+        <h1>Welcome to DaanNetwork!!</h1>
+    </div>
+    <div style="text-align: center; color: rgb(66, 103, 66)">
+        <h2>Thank you for joining us in our mission to make the world a better place. We are excited 
+            to have you as a part of our community. We are looking forward to working with you and making 
+            a difference in the society.
+        </h2>
+    </div>
+    <div style="text-align: center; color: rgb(66, 103, 66)">
+        <h3>Your commitment to supporting our NGO's mission is truly appreciated. By connecting with us, 
+            you're helping to bridge the gap between surplus food and those in need. Your generosity will 
+            directly impact communities by ensuring that nutritious meals reach those who need them most. 
+            Together, we can make a significant difference in combating hunger and food insecurity. We look forward 
+            to partnering with you to create positive change. Thank you for your support!
+        </h3>
+    </div>
+    <div>
+        <img src="cid:myimg" alt="DaanNetwork" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top:3%; margin-bottom:2%;"/>
+    </div>
+    <div style="margin-top:6%;">
+        <h3 style="color: rgb(66, 103, 66);">Regards<br/>DaanNetwork Family<h3/>
+        <a href="" style="cursor: pointer; color:blue;">Click here to go to website.</a>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div style="color: red;">
+      Note: Please do not reply directly to this e-mail. This e-mail was sent
+      from a notification-only address that cannot accept incoming e-mail.
+    </div>
+  </div> `,
+    attachments: [
+      {
+        filename: "donor_email_pic.jpg",
+        path: path.resolve(__dirname, "../../api/views/donor_email_pic.jpg"),
+        cid: "myimg",
+      },
+    ],
+  };
+
+  transporter.sendMail(mailOptions, (err, success) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+};
+
 
 /** donor controller to create donor
- * req body : { name, emailId, contactNumber, address, password }
+ * req body : { name, phone, alt_phone, emailId, birthdate, password, address, city, state, zip_code, gender, nationality}
  * res : {status:boolean,desc:string}
  */
 module.exports.createDonor = async (req, res) => {
   try {
-    const { name, emailId, contactNumber, address, password } = req.body;
+    const { name, phone, alt_phone, emailId, birthdate, password, address, city, state, zip_code, gender, nationality} = req.body;
 
     // check if donor with this email already exists or not
-    const donors = await Donor.find({ emailId: emailId });
+    var donors = await Donor.find({ emailId: emailId });
     if (donors.length != 0) {
       return res.status(400).json({
         status: false,
-        desc: "Donor already exists with this mail id",
+        desc: "Donor already exists with this Email!!",
       });
     }
+    var donors =await Donor.find({phone:phone});
+    if(donors.length!=0){
+      return res.status(400).json({
+        status: false,
+        desc: "Donor already exists with this Contact Number!!",
+      });
+    }
+    
+    var salt = await bcrypt.genSalt(10);
+    var hashPassword = await bcrypt.hash(password, salt);
 
-    let donor = await Donor.create({
+    let newDonor = await Donor.create({
       name: name,
+      phone: phone,
+      alt_phone: alt_phone,
       emailId: emailId,
-      contactNumber: contactNumber,
+      birthdate: birthdate,
       address: address,
-      password: password,
+      gender: gender,
+      password: hashPassword,
+      city: city,
+      state: state,
+      zip_code: zip_code,
+      nationality: nationality,
     });
-    console.log(donor);
+    notifyDonorRegistration(name, emailId);
     res.status(200).json({ status: true, desc: "Donor created successfully" });
   } catch (error) {
     console.log(error);

@@ -1,27 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
-import Home from "./components/Home/Home";
-import NGOsignup from "./components/Ngo/NgoSignup";
-import DonationForm from "./components/Donor/DonationForm";
-import NgoDonationDrive from "./components/Ngo/NgoDonatonDrive";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import Home from './components/Home/Home';
+import NGOsignup from './components/Ngo/NgoSignup';
+import NgoDonationDrive from './components/Ngo/NgoDonatonDrive'
+import DonorSignup from './components/Donor/DonorSignup'
+import Donor from './components/Donor/DonationForm'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="ngo-signup" element={<NGOsignup />} />
-      <Route path="donor-post" element={<DonationForm />} />
-      <Route path="ngo-drive" element={<NgoDonationDrive />} />
-    </Route>,
-  ),
-);
+      <Route path='ngo-signup' element={<NGOsignup />} />
+      <Route path='donor-post' element={<Donor />} />
+      <Route path='donor-signup' element={<DonorSignup />} />
+    </Route>
+  )
+)
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={router} />);
