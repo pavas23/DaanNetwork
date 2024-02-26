@@ -1,7 +1,6 @@
 const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
 const UploadImage = require("../models/uploadImage");
-const uploadFile = require("../middlewares/uploadFile");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
 const router = require("../routes");
 const mongoose = require("mongoose");
@@ -13,7 +12,6 @@ const hbs = require("nodemailer-express-handlebars");
 const Ngo = require("../models/ngo");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
-
 
 var notifyDonorRegistration = async (name, emailId) => {
   let transporter = nodemailer.createTransport({
@@ -84,14 +82,27 @@ var notifyDonorRegistration = async (name, emailId) => {
   });
 };
 
-
 /** donor controller to create donor
- * req body : { name, phone, alt_phone, emailId, birthdate, password, address, city, state, zip_code, gender, nationality}
- * res : {status:boolean,desc:string}
+ * req body : { name, phone, alt_phone, emailId, birthdate, password, address, city, state, zip_code, gender,
+ * nationality}
+ * res : { status:boolean,desc:string }
  */
 module.exports.createDonor = async (req, res) => {
   try {
-    const { name, phone, alt_phone, emailId, birthdate, password, address, city, state, zip_code, gender, nationality} = req.body;
+    const {
+      name,
+      phone,
+      alt_phone,
+      emailId,
+      birthdate,
+      password,
+      address,
+      city,
+      state,
+      zip_code,
+      gender,
+      nationality,
+    } = req.body;
 
     // check if donor with this email already exists or not
     var donors = await Donor.find({ emailId: emailId });
@@ -101,14 +112,14 @@ module.exports.createDonor = async (req, res) => {
         desc: "Donor already exists with this Email!!",
       });
     }
-    var donors =await Donor.find({phone:phone});
-    if(donors.length!=0){
+    var donors = await Donor.find({ phone: phone });
+    if (donors.length != 0) {
       return res.status(400).json({
         status: false,
         desc: "Donor already exists with this Contact Number!!",
       });
     }
-    
+
     var salt = await bcrypt.genSalt(10);
     var hashPassword = await bcrypt.hash(password, salt);
 
@@ -148,7 +159,7 @@ module.exports.createDonationRequest = async (req, res) => {
       description,
       pickUpLocation,
       donorEmailId,
-      items
+      items,
     } = req.body;
 
     // finding donor by email id
@@ -308,7 +319,7 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => { };
+var notifyNewDonorForDrive = async (drive, donor) => {};
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
@@ -357,7 +368,8 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
 };
 
 /** donor controller to apply for donation drive created by ngo
- * req : {donorEmailId , donationDetails, donationRequestId (i think this will be enough as we dont need  * ngo id we can extract ngo id from the donation request)}
+ * req : {donorEmailId , donationDetails, donationRequestId (i think this will be enough as we dont need
+ * ngo id we can extract ngo id from the donation request)}
  *   donationDetails: {
  *      items: Array,
  *      pickUpDate: Date,
@@ -567,7 +579,8 @@ module.exports.getAllAppliedDrives = async (req, res) => {
 };
 
 /** delete application to donation drive
- * req{ donorEmailId, donationDriveId }
+ * req body: { donorEmailId, donationDriveId }
+ * res : { status:boolean, desc:string }
  */
 module.exports.deleteApplicationToDrive = async (req, res) => {
   const { donorEmailId, donationDriveId } = req.body;

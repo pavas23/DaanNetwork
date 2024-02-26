@@ -115,7 +115,7 @@ const NgoDonationDrive = () => {
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-        }
+        },
       );
       var data = await resp.json();
       console.log(data);

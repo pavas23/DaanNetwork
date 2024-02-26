@@ -462,4 +462,3 @@ module.exports.deleteDonationDrive = async (req, res) => {
     return res.status(500).json({ status: false, msg: err });
   }
 };
-

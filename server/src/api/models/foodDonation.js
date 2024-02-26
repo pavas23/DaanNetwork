@@ -23,15 +23,15 @@ const foodDonationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  items:[
+  items: [
     {
-      name:{
+      name: {
         type: String,
       },
-      quantity:{
+      quantity: {
         type: Number,
-      }
-    }
+      },
+    },
   ],
   // images:[
   //     {

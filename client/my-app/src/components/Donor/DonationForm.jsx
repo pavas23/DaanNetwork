@@ -70,7 +70,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         "Pick up date can not be null !",
-        "error"
+        "error",
       );
       return;
     }
@@ -79,7 +79,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         "Item list can not be empty !",
-        "error"
+        "error",
       );
       return;
     }

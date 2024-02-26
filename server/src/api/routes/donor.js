@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const uploadImage = require("../middlewares/uploadImage");
-const uploadFile = require("../middlewares/uploadFile");
 const donorController = require("../controllers/DonorController");
 
 /**
@@ -158,7 +157,10 @@ router.post("/donation-request", donorController.createDonationRequest);
  *               items:
  *                 $ref: '#/components/schemas/FoodDonation'
  */
-router.delete("/delete-donation-request",donorController.deleteDonationRequest);
+router.delete(
+  "/delete-donation-request",
+  donorController.deleteDonationRequest,
+);
 
 /**
  * @swagger
@@ -182,7 +184,10 @@ router.delete("/delete-donation-request",donorController.deleteDonationRequest);
  *               type: array
  *               items:
  */
-router.post("/my-accepted-donation-requests",donorController.getAllAcceptedDonationRequests);
+router.post(
+  "/my-accepted-donation-requests",
+  donorController.getAllAcceptedDonationRequests,
+);
 
 /**
  * @swagger
@@ -283,7 +288,11 @@ router.post("/apply-for-donation-drive", donorController.applyForDonationDrive);
  *               type: array
  *               items:
  */
-router.post("/upload-images",uploadImage.single("image"),donorController.uploadDonationImages);
+router.post(
+  "/upload-images",
+  uploadImage.single("image"),
+  donorController.uploadDonationImages,
+);
 
 /**
  *
@@ -338,4 +347,9 @@ router.post("/my-donation-drives", donorController.getAllAppliedDrives);
  *               type: array
  *               items:
  */
-router.post("/delete-drive-application",donorController.deleteApplicationToDrive);
+router.post(
+  "/delete-drive-application",
+  donorController.deleteApplicationToDrive,
+);
+
+module.exports = router;
