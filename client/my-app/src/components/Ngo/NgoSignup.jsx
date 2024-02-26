@@ -19,7 +19,7 @@ function NGOsignup() {
 
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({ error: " " });
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [file, setFile] = useState();
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -36,24 +36,22 @@ function NGOsignup() {
 
   const submitRequest = async () => {
     if (formErrors.error === "") {
+      const formData=new FormData();
+      formData.append("name",formValues.ngo_name);
+      formData.append("panNumber",formValues.ngo_pan);
+      formData.append("nameOfHead",formValues.ngo_head);
+      formData.append("gender",formValues.gender);
+      formData.append("emailId",formValues.email);
+      formData.append("password",formValues.password);
+      formData.append("contactNumber",formValues.contact);
+      formData.append("website",formValues.website);
+      formData.append("address",formValues.address);
+      formData.append("gstnumber",formValues.gst);
+      formData.append("regnumber",formValues.reg_no);
+      formData.append("reg_certificate",file);
       var res = await fetch("http://localhost:5004/ngo/create-ngo", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formValues.ngo_name,
-          panNumber: formValues.ngo_pan,
-          nameOfHead: formValues.ngo_head,
-          gender: formValues.gender,
-          emailId: formValues.email,
-          password: formValues.password,
-          contactNumber: formValues.contact,
-          website: formValues.website,
-          address: formValues.address,
-          gstnumber: formValues.gst,
-          regnumber: formValues.reg_no,
-        }),
+        body: formData,
       });
       res = await res.json();
       if (!res.status) {
@@ -67,13 +65,13 @@ function NGOsignup() {
   const handleUpload = (e) => {
     e.preventDefault();
     formValues.file = e.target.files[0];
+    setFile(e.target.files[0]);
   };
 
   const validateForm = (values) => {
     const errors = { error: "" };
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/i;
     if (values.file === "") {
-      console.log("file");
       errors["error"] = "Please upload the registration certificate!";
       return errors;
     }
@@ -102,7 +100,7 @@ function NGOsignup() {
     <div className={styles.background_box}>
       <div className={styles.signup_box}>
         <div className={styles.signup_title}>NGO-Registration</div>
-        <form onSubmit={handleSubmit}>
+        <form method="POST" action="http://localhost:5004/ngo/create-ngo" onSubmit={handleSubmit} encType="multipart/form-data">
           <div className={styles.signup_form}>
             <div className={styles.row}>
               <div className={styles.signup_text}>

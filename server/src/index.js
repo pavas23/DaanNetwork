@@ -6,6 +6,7 @@ connectToMongo();
 const cors = require("cors");
 const swaggerUI = require("swagger-ui-express");
 const specs = require("../src/config/swagger/index");
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
