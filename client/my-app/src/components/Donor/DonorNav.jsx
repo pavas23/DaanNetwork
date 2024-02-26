@@ -33,10 +33,10 @@ const DonorNav = () => {
                 Donate
               </Nav.Link>
               <Nav.Link href="#impactPage" className={styles.nav_opt}>
-                Donation Requests
+                My Donation Requests
               </Nav.Link>
               <Nav.Link href="#contactPage" className={styles.nav_opt}>
-                Accepted Donation
+                My Accepted Donations
               </Nav.Link>
             </Nav>
             <Nav>

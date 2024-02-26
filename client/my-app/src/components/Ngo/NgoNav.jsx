@@ -7,6 +7,7 @@ import styles from "../../css/Ngo/NgoNav.module.css";
 import { Link } from "react-router-dom";
 const x =
   "#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}";
+
 const NgoNavBar = () => {
   const logout = () => {
     console.log("Logout clicked");

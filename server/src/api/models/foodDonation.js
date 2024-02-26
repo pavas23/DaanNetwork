@@ -11,9 +11,9 @@ const foodDonationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  numberDaysBeforeExpiry: {
-    type: Number,
-    required: true,
+  pickUpDate: {
+    type: Date,
+    default: Date.now(),
   },
   createdAt: {
     type: Date,

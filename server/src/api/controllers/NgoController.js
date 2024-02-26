@@ -25,7 +25,7 @@ var notifyNGORegistration = async (ngoName, emailId) => {
     to: emailId,
     subject: "Welcome to Daan Network!!",
     ngo: ngoName,
-    html: '<div><br /><div><div style="text-align: center; color: rgb(56, 80, 56)"><h1>Welcome to DaanNetwork!!</h1></div><div style="text-align: center; color: rgb(66, 103, 66)"><h2>Thank you for joining us in our mission to make the world a better place. We are excited to have you as a part of our community. We are looking forward to working with you and making a difference in the society.     </h2></div><div style="text-align: center; color: rgb(66, 103, 66)"><h3>At DaanNetwork, we understand the vital role NGOs play in addressing food insecurity and supporting vulnerable populations. That\'s why we\'re committed to providing you with a user-friendly platform that streamlines the process of securing food donations, enabling you to focus more of your time and resources on your invaluable work. As you embark on this journey with us, please know that our team is here to support you every step of the way. Whether you have questions, need assistance, or simply want to share your successes, we\'re just a message away.</h3></div><div><img src="cid:myimg" alt="DaanNetwork" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top:3%; margin-bottom:2%;"/></div></div><div style="margin-top:6%;"><h3 style="color: rgb(66, 103, 66);">Regards<br/>DaanNetwork Family<h3/><a href="" style="cursor: pointer; color:blue;">Click here to go to website.</a></div><br /><br /><br /><div style="color: red;">Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.</div></div>',
+    html: '<div><br /><div><div style="text-align: center; color: rgb(56, 80, 56)"><h1>Welcome to DaanNetwork!!</h1></div><div style="text-align: center; color: rgb(66, 103, 66)"><h2>Thank you for joining us in our mission to make the world a better place. We are excited to have you as a part of our community. We are looking forward to working with you and making a difference in the society. </h2></div><div style="text-align: center; color: rgb(66, 103, 66)"><h3>At DaanNetwork, we understand the vital role NGOs play in addressing food insecurity and supporting vulnerable populations. That\'s why we\'re committed to providing you with a user-friendly platform that streamlines the process of securing food donations, enabling you to focus more of your time and resources on your invaluable work. As you embark on this journey with us, please know that our team is here to support you every step of the way. Whether you have questions, need assistance, or simply want to share your successes, we\'re just a message away.</h3></div><div><img src="cid:myimg" alt="DaanNetwork" style="display: block; margin-left: auto; margin-right: auto; width: 50%; margin-top:3%; margin-bottom:2%;"/></div></div><div style="margin-top:6%;"><h3 style="color: rgb(66, 103, 66);">Regards<br/>DaanNetwork Family<h3/><a href="" style="cursor: pointer; color:blue;">Click here to go to website.</a></div><br /><br /><br /><div style="color: red;">Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.</div></div>',
     attachments: [
       {
         filename: "email_pic.jpg",
@@ -43,7 +43,8 @@ var notifyNGORegistration = async (ngoName, emailId) => {
 };
 
 /** ngo controller to create ngo
- * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address, gstnumber, regnumber}
+ * req body : {name, panNumber, nameOfHead, gender, emailId, password, contactNumber, website, address,
+ * gstnumber, regnumber}
  * res : { status:boolean, desc:string }
  */
 module.exports.addNGO = async (req, res) => {
@@ -461,3 +462,4 @@ module.exports.deleteDonationDrive = async (req, res) => {
     return res.status(500).json({ status: false, msg: err });
   }
 };
+

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Donor/DonationForm.module.css";
 import Form from "react-bootstrap/Form";
 import { Button, Modal } from "react-bootstrap";
+import swal from "sweetalert";
 
 const DonationForm = () => {
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
@@ -24,6 +25,7 @@ const DonationForm = () => {
     numberDaysBeforeExpiry: "",
     description: "",
     pickUpLocation: "",
+    pickUpDate: null,
     donorEmailId: mailId,
   });
 
@@ -47,6 +49,13 @@ const DonationForm = () => {
     setItems(data);
   };
 
+  const handlepickUpDateChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -57,11 +66,21 @@ const DonationForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (items.length === 0 || (items.length === 1 && items[0].quantity === 0)) {
-      setModalMessage(
-        `Could not send donation request: Item list can not be empty`
+    if (formData.pickUpDate == null) {
+      swal(
+        "Could not send donation request",
+        "Pick up date can not be null !",
+        "error"
       );
-      setShowModal(true);
+      return;
+    }
+
+    if (items.length === 0 || (items.length === 1 && items[0].quantity === 0)) {
+      swal(
+        "Could not send donation request",
+        "Item list can not be empty !",
+        "error"
+      );
       return;
     }
 
@@ -84,6 +103,7 @@ const DonationForm = () => {
         numberDaysBeforeExpiry: formData.numberDaysBeforeExpiry,
         description: formData.description,
         pickUpLocation: formData.pickUpLocation,
+        pickUpDate: formData.pickUpDate,
         donorEmailId: formData.donorEmailId,
         items: items,
       }),
@@ -91,16 +111,15 @@ const DonationForm = () => {
 
     const json = await response.json();
     if (!json.status) {
-      setModalMessage(`Could not send donation request: ${json.desc}`);
-      setShowModal(true);
+      swal("Could not send donation request", `${json.desc} !!`, "error");
     } else {
-      setModalMessage("Donation request sent successfully !!");
-      setShowModal(true);
+      swal("Good job", "Donation request sent successfully !!", "success");
       setFormData({
         quantity: "",
         numberDaysBeforeExpiry: "",
         description: "",
         pickUpLocation: "",
+        pickUpDate: "",
         donorEmailId: mailId,
       });
       setItems([{ name: "", quantity: 0 }]);
@@ -145,6 +164,7 @@ const DonationForm = () => {
                         <label htmlFor="name" className={styles.form_label}>
                           Donation Quantity (in kg)
                         </label>
+                        <span style={{ color: "red" }}>*</span>{" "}
                         <input
                           type="text"
                           className="form-control"
@@ -162,17 +182,15 @@ const DonationForm = () => {
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="name" className={styles.form_label}>
-                          Number of Days Before Expiry
+                          Pick Up Date
                         </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="numberDaysBeforeExpiry"
-                          name="numberDaysBeforeExpiry"
-                          min="0"
-                          value={formData.numberDaysBeforeExpiry}
-                          onChange={handleChange}
-                          required
+                        <span style={{ color: "red" }}>*</span>{" "}
+                        <Form.Control
+                          type="date"
+                          name="pickUpDate"
+                          value={formData.pickUpDate}
+                          onChange={handlepickUpDateChange}
+                          min={new Date().toISOString().slice(0, 10)}
                           onKeyPress={(event) => {
                             if (event.key === "Enter") {
                               event.preventDefault();
@@ -188,6 +206,7 @@ const DonationForm = () => {
                             <label htmlFor="name" className={styles.form_label}>
                               Item
                             </label>
+                            <span style={{ color: "red" }}>*</span>{" "}
                             <input
                               type="text"
                               className="form-control"
@@ -208,6 +227,7 @@ const DonationForm = () => {
                             <label htmlFor="name" className={styles.form_label}>
                               Quantity (in kg)
                             </label>
+                            <span style={{ color: "red" }}>*</span>{" "}
                             <input
                               type="number"
                               className="form-control"
@@ -230,14 +250,14 @@ const DonationForm = () => {
                             type="button"
                             style={{
                               width: "10%",
-                              marginTop: "1.5rem",
-                              backgroundColor: "white",
+                              marginTop: "1.2rem",
+                              backgroundColor: "inherit",
                               color: "red",
-                              fontSize: "1.2rem",
+                              fontSize: "24px",
                             }}
                             onClick={deleteItems}
                           >
-                            X
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                           </button>
                         </div>
                       );
@@ -261,11 +281,12 @@ const DonationForm = () => {
                       <label htmlFor="message" className={styles.form_label}>
                         Pick Up Location
                       </label>
+                      <span style={{ color: "red" }}>*</span>{" "}
                       <textarea
                         className="form-control"
                         id="pickUpLocation"
                         name="pickUpLocation"
-                        rows="5"
+                        rows="3"
                         value={formData.pickUpLocation}
                         onChange={handleChange}
                         required
@@ -275,11 +296,12 @@ const DonationForm = () => {
                       <label htmlFor="message" className={styles.form_label}>
                         Donation Description
                       </label>
+                      <span style={{ color: "red" }}>*</span>{" "}
                       <textarea
                         className="form-control"
                         id="description"
                         name="description"
-                        rows="5"
+                        rows="3"
                         value={formData.description}
                         onChange={handleChange}
                         required

@@ -1,8 +1,10 @@
 const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
 const UploadImage = require("../models/uploadImage");
+const uploadFile = require("../middlewares/uploadFile");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
 const router = require("../routes");
+const mongoose = require("mongoose");
 const path = require("path");
 const { monitorEventLoopDelay } = require("perf_hooks");
 const { builtinModules } = require("module");
@@ -53,7 +55,7 @@ module.exports.createDonationRequest = async (req, res) => {
   try {
     const {
       quantity,
-      numberDaysBeforeExpiry,
+      pickUpDate,
       description,
       pickUpLocation,
       donorEmailId,
@@ -77,7 +79,7 @@ module.exports.createDonationRequest = async (req, res) => {
     let foodDonation = await FoodDonation.create({
       donationRequestNum: count + 1,
       quantity: quantity,
-      numberDaysBeforeExpiry: numberDaysBeforeExpiry,
+      pickUpDate: pickUpDate,
       createdAt: new Date(),
       description: description,
       images: [],
@@ -159,7 +161,7 @@ module.exports.renderUploadImageTemplate = async (req, res) => {
   }
 };
 
-/** donor controller to upload images for donation items
+/** donor controller to upload images for donation items to file-sytem
  * req body : {}
  * res : { status:boolean, desc:string }
  */
