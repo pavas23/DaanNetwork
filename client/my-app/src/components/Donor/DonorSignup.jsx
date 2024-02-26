@@ -1,8 +1,17 @@
 import styles from '../../css/Donor/DonorSignup.module.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function DonorSignup() {
+
+	const date = new Date();
+
+	let day = date.getDate();
+	let month = date.getMonth() + 1;
+	let year = date.getFullYear()-18;
+	var currDate=year+'-'+month+'-'+day;
+	var validDate= new Date(currDate);
+
 
 	const initialValues={
 		donor_name:"",
@@ -13,31 +22,66 @@ function DonorSignup() {
         chk_password:"",
         birthdate:"",
 		gender:"Male",
+		address1:"",
+		address2:"",
 		state:"",
 		city:"",
         zip:"",
-		address:"",
-        nationality:""
-		
+        nationality:"indian",	
 	}
 
 	const [formValues,setFormValues]=useState(initialValues);
-	const [formErrors,setFormErrors]=useState({});
+	const [formErrors,setFormErrors]=useState({ error: " " });
 	const [isSubmit,setIsSubmit]=useState(false);
 
 	const handleChange=(e)=>{
 		setFormValues({...formValues,[e.target.name]:e.target.value});
 	}
 
-	const handleSubmit=(e)=>{
+	useEffect(() => {
+		submitRequest();
+	  }, [formErrors]);
+	
+	  const handleSubmit = async (e) => {
 		e.preventDefault();
 		setFormErrors(validateForm(formValues));
-		setIsSubmit(true);
-	}
+	  };
+	
+	  const submitRequest = async () => {
+		if (formErrors.error === "") {
+		  var res = await fetch("http://localhost:5004/donor/add-donor", {
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: formValues.donor_name,
+				phone: formValues.phone,
+				alt_phone: formValues.alt_phone,
+				emailId: formValues.email,
+				birthdate: formValues.birthdate,
+				address: formValues.address1+", "+formValues.address2,
+				gender: formValues.gender,
+				password: formValues.password,
+				city: formValues.city,
+				state: formValues.state,
+				zip_code: formValues.zip,
+				nationality: formValues.nationality,
+			}),
+		  });
+		  res = await res.json();
+		  if (!res.status) {
+			setFormErrors({ error: res.desc });
+		  } else {
+			setFormValues(initialValues);
+		  }
+		}
+	  };
 	
 	const validateForm=(values)=>{
-		const errors={};
+		const errors={error:""};
 		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/i;
+		const bday= new Date(values.birthdate);
 		for(let item in values){
 			if(!values[item] && item!=="alt_phone" ){
 				errors["error"]="Please fill out all the required details!";
@@ -46,6 +90,9 @@ function DonorSignup() {
 		}
 		if(!regex.test(values.email)){
 			errors["error"]="Please enter a valid email address!";
+		}
+		else if(bday>validDate){
+			errors["error"]="You should be over the age of 18!";
 		}
 
 		else if(values.password.length<8){
@@ -56,6 +103,9 @@ function DonorSignup() {
         }
 		else if(values.phone.length!==10  || isNaN(values.phone)){
 			errors["error"]="Please enter a valid contact number!";
+		}
+		else if(values.alt_phone==""){
+			return errors;
 		}
         else if(values.alt_phone.length!==10  || isNaN(values.alt_phone)){
 			errors["error"]="Please enter a valid contact number!";
@@ -108,9 +158,9 @@ function DonorSignup() {
 						</div>	
 					</div>
                     <div className={styles.row}>
-						<div className={styles.signup_text}>Birth date: <span style={{color:'red' }}>*</span></div>
+						<div className={styles.signup_text}>Birth Date: <span style={{color:'red' }}>*</span></div>
 						<div className={styles.signup_input_element}>
-							<input type='date' name='birthdate' className={styles.signup_input} value={formValues.birthdate} onChange={handleChange}/>
+							<input type='date' name='birthdate' className={styles.date_select} value={formValues.birthdate} onChange={handleChange}/>
 						</div>	
 					</div>
 					<div className={styles.row}>
@@ -126,9 +176,15 @@ function DonorSignup() {
 						</div>	
 					</div>
 					<div className={styles.row}>
-						<div className={styles.signup_text}>State:<span style={{color:'red' }}>*</span> </div>
+						<div className={styles.signup_text}>Address Line 1: <span style={{color:'red' }}>*</span></div>
 						<div className={styles.signup_input_element}>
-							<input type='text' name='state' className={styles.signup_input} value={formValues.state} onChange={handleChange}/>
+							<input type='text' name='address1' className={styles.signup_input} value={formValues.address1} onChange={handleChange}/>
+						</div>	
+					</div>
+					<div className={styles.row}>
+						<div className={styles.signup_text}>Address Line 2: <span style={{color:'red' }}>*</span></div>
+						<div className={styles.signup_input_element}>
+							<input type='text' name='address2' className={styles.signup_input} value={formValues.address2} onChange={handleChange}/>
 						</div>	
 					</div>
 					<div className={styles.row}>
@@ -137,16 +193,16 @@ function DonorSignup() {
 							<input type='text' name='city' className={styles.signup_input} value={formValues.city} onChange={handleChange}/>
 						</div>	
 					</div>
+					<div className={styles.row}>
+						<div className={styles.signup_text}>State:<span style={{color:'red' }}>*</span> </div>
+						<div className={styles.signup_input_element}>
+							<input type='text' name='state' className={styles.signup_input} value={formValues.state} onChange={handleChange}/>
+						</div>	
+					</div>
                     <div className={styles.row}>
 						<div className={styles.signup_text}>Zip code: <span style={{color:'red' }}>*</span></div>
 						<div className={styles.signup_input_element}>
 							<input type='text' name='zip' className={styles.signup_input} value={formValues.zip} onChange={handleChange}/>
-						</div>	
-					</div>
-					<div className={styles.row}>
-						<div className={styles.signup_text}>Full Address:<span style={{color:'red' }}>*</span> </div>
-						<div className={styles.signup_input_element}>
-							<textarea  style={{fontFamily:"sans-serif"}} type='text' name='address' maxLength="500" className={styles.signup_textarea} value={formValues.address} onChange={handleChange}/>
 						</div>	
 					</div>
 					<div className={styles.row}>

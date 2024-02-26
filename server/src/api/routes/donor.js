@@ -112,7 +112,7 @@ const donorController = require("../controllers/DonorController");
  *               items:
  *                 $ref: '#/components/schemas/Donor'
  */
-router.post("/create-donor", donorController.createDonor);
+router.post("/add-donor", donorController.createDonor);
 
 /**
  * @swagger

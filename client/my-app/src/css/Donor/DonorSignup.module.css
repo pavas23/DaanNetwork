@@ -121,6 +121,16 @@ body {
     font-size: 0.9rem;
     box-sizing: content-box;
   }
+
+  .date_select{
+    border: solid 0.125rem black;
+    height: 2rem;
+    width: 50%;
+    margin-left: 6%;
+    padding: 1% 2% 1% 2%;
+    font-size: 0.9rem;
+    box-sizing: content-box;
+  }
   
   .signup_textarea {
     border: solid 0.125rem black;
