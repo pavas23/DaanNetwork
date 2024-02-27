@@ -7,6 +7,7 @@ const cors = require("cors");
 const swaggerUI = require("swagger-ui-express");
 const specs = require("../src/config/swagger/index");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 5004;
 
 // use express router
 app.use("/", require("./api/routes"));
+app.use(cors());
 
 app.listen(PORT, (err) => {
   if (err) {

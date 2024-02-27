@@ -3,26 +3,26 @@ body {
 }
 
 .background_box {
+  background-image: url(../../images/bgd5.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 115vh;
-  padding: 8% 6% 4% 6%;
+  height: 100vh;
   box-sizing: content-box;
-  background-color: #4ea76d;
+  
 }
 
 .login_box {
   background-color: rgba(248, 247, 247, 0.8);
   position: absolute;
-  width: 45%;
+  width: 30%;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 10%;
-  border: solid 4px #213f17;
+  border: solid 4px #195406;
   padding: 1.5% 2% 1.5% 2%;
-  border-radius: 2rem;
+  border-radius: 1rem;
   box-sizing: content-box;
 }
 
@@ -43,7 +43,6 @@ body {
   transform: scale(1.1);
   box-shadow: 0 0 0 0.2rem #f8faf7;
   background-color: black;
-  border-radius: 0.5rem;
 }
 
 .login_title {
@@ -93,7 +92,7 @@ body {
 .login_input {
   border: solid 0.125rem black;
   height: 1.5rem;
-  width: 70%;
+  width: 80%;
   margin-left: 6%;
   border-radius: 0.5rem;
   padding: 1% 2% 1% 2%;

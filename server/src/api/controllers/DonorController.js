@@ -12,6 +12,33 @@ const hbs = require("nodemailer-express-handlebars");
 const Ngo = require("../models/ngo");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
+const { createSecretToken } = require("../middlewares/secretToken");
+
+
+module.exports.donorLogin= async (req,res)=>{
+  try{
+    const { emailId, password}=req.body;
+    const donor=await Donor.findOne({emailId:emailId});
+    if(!donor){
+      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    }
+    const validPassword=await bcrypt.compare(password,donor.password);
+    if(!validPassword){
+      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    }
+    const token = createSecretToken(donor._id);
+     res.cookie("token", token, {
+       withCredentials: true,
+       httpOnly: false,
+     });
+     res.status(201).json({status:true, message: "User logged in successfully"});
+  }
+  catch(err){
+    console.log(err);
+    return res.status(500).json({status:false,desc:"Internal Server Error Occured"});
+  }
+}
+
 
 var notifyDonorRegistration = async (name, emailId) => {
   let transporter = nodemailer.createTransport({
@@ -120,8 +147,7 @@ module.exports.createDonor = async (req, res) => {
       });
     }
 
-    var salt = await bcrypt.genSalt(10);
-    var hashPassword = await bcrypt.hash(password, salt);
+    var hashPassword = await bcrypt.hash(password, 10);
 
     let newDonor = await Donor.create({
       name: name,
@@ -138,7 +164,12 @@ module.exports.createDonor = async (req, res) => {
       nationality: nationality,
     });
     notifyDonorRegistration(name, emailId);
-    res.status(200).json({ status: true, desc: "Donor created successfully" });
+    const token = createSecretToken(newDonor._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
+    res.status(201).json({ status: true, desc: "Donor created successfully" });
   } catch (error) {
     console.log(error);
     res

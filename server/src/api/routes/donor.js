@@ -112,6 +112,7 @@ const donorController = require("../controllers/DonorController");
  *                 $ref: '#/components/schemas/Donor'
  */
 router.post("/add-donor", donorController.createDonor);
+router.post("/donor-login", donorController.donorLogin);
 
 /**
  * @swagger

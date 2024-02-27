@@ -5,10 +5,13 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import styles from "../../css/Home/HomeNav.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function HomeNav() {
   const x =
-    "#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}";
+    `#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;font-weight:semi-bold;}
+  .dropdown-item.active, .dropdown-item:active {background-color: #195406 !important; }
+    `;
   return (
     <>
       <style>{x}</style>
@@ -52,9 +55,15 @@ function HomeNav() {
                   justifyContent: "center",
                 }}
               >
+              <Link  style={{ textDecoration: "none" }}> 
                 <NavDropdown.Item>Login as a NGO</NavDropdown.Item>
+              </Link>
                 <NavDropdown.Divider />
-                <NavDropdown.Item>Login as a Donor</NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link to="/donor-login" style={{ textDecoration: "none",color:"inherit"}}>
+                    Login as a Donor
+                  </Link>
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
