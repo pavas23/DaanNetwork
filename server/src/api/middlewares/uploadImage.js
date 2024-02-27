@@ -9,10 +9,9 @@ const storage = multer.diskStorage({
     cb(null, path.resolve("../src/images"));
   },
   filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, new Date().getMinutes() + file.originalname);
   },
-});
+})
 
 const upload = multer({ storage: storage });
 

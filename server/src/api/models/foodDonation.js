@@ -33,15 +33,11 @@ const foodDonationSchema = new mongoose.Schema({
       },
     },
   ],
-  // images:[
-  //     {
-  //         type:mongoose.Schema.Types.ObjectId,
-  //         ref:"Image",
-  //     }
-  // ],
-  images: {
-    type: Array,
-  },
+  images:[
+      {
+        type: String,
+      }
+  ],
   pickUpLocation: {
     type: String,
     required: true,

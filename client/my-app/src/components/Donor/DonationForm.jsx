@@ -1,5 +1,5 @@
 import DonorNav from "./DonorNav";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Donor/DonationForm.module.css";
 import Form from "react-bootstrap/Form";
@@ -29,8 +29,10 @@ const DonationForm = () => {
     donorEmailId: mailId,
   });
 
+  const [file, setFile] = useState(null);
   const [flag, setFlag] = useState(0);
   const [items, setItems] = useState([{ name: "", quantity: 0 }]);
+  const inputFile = useRef(null);
 
   const addItems = () => {
     setItems([...items, { name: "", quantity: 0 }]);
@@ -63,6 +65,11 @@ const DonationForm = () => {
     });
   };
 
+  const handleUpload = (e) => {
+    e.preventDefault();
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -93,20 +100,18 @@ const DonationForm = () => {
       }
     }
 
+    const formDataNew = new FormData();
+    formDataNew.append("quantity", formData.quantity);
+    formDataNew.append("description", formData.description);
+    formDataNew.append("pickUpLocation", formData.pickUpLocation);
+    formDataNew.append("pickUpDate", formData.pickUpDate);
+    formDataNew.append("donorEmailId", formData.donorEmailId);
+    formDataNew.append("items", JSON.stringify(items));
+    formDataNew.append("file", file);
+
     const response = await fetch(`${REACT_APP_APIURL}/donor/donation-request`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        quantity: formData.quantity,
-        numberDaysBeforeExpiry: formData.numberDaysBeforeExpiry,
-        description: formData.description,
-        pickUpLocation: formData.pickUpLocation,
-        pickUpDate: formData.pickUpDate,
-        donorEmailId: formData.donorEmailId,
-        items: items,
-      }),
+      body: formDataNew,
     });
 
     const json = await response.json();
@@ -123,6 +128,10 @@ const DonationForm = () => {
         donorEmailId: mailId,
       });
       setItems([{ name: "", quantity: 0 }]);
+      if (inputFile.current) {
+        inputFile.current.value = "";
+        inputFile.current.type = "file";
+      }
     }
   };
 
@@ -158,7 +167,7 @@ const DonationForm = () => {
               <div className="col-lg-6 col-md-8 col-sm-10">
                 <div className={styles.form_container}>
                   <h2 className="text-center mb-4">Donate Now</h2>
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="row mb-4">
                       <div className="col-md-6">
                         <label htmlFor="name" className={styles.form_label}>
@@ -306,6 +315,19 @@ const DonationForm = () => {
                         onChange={handleChange}
                         required
                       ></textarea>
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="message" className={styles.form_label}>
+                        Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        name="file"
+                        onChange={handleUpload}
+                        accept=".jpg,.jpeg,.png"
+                        className="form-control"
+                        ref={inputFile}
+                      />
                     </div>
                     <button
                       type="submit"

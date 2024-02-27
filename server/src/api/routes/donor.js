@@ -134,7 +134,7 @@ router.post("/add-donor", donorController.createDonor);
  *               items:
  *                 $ref: '#/components/schemas/FoodDonation'
  */
-router.post("/donation-request", donorController.createDonationRequest);
+router.post("/donation-request", uploadImage.single("file"), donorController.createDonationRequest);
 
 /**
  * @swagger

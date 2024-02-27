@@ -39,7 +39,7 @@
     255,
     0.5
   ); /* Semi-transparent white background */
-  backdrop-filter: blur(10px); /* Apply blur effect */
+  /* backdrop-filter: blur(10px); Apply blur effect */
   padding: 20px; /* Adjust padding as needed */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

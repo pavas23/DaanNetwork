@@ -162,6 +162,13 @@ module.exports.createDonationRequest = async (req, res) => {
       items,
     } = req.body;
 
+    // if no image is attached
+    var imagesArray = [];
+    if (req.file) {
+      let imageName = new Date().getMinutes() + req.file.originalname;
+      imagesArray = [imageName.toString()];
+    }
+
     // finding donor by email id
     const donors = await Donor.find({ emailId: donorEmailId });
     if (donors.length == 0) {
@@ -182,11 +189,11 @@ module.exports.createDonationRequest = async (req, res) => {
       pickUpDate: pickUpDate,
       createdAt: new Date(),
       description: description,
-      images: [],
+      images: imagesArray,
       pickUpLocation: pickUpLocation,
       donor: donors[0]._id,
       accepted: false,
-      items: items,
+      items: JSON.parse(items),
     });
 
     console.log(foodDonation);
@@ -319,7 +326,7 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => {};
+var notifyNewDonorForDrive = async (drive, donor) => { };
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({

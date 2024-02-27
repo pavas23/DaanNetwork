@@ -5,6 +5,5 @@ console.log("Router loaded");
 
 router.use("/donor", require("./donor"));
 router.use("/ngo", require("./ngo"));
-router.use("/image",require("./image"));
 
 module.exports = router;

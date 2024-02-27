@@ -36,19 +36,19 @@ function NGOsignup() {
 
   const submitRequest = async () => {
     if (formErrors.error === "") {
-      const formData=new FormData();
-      formData.append("name",formValues.ngo_name);
-      formData.append("panNumber",formValues.ngo_pan);
-      formData.append("nameOfHead",formValues.ngo_head);
-      formData.append("gender",formValues.gender);
-      formData.append("emailId",formValues.email);
-      formData.append("password",formValues.password);
-      formData.append("contactNumber",formValues.contact);
-      formData.append("website",formValues.website);
-      formData.append("address",formValues.address);
-      formData.append("gstnumber",formValues.gst);
-      formData.append("regnumber",formValues.reg_no);
-      formData.append("reg_certificate",file);
+      const formData = new FormData();
+      formData.append("name", formValues.ngo_name);
+      formData.append("panNumber", formValues.ngo_pan);
+      formData.append("nameOfHead", formValues.ngo_head);
+      formData.append("gender", formValues.gender);
+      formData.append("emailId", formValues.email);
+      formData.append("password", formValues.password);
+      formData.append("contactNumber", formValues.contact);
+      formData.append("website", formValues.website);
+      formData.append("address", formValues.address);
+      formData.append("gstnumber", formValues.gst);
+      formData.append("regnumber", formValues.reg_no);
+      formData.append("reg_certificate", file);
       var res = await fetch("http://localhost:5004/ngo/create-ngo", {
         method: "POST",
         body: formData,
@@ -100,7 +100,12 @@ function NGOsignup() {
     <div className={styles.background_box}>
       <div className={styles.signup_box}>
         <div className={styles.signup_title}>NGO-Registration</div>
-        <form method="POST" action="http://localhost:5004/ngo/create-ngo" onSubmit={handleSubmit} encType="multipart/form-data">
+        <form
+          method="POST"
+          action="http://localhost:5004/ngo/create-ngo"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
           <div className={styles.signup_form}>
             <div className={styles.row}>
               <div className={styles.signup_text}>

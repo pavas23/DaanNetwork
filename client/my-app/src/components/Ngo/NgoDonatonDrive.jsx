@@ -1,10 +1,9 @@
 import NgoNavBar from "./NgoNav";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
 
-let image = require("../../images/ddi.jpg");
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
 const NgoDonationDrive = () => {
@@ -18,6 +17,8 @@ const NgoDonationDrive = () => {
 
   const [flag, setFlag] = useState(0);
   const [items, setItems] = useState([{ item: "", quantity: 0 }]);
+  const [file, setFile] = useState(null);
+  const inputFile = useRef(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,6 +67,11 @@ const NgoDonationDrive = () => {
     let data = [...items];
     data[index][event.target.name] = event.target.value;
     setItems(data);
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -136,6 +142,10 @@ const NgoDonationDrive = () => {
       startDate: "",
       endDate: "",
     });
+    if (inputFile.current) {
+      inputFile.current.value = "";
+      inputFile.current.type = "file";
+    }
   };
 
   return (
@@ -159,8 +169,9 @@ const NgoDonationDrive = () => {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="name" className={styles.form_label}>
-                      Drive Name *
+                      Drive Name
                     </label>
+                    <span style={{ color: "red" }}>*</span>{" "}
                     <input
                       type="text"
                       className="form-control"
@@ -181,8 +192,9 @@ const NgoDonationDrive = () => {
                       <div className="row mb-3">
                         <div className="col">
                           <label htmlFor="name" className={styles.form_label}>
-                            Item *
+                            Item
                           </label>
+                          <span style={{ color: "red" }}>*</span>{" "}
                           <input
                             type="text"
                             className="form-control"
@@ -199,8 +211,9 @@ const NgoDonationDrive = () => {
                         </div>
                         <div className="col">
                           <label htmlFor="name" className={styles.form_label}>
-                            Quantity *
+                            Quantity
                           </label>
+                          <span style={{ color: "red" }}>*</span>{" "}
                           <input
                             type="number"
                             className="form-control"
@@ -220,14 +233,14 @@ const NgoDonationDrive = () => {
                           type="button"
                           style={{
                             width: "10%",
-                            marginTop: "1.5rem",
-                            backgroundColor: "white",
+                            marginTop: "1.2rem",
+                            backgroundColor: "inherit",
                             color: "red",
-                            fontSize: "1.2rem",
+                            fontSize: "24px",
                           }}
                           onClick={deleteItems}
                         >
-                          X
+                          <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                       </div>
                     );
@@ -246,7 +259,10 @@ const NgoDonationDrive = () => {
 
                   <div className="row mb-3">
                     <div className="col">
-                      <label className="form-label">Start Date *</label>
+                      <label htmlFor="name" className={styles.form_label}>
+                        Start Date
+                      </label>
+                      <span style={{ color: "red" }}>*</span>{" "}
                       <Form.Control
                         type="date"
                         name="startDate"
@@ -261,7 +277,10 @@ const NgoDonationDrive = () => {
                       />
                     </div>
                     <div className="col">
-                      <label className="form-label">End Date *</label>
+                      <label htmlFor="name" className={styles.form_label}>
+                        End Date
+                      </label>
+                      <span style={{ color: "red" }}>*</span>{" "}
                       <Form.Control
                         type="date"
                         name="endDate"
@@ -288,6 +307,19 @@ const NgoDonationDrive = () => {
                       value={formData.description}
                       onChange={handleChange}
                     ></textarea>
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="message" className={styles.form_label}>
+                      Upload Image
+                    </label>
+                    <input
+                      type="file"
+                      name="file"
+                      onChange={handleUpload}
+                      accept=".jpg,.jpeg,.png"
+                      className="form-control"
+                      ref={inputFile}
+                    />
                   </div>
                   <button type="submit" className={"btn " + styles.btn_primary}>
                     Submit

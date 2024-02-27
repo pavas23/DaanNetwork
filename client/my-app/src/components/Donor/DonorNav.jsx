@@ -15,17 +15,19 @@ const DonorNav = () => {
       <style>{x}</style>
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Navbar.Brand
-            className={styles.kaushan_script_regular}
-            style={{
-              color: "#078534",
-              fontWeight: "bold",
-              fontSize: "160%",
-              paddingRight: "2%",
-            }}
-          >
-            DaanNetwork
-          </Navbar.Brand>
+          <Nav.Link href="/" className={styles.nav_opt}>
+            <Navbar.Brand
+              className={styles.kaushan_script_regular}
+              style={{
+                color: "#078534",
+                fontWeight: "bold",
+                fontSize: "160%",
+                paddingRight: "2%",
+              }}
+            >
+              DaanNetwork
+            </Navbar.Brand>
+          </Nav.Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id="dekho_zara">
