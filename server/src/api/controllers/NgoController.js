@@ -61,7 +61,7 @@ module.exports.addNGO = async (req, res) => {
     gstnumber,
     regnumber,
   } = req.body;
-
+  
   try {
     var exists = await Ngo.find({ emailId: emailId });
     if (exists.length > 0) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const uploadCertificate = require("../middlewares/uploadCertificate");
 const ngoController = require("../controllers/NgoController");
 
 /**
@@ -100,7 +100,7 @@ const ngoController = require("../controllers/NgoController");
  *   description: The APIs for NGO
  */
 
-router.post("/create-ngo", ngoController.addNGO);
+router.post("/create-ngo",uploadCertificate.single("reg_certificate") ,ngoController.addNGO);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
