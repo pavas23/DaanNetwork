@@ -13,6 +13,7 @@ import NgoDonationDrive from "./components/Ngo/NgoDonatonDrive";
 import DonorSignup from "./components/Donor/DonorSignup";
 import DonationForm from "./components/Donor/DonationForm";
 import DonorLogin from "./components/Donor/DonorLogin";
+import DonorPosts from "./components/Donor/DonorPosts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
