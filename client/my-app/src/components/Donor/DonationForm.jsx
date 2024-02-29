@@ -5,12 +5,17 @@ import styles from "../../css/Donor/DonationForm.module.css";
 import Form from "react-bootstrap/Form";
 import { Button, Modal } from "react-bootstrap";
 import swal from "sweetalert";
+import { useNavigate } from "react-router";
 
 const DonationForm = () => {
+  let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-  // TODO : get mail id from login session
-  const mailId = "pavasgarg2003@gmail.com";
+  useEffect(() => {
+    if (!localStorage.getItem("auth-token")) {
+      navigate("/donor-login", { replace: true });
+    }
+  });
 
   // TODO : make sure image covers entire background for phone also
 
@@ -26,7 +31,6 @@ const DonationForm = () => {
     description: "",
     pickUpLocation: "",
     pickUpDate: null,
-    donorEmailId: mailId,
   });
 
   const [file, setFile] = useState(null);
@@ -105,18 +109,28 @@ const DonationForm = () => {
     formDataNew.append("description", formData.description);
     formDataNew.append("pickUpLocation", formData.pickUpLocation);
     formDataNew.append("pickUpDate", formData.pickUpDate);
-    formDataNew.append("donorEmailId", formData.donorEmailId);
     formDataNew.append("items", JSON.stringify(items));
     formDataNew.append("file", file);
 
     const response = await fetch(`${REACT_APP_APIURL}/donor/donation-request`, {
       method: "POST",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
       body: formDataNew,
     });
 
     const json = await response.json();
     if (!json.status) {
-      swal("Could not send donation request", `${json.desc} !!`, "error");
+      if (json.desc == "Please authenticate using a valid token") {
+        swal("Could not send donation request", "Invalid Session", "error");
+        localStorage.removeItem("auth-token");
+        setTimeout(() => {
+          navigate("/donor-login", { replace: true });
+        }, 1500);
+      } else {
+        swal("Could not send donation request", `${json.desc} !!`, "error");
+      }
     } else {
       swal("Good job", "Donation request sent successfully !!", "success");
       setFormData({
@@ -125,7 +139,6 @@ const DonationForm = () => {
         description: "",
         pickUpLocation: "",
         pickUpDate: "",
-        donorEmailId: mailId,
       });
       setItems([{ name: "", quantity: 0 }]);
       if (inputFile.current) {

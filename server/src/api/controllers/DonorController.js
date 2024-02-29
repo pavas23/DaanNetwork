@@ -12,33 +12,42 @@ const hbs = require("nodemailer-express-handlebars");
 const Ngo = require("../models/ngo");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
-const { createSecretToken } = require("../middlewares/secretToken");
+const { createSecretToken } = require("../helpers/secretToken");
 
+/** donor controller, which will send token on successful login
+ * res : { status: boolean, token: string, desc: string }
+ */
+module.exports.donorLogin = async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const donor = await Donor.findOne({ emailId: emailId });
 
-module.exports.donorLogin= async (req,res)=>{
-  try{
-    const { emailId, password}=req.body;
-    const donor=await Donor.findOne({emailId:emailId});
-    if(!donor){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    if (!donor) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
-    const validPassword=await bcrypt.compare(password,donor.password);
-    if(!validPassword){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+
+    const validPassword = await bcrypt.compare(password, donor.password);
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
+
     const token = createSecretToken(donor._id);
-     res.cookie("token", token, {
-       withCredentials: true,
-       httpOnly: false,
-     });
-     res.status(201).json({status:true, message: "User logged in successfully"});
-  }
-  catch(err){
+    res.status(200).json({
+      status: true,
+      token: token,
+      message: "User logged in successfully",
+    });
+  } catch (err) {
     console.log(err);
-    return res.status(500).json({status:false,desc:"Internal Server Error Occured"});
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
-
+};
 
 var notifyDonorRegistration = async (name, emailId) => {
   let transporter = nodemailer.createTransport({
@@ -163,12 +172,9 @@ module.exports.createDonor = async (req, res) => {
       zip_code: zip_code,
       nationality: nationality,
     });
+
     notifyDonorRegistration(name, emailId);
-    const token = createSecretToken(newDonor._id);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
+
     res.status(201).json({ status: true, desc: "Donor created successfully" });
   } catch (error) {
     console.log(error);
@@ -184,14 +190,10 @@ module.exports.createDonor = async (req, res) => {
  */
 module.exports.createDonationRequest = async (req, res) => {
   try {
-    const {
-      quantity,
-      pickUpDate,
-      description,
-      pickUpLocation,
-      donorEmailId,
-      items,
-    } = req.body;
+    const { quantity, pickUpDate, description, pickUpLocation, items } =
+      req.body;
+
+    const donorEmailId = req.user.emailId;
 
     // if no image is attached
     var imagesArray = [];
@@ -357,7 +359,7 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => { };
+var notifyNewDonorForDrive = async (drive, donor) => {};
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({

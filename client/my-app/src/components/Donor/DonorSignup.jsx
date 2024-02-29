@@ -1,8 +1,18 @@
 import styles from "../../css/Donor/DonorSignup.module.css";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import swal from "sweetalert";
 
 function DonorSignup() {
+  let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
+  useEffect(() => {
+    // if logged in user tries to access this page, redirect to prev. page
+    if (localStorage.getItem("auth-token")) {
+      navigate(-1);
+    }
+  });
 
   const date = new Date();
 
@@ -72,6 +82,10 @@ function DonorSignup() {
       if (!res.status) {
         setFormErrors({ error: res.desc });
       } else {
+        swal("Good job", "Successfully registered !!", "success");
+        setTimeout(() => {
+          navigate("/donor-login", { replace: true });
+        }, 1500);
         setFormValues(initialValues);
       }
     }

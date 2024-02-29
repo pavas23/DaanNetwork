@@ -100,13 +100,17 @@ const ngoController = require("../controllers/NgoController");
  *   description: The APIs for NGO
  */
 
-router.post("/create-ngo",uploadCertificate.single("reg_certificate") ,ngoController.addNGO);
+router.post(
+  "/create-ngo",
+  uploadCertificate.single("reg_certificate"),
+  ngoController.addNGO,
+);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post(
   "/send-confirmation-mail",
-  ngoController.sendConfirmationMailToDonor
+  ngoController.sendConfirmationMailToDonor,
 );
 router.post("/create-donation-request", ngoController.createDonationRequest);
 router.post("/get-all-drives", ngoController.getAllDonationDrives);

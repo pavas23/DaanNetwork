@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uploadImage = require("../middlewares/uploadImage");
 const donorController = require("../controllers/DonorController");
+const { donorVerification } = require("../middlewares/donorVerify");
 
 /**
  * @swagger
@@ -135,7 +136,12 @@ router.post("/donor-login", donorController.donorLogin);
  *               items:
  *                 $ref: '#/components/schemas/FoodDonation'
  */
-router.post("/donation-request", uploadImage.single("file"), donorController.createDonationRequest);
+router.post(
+  "/donation-request",
+  donorVerification,
+  uploadImage.single("file"),
+  donorController.createDonationRequest,
+);
 
 /**
  * @swagger
