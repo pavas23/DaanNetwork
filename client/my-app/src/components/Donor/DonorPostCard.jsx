@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Button, Modal } from 'react-bootstrap';
 import styles from "../../css/Donor/DonorPostCard.module.css";
 
-function DonorPostCard({ id, image, title, quantity, numberDaysBeforeExpiry, description, pickUpLocation, pickUpDate, onDelete, onEdit }) {
+function DonorPostCard({ id, image, title, items, numberDaysBeforeExpiry, description, pickUpLocation, pickUpDate, onDelete, onEdit }) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
     const handleDeleteClick = () => {
@@ -29,7 +29,7 @@ function DonorPostCard({ id, image, title, quantity, numberDaysBeforeExpiry, des
                 {/* <Card.Title>{title}</Card.Title> */}
                 <Card.Text>
                     <strong>Description:</strong> {description}<br />
-                    <strong>Quantity:</strong> {quantity}<br />
+                    <strong>Items:</strong> {items.map((item, index) => `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ', ' : ''}`)}<br />
                     <strong>Days Before Expiry:</strong> {numberDaysBeforeExpiry}<br />
                     <strong>Pick Up Location:</strong> {pickUpLocation}<br />
                     <strong>Pick Up Date:</strong> {pickUpDate}<br />

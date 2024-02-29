@@ -9,7 +9,18 @@ const dummyPostData = [{
     id: 1,
     title: "Card 1",
     description: "This is the description for card 1.",
-    quantity: 10,
+    items: [{
+        name: "Item1",
+        quantity: 10,
+    },
+    {
+        name: "Item2",
+        quantity: 20,
+    },
+    {
+        name: "Item3",
+        quantity: 30,
+    }],
     numberDaysBeforeExpiry: 5,
     pickUpLocation: "Location 1",
     pickUpDate: "2024-03-01"
@@ -18,7 +29,18 @@ const dummyPostData = [{
     id: 2,
     title: "Card 2",
     description: "This is the description for card 2.",
-    quantity: 10,
+    items: [{
+        name: "Item1",
+        quantity: 10,
+    },
+    {
+        name: "Item2",
+        quantity: 20,
+    },
+    {
+        name: "Item3",
+        quantity: 30,
+    }],
     numberDaysBeforeExpiry: 5,
     pickUpLocation: "Location 2",
     pickUpDate: "2024-03-01"
@@ -27,7 +49,18 @@ const dummyPostData = [{
     id: 3,
     title: "Card 3",
     description: "This is the description for card 3.",
-    quantity: 10,
+    items: [{
+        name: "Item1",
+        quantity: 10,
+    },
+    {
+        name: "Item2",
+        quantity: 20,
+    },
+    {
+        name: "Item3",
+        quantity: 30,
+    }],
     numberDaysBeforeExpiry: 5,
     pickUpLocation: "Location 3",
     pickUpDate: "2024-03-01"
@@ -36,7 +69,18 @@ const dummyPostData = [{
     id: 4,
     title: "Card 4",
     description: "This is the description for card 4.",
-    quantity: 10,
+    items: [{
+        name: "Item1",
+        quantity: 10,
+    },
+    {
+        name: "Item2",
+        quantity: 20,
+    },
+    {
+        name: "Item3",
+        quantity: 30,
+    }],
     numberDaysBeforeExpiry: 5,
     pickUpLocation: "Location 4",
     pickUpDate: "2024-03-01"
@@ -45,7 +89,18 @@ const dummyPostData = [{
     id: 5,
     title: "Card 5",
     description: "This is the description for card 5.",
-    quantity: 10,
+    items: [{
+        name: "Item1",
+        quantity: 10,
+    },
+    {
+        name: "Item2",
+        quantity: 20,
+    },
+    {
+        name: "Item3",
+        quantity: 30,
+    }],
     numberDaysBeforeExpiry: 5,
     pickUpLocation: "Location 5",
     pickUpDate: "2024-03-01"
@@ -90,7 +145,7 @@ const DonorPosts = () => {
                                 id={card.id}
                                 title={card.title}
                                 description={card.description}
-                                quantity={card.quantity}
+                                items={card.items}
                                 numberDaysBeforeExpiry={card.numberDaysBeforeExpiry}
                                 pickUpLocation={card.pickUpLocation}
                                 pickUpDate={card.pickUpDate}
