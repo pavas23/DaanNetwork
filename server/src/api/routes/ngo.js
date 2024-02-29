@@ -100,6 +100,7 @@ const ngoController = require("../controllers/NgoController");
  *   description: The APIs for NGO
  */
 
+router.post("/ngo-login", ngoController.NGOLogin);
 router.post("/create-ngo",uploadCertificate.single("reg_certificate") ,ngoController.addNGO);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
