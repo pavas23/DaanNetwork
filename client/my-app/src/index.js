@@ -23,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="donor-signup" element={<DonorSignup />} />
       <Route path="ngo-drive" element={<NgoDonationDrive />} />
       <Route path="donor-login" element={<DonorLogin />} />
+      <Route path="donor-posts" element={<DonorPosts />} />
     </Route>,
   ),
 );
