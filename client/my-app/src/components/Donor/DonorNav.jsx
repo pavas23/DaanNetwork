@@ -24,7 +24,7 @@ const DonorNav = () => {
       <style>{x}</style>
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Nav.Link href="/" className={styles.nav_opt}>
+          <Nav.Link href="#" className={styles.nav_opt}>
             <Navbar.Brand
               className={styles.kaushan_script_regular}
               style={{
@@ -40,13 +40,13 @@ const DonorNav = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id="dekho_zara">
-              <Nav.Link href="#aboutUsPage" className={styles.nav_opt}>
+              <Nav.Link href="/donor-post" className={styles.nav_opt}>
                 Donate
               </Nav.Link>
-              <Nav.Link href="#impactPage" className={styles.nav_opt}>
+              <Nav.Link href="/donor-posts" className={styles.nav_opt}>
                 My Donation Requests
               </Nav.Link>
-              <Nav.Link href="#contactPage" className={styles.nav_opt}>
+              <Nav.Link href="/donor-accpted-posts" className={styles.nav_opt}>
                 My Accepted Donations
               </Nav.Link>
               <Nav.Link to="/donation-drive" className={styles.nav_opt}>

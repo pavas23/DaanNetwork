@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DonorPostCard from "./DonorPostCard";
+import DonorAcceptedPostCard from "./DonorAcceptedPostCard";
 import DonorNav from "./DonorNav";
 import foodimg from "../../images/foodaaaa.jpg";
 import swal from "sweetalert";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-const DonorPosts = () => {
+const DonorAcceptedPosts = () => {
   let navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -28,7 +28,7 @@ const DonorPosts = () => {
 
   const getData = async () => {
     const response = await fetch(
-      `${REACT_APP_APIURL}/donor/get-donation-history`,
+      `${REACT_APP_APIURL}/donor/my-accepted-donation-requests`,
       {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ const DonorPosts = () => {
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
         swal(
-          "Could not fetch your donation requests",
+          "Could not fetch your accepted donation requests",
           "Invalid Session",
           "error"
         );
@@ -51,17 +51,22 @@ const DonorPosts = () => {
         }, 1500);
       } else {
         swal(
-          "Could not fetch your donation requests",
+          "Could not fetch your accepted donation requests",
           `${json.desc} !!`,
           "error"
         );
       }
     } else {
       if (json.foodDonations[0] == null) {
-        swal("No donation requests to show", `${json.desc} !!`, "error");
+        swal(
+          "No accepted donation requests to show",
+          `${json.desc} !!`,
+          "error"
+        );
       }
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
+      console.log(json.foodDonations);
     }
   };
 
@@ -135,11 +140,11 @@ const DonorPosts = () => {
     <div>
       <DonorNav />
       <Container>
-        <h1 className="text-center mt-3 mb-5">My Pending Donation Requests</h1>
+        <h1 className="text-center mt-3 mb-5">My Accepted Donation Requests</h1>
         <Row className="justify-content-center">
           {cards.map((card) => (
             <Col md={4} key={card._id}>
-              <DonorPostCard
+              <DonorAcceptedPostCard
                 image={card.images.length !== 0 ? card.images[0] : ""}
                 _id={card._id}
                 donationRequestNum={card.donationRequestNum}
@@ -149,6 +154,11 @@ const DonorPosts = () => {
                 quantity={card.quantity}
                 pickUpLocation={card.pickUpLocation}
                 pickUpDate={card.pickUpDate}
+                ngo_name={card.ngo.name}
+                ngo_address={card.ngo.address}
+                ngo_contactNumber={card.ngo.contactNumber}
+                ngo_emailId={card.ngo.emailId}
+                ngo_website={card.ngo.website}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
               />
@@ -405,4 +415,4 @@ const EditModal = ({
   );
 };
 
-export default DonorPosts;
+export default DonorAcceptedPosts;

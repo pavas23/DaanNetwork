@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Modal } from "react-bootstrap";
 import styles from "../../css/Donor/DonorPostCard.module.css";
 
-function DonorPostCard({
+function DonorAcceptedPostCard({
   id,
   _id,
   image,
@@ -14,6 +14,11 @@ function DonorPostCard({
   pickUpDate,
   onDelete,
   onEdit,
+  ngo_name,
+  ngo_address,
+  ngo_contactNumber,
+  ngo_emailId,
+  ngo_website,
 }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -64,19 +69,17 @@ function DonorPostCard({
           {new Date(pickUpDate).toLocaleString().split(",")[0]}
           <br />
           <strong>Status: </strong>
-          {accepted ? "NGO Accepted" : "Not Accepted"}
+          {accepted ? `Accepted by NGO: ${ngo_name}` : "Not Accepted"}
+          <br />
+          <strong>NGO Address:</strong> {ngo_address}
+          <br />
+          <strong>NGO Contact Number:</strong> {ngo_contactNumber}
+          <br />
+          <strong>NGO Email Id:</strong> {ngo_emailId}
+          <br />
+          <strong>NGO Website:</strong> {ngo_website}
           <br />
         </Card.Text>
-        <div className="d-flex justify-content-between align-items-center">
-          {" "}
-          {/* Align delete button to the bottom */}
-          <Button variant="primary" onClick={handleEditClick}>
-            Edit
-          </Button>
-          <Button variant="danger" onClick={handleDeleteClick}>
-            Delete
-          </Button>
-        </div>
       </Card.Body>
 
       <Modal show={showConfirmationModal} onHide={handleCancelDelete}>
@@ -97,4 +100,4 @@ function DonorPostCard({
   );
 }
 
-export default DonorPostCard;
+export default DonorAcceptedPostCard;
