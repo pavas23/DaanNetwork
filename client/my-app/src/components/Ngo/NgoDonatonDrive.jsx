@@ -242,7 +242,7 @@ const NgoDonationDrive = () => {
                     style={{ justifyContent: "flex-end" }}
                   >
                     <button
-                      className={"btn " + styles.btn_secondary}
+                      className={"btn " + styles.btn_ternary}
                       onClick={addItems}
                     >
                       Add New Item
