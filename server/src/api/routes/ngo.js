@@ -101,6 +101,10 @@ const ngoController = require("../controllers/NgoController");
  */
 
 router.post(
+  "/ngo-login", ngoController.NGOLogin
+);
+
+router.post(
   "/create-ngo",
   uploadCertificate.single("reg_certificate"),
   ngoController.addNGO,
