@@ -412,6 +412,7 @@ module.exports.createDonationRequest = async (req, res) => {
         name: description.name,
         items: description.items,
         images: description.images,
+        brief:description.brief
       },
       ngo: ngo[0]._id,
       donors: [],

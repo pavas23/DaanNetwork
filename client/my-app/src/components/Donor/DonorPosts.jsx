@@ -72,6 +72,14 @@ const DonorPosts = () => {
       if (card._id == id) return card.donationRequestNum;
     });
 
+    var num = 0;
+    for (var i = 0; i < donationRequestNum.length; i++) {
+      if (donationRequestNum[i] != undefined) {
+        num = donationRequestNum[i];
+        break;
+      }
+    }
+
     const deleteData = async () => {
       const response = await fetch(
         `${REACT_APP_APIURL}/donor/delete-donation-request`,
@@ -82,7 +90,7 @@ const DonorPosts = () => {
             "Content-type": "application/json",
           },
           body: JSON.stringify({
-            donationRequestNum: donationRequestNum[0],
+            donationRequestNum: num,
           }),
         }
       );
@@ -134,37 +142,39 @@ const DonorPosts = () => {
     <div>
       <DonorNav />
       <div className={styles.main_body}>
-      <Container>
-        <h1 className="text-center mt-3 mb-5" style={{color:"black"}}>My Pending Donation Requests</h1>
-        <Row className="justify-content-center">
-          {cards.map((card) => (
-            <Col md={4} key={card._id}>
-              <DonorPostCard
-                image={card.images.length !== 0 ? card.images[0] : ""}
-                _id={card._id}
-                donationRequestNum={card.donationRequestNum}
-                accepted={card.accepted}
-                description={card.description}
-                items={card.items}
-                quantity={card.quantity}
-                pickUpLocation={card.pickUpLocation}
-                pickUpDate={card.pickUpDate}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-              />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-      <EditModal
-        flag={flag}
-        setFlag={setFlag}
-        show={showModal}
-        onHide={handleCloseModal}
-        editedCard={editedCard}
-        onSaveChanges={handleSaveChanges}
-      />
-    </div>
+        <Container>
+          <h1 className="text-center mt-3 mb-5">
+            My Pending Donation Requests
+          </h1>
+          <Row className="justify-content-center">
+            {cards.map((card) => (
+              <Col md={4} key={card._id}>
+                <DonorPostCard
+                  image={card.images.length !== 0 ? card.images[0] : ""}
+                  _id={card._id}
+                  donationRequestNum={card.donationRequestNum}
+                  accepted={card.accepted}
+                  description={card.description}
+                  items={card.items}
+                  quantity={card.quantity}
+                  pickUpLocation={card.pickUpLocation}
+                  pickUpDate={card.pickUpDate}
+                  onDelete={handleDelete}
+                  onEdit={handleEdit}
+                />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+        <EditModal
+          flag={flag}
+          setFlag={setFlag}
+          show={showModal}
+          onHide={handleCloseModal}
+          editedCard={editedCard}
+          onSaveChanges={handleSaveChanges}
+        />
+      </div>
     </div>
   );
 };
@@ -272,7 +282,6 @@ const EditModal = ({
     updateData();
     onSaveChanges(editedCard);
     setFlag(true);
-    // call get data function
   };
 
   return (
@@ -296,7 +305,7 @@ const EditModal = ({
               }}
             />
           </Form.Group>
-          <br/>
+          <br />
           <Form.Group controlId="formQuantity">
             <Form.Label className={styles.form_label}>Quantity</Form.Label>
             <span style={{ color: "red" }}>*</span>{" "}
@@ -311,7 +320,7 @@ const EditModal = ({
               }}
             />
           </Form.Group>
-          <br/>
+          <br />
           <Form.Group controlId="formDaysBeforeExpiry">
             {editedItems.map((i, index) => {
               return (
@@ -388,9 +397,11 @@ const EditModal = ({
               </button>
             </div>
           </Form.Group>
-          <br/>
+          <br />
           <Form.Group controlId="formPickUpLocation">
-            <Form.Label className={styles.form_label}>Pick Up Location</Form.Label>
+            <Form.Label className={styles.form_label}>
+              Pick Up Location
+            </Form.Label>
             <span style={{ color: "red" }}>*</span>{" "}
             <Form.Control
               type="text"
@@ -403,7 +414,7 @@ const EditModal = ({
               }}
             />
           </Form.Group>
-          <br/>
+          <br />
           <Form.Group controlId="formPickUpDate">
             <Form.Label className={styles.form_label}>Pick Up Date</Form.Label>
             <span style={{ color: "red" }}>*</span>{" "}
@@ -418,7 +429,7 @@ const EditModal = ({
               }}
             />
           </Form.Group>
-          <br/>
+          <br />
         </Form>
       </Modal.Body>
       <Modal.Footer>
