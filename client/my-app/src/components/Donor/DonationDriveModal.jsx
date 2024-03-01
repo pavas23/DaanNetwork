@@ -3,11 +3,17 @@ import React, { useState } from "react";
 import sampleImage from '../../images/bgd1.jpg'; 
 import styles from '../../css/Donor/DonorDonationDriveModal.module.css';
 import Form from 'react-bootstrap/Form'
-const temp = [{name: "Potato",quantity:10}, {name: "Tomato", quantity:20}, {name : "dine mutter",quantity:25}]
-function DonationDriveModal({donationDrive}){
-  const [items, setItems] = useState([{ item: "", quantity: 0 }]);
+import { useNavigate } from "react-router";
+import swal from "sweetalert";
+
+
+const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
+function DonationDriveModal({donationDrive,closeModal}){
+  let navigate = useNavigate();
+  const [items, setItems] = useState([{ name: "", quantity: 0 }]);
   const addItems = () => {
-    setItems([...items, { item: "", quantity: 0 }]);
+    setItems([...items, { name: "", quantity: 0 }]);
   };
 
   const deleteItems = (index) => {
@@ -44,10 +50,54 @@ function DonationDriveModal({donationDrive}){
   };
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     console.log(items);
+    var donationDetails = {
+      donationRequestId:donationDrive._id,
+      donationDetails:{
+        items: items,
+        pickUpDate:formData.pickUpDate,
+        pickUpAddress:formData.pickUpAddress,
+        description:formData.description
+      }
+    };
+    var response = await fetch(
+      `${REACT_APP_APIURL}/donor/apply-for-donation-drive`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationDetails)
+      }
+    );
+    const json = await response.json()
+    if (!json.status) {
+      if (json.desc == "Please authenticate using a valid token") {
+        swal(
+          "Could not apply to drive",
+          "Server Error",
+          "error"
+        );
+        // localStorage.removeItem("auth-token");
+        setTimeout(() => {
+          closeModal()
+        }, 1500);
+      } else {
+        swal(
+          "Could not apply to drive",
+          `${json.desc} !!`,
+          "error"
+        );
+      }
+    } else {
+      swal("Thank you", "Successfully applied to drive !!", "success");
+      navigate('/donation-drive',{replace:true})
+      closeModal()
+    }
     setForm(
         {
             pickUpDate:"",
@@ -77,7 +127,7 @@ function DonationDriveModal({donationDrive}){
          </strong>
         </div>
         <div class="col">
-          {donationDrive.startDate}
+          {donationDrive.startDate.slice(0,10)}
          </div>
          </div>
          <div class="row justify-content-center mb-1">
@@ -87,7 +137,7 @@ function DonationDriveModal({donationDrive}){
          </strong>
         </div>
         <div class="col">
-          {donationDrive.endDate}
+          {donationDrive.endDate.slice(0,10)}
          </div>
          </div>
             <strong>Reccomended Items</strong>
@@ -100,7 +150,7 @@ function DonationDriveModal({donationDrive}){
                    <strong>
                     Item: 
                    </strong>
-                   {item.item}
+                   {item.name}
                   </div>
                    <div class="col">
                     <strong>Quantity:</strong>
@@ -111,7 +161,7 @@ function DonationDriveModal({donationDrive}){
               })
             }
             </ul>
-            <p><strong>Description: </strong>{donationDrive.description.brief}</p>
+            <p style={{textWrap:"pretty", wordWrap: "break-word"}}><strong>Description: </strong>{donationDrive.description.brief}</p>
           </div>
           </div>
           <div className="col-lg-6 col-md-8 col-sm-10">
@@ -126,9 +176,9 @@ function DonationDriveModal({donationDrive}){
                         type="text"
                         className="form-control"
                         id="name"
-                        name="item"
+                        name="name"
                         required
-                        value={i.item}
+                        value={i.name}
                         onChange={(event) => handleItemChange(index, event)}
                         onKeyPress={(event) => {
                           if (event.key === "Enter") {

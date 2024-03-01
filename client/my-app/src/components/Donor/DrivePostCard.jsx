@@ -14,18 +14,17 @@ function DrivePostCard({donationDrive}) {
     const handleApplyClick = () => {
        setShowModal(true)
     }
-
     return (
         <Card className={`${styles.card} mb-4`}>
-            <Card.Img variant="top" src={donationDrive.description.images[0]} alt={'Alt'} />
+            <Card.Img variant="top" src={donationDrive.description.images.length >0 ? donationDrive.description.images[0]:''} alt={'Alt'} />
             <Card.Body>
                 {/* <Card.Title>{title}</Card.Title> */}
                 <Card.Text className='text-center'>
                     <strong className='h4'>{donationDrive.description.name}</strong><br/>
                     </Card.Text>
                     <Card.Text >
-                     <strong>Start Date:</strong> {donationDrive.startDate}<br />
-                    <strong>End Date:</strong> {donationDrive.endDate}<br />
+                     <strong>Start Date:</strong> {donationDrive.startDate.slice(0,10)}<br />
+                    <strong>End Date:</strong> {donationDrive.endDate.slice(0,10)}<br />
                     <strong>Organising NGO:</strong> {donationDrive.ngo.name}<br />
                     
                 </Card.Text>
@@ -49,6 +48,7 @@ function DrivePostCard({donationDrive}) {
         <Modal.Body>
             <DonationDriveModal
                 donationDrive={donationDrive}
+                closeModal = {handleClose}
             />
         </Modal.Body>
         <Modal.Footer>

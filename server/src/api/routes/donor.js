@@ -246,7 +246,7 @@ router.post("/get-donation-history",donorVerification, donorController.getAllDon
 
 /**
  * @swagger
- * /donor/appy-drive:
+ * /donor/apply-for-donation-drive:
  *   post:
  *     summary: Donor can see all donations requests raised by them
  *     tags: [Donor]
@@ -275,7 +275,7 @@ router.post("/get-donation-history",donorVerification, donorController.getAllDon
  *               items:
  *                  $ref: '#/components/schemas/NgoDonationRequest'
  */
-router.post("/apply-for-donation-drive", donorController.applyForDonationDrive);
+router.post("/apply-for-donation-drive", donorVerification,donorController.applyForDonationDrive);
 
 /**
  * @swagger
