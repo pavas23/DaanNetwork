@@ -424,8 +424,11 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
  *   }
  */
 module.exports.applyForDonationDrive = async (req, res) => {
-  const { donorEmailId, donationDetails, donationRequestId } = req.body;
-
+  console.log(req.body)
+  console.log(req.user);
+  const donorEmailId = req.user.emailId;
+  const {donationRequestId ,donationDetails} = req.body;
+  console.log(donationDetails);
   try {
     var donor = await Donor.find({ emailId: donorEmailId });
     if (donor.length == 0)
@@ -435,7 +438,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
 
     var donationRequest = await NgoDonationRequest.findById(donationRequestId);
     if (donationRequest == null)
-      return res.status(400).json({ status: true, msg: "Invalid donationID" });
+      return res.status(400).json({ status: false, msg: "Invalid donationID" });
     var ngoID = donationRequest.ngo;
 
     const donor_obj = {

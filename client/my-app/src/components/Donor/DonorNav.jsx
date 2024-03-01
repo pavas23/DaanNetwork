@@ -16,7 +16,7 @@ const DonorNav = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
-    navigate("/donor-login", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
@@ -49,11 +49,14 @@ const DonorNav = () => {
               <Nav.Link href="/donor-accpted-posts" className={styles.nav_opt}>
                 My Accepted Donations
               </Nav.Link>
+              <Nav.Link href="/donation-drive" className={styles.nav_opt}>
+                Donation Drive
+              </Nav.Link>
             </Nav>
             <Nav>
-              <Link className={styles.logout_btn} onClick={handleLogout}>
+              <Nav.Link className={styles.logout_btn} onClick={handleLogout}>
                 Logout
-              </Link>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
