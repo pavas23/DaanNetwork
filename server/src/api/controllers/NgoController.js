@@ -7,7 +7,7 @@ const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
-
+const { createSecretToken } = require("../helpers/secretToken");
 
 module.exports.NGOLogin= async (req,res)=>{
   try{
@@ -21,11 +21,8 @@ module.exports.NGOLogin= async (req,res)=>{
       return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
     }
     const token = createSecretToken(newNGO._id);
-     res.cookie("token", token, {
-       withCredentials: true,
-       httpOnly: false,
-     });
-     res.status(201).json({status:true, message: "User logged in successfully"});
+
+     res.status(201).json({status:true,token:token, message: "User logged in successfully"});
   }
   catch(err){
     console.log(err);
@@ -127,11 +124,6 @@ module.exports.addNGO = async (req, res) => {
 
     //send mail to ngo
     notifyNGORegistration(name, emailId);
-    const token = createSecretToken(newNGO._id);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
     return res
       .status(201)
       .json({ status: true, desc: "NGO added successfully" });
@@ -387,7 +379,9 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
  * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
-  const { startDate, endDate, description, ngoEmail } = req.body;
+  console.log('hello')
+  const ngoEmail = req.user.emailId
+  const { startDate, endDate, description} = req.body;
   console.log(description);
   //for now end is an int which will be added to current date
   // var someDate = new Date();

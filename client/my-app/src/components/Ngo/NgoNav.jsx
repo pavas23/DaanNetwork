@@ -5,12 +5,15 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import styles from "../../css/Ngo/NgoNav.module.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 const x =
   "#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}";
 
 const NgoNavBar = () => {
+  let navigate = useNavigate();
   const logout = () => {
-    console.log("Logout clicked");
+    localStorage.removeItem("auth-token");
+    navigate("/", { replace: true });
   };
   return (
     <div style={{ backgroundColor: "#f6f6f6" }}>
@@ -31,10 +34,10 @@ const NgoNavBar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id="dekho_zara">
-              <Nav.Link href="#aboutUsPage" className={styles.nav_opt}>
+              <Nav.Link href="/ngo-donations" className={styles.nav_opt}>
                 Donations
               </Nav.Link>
-              <Nav.Link href="#impactPage" className={styles.nav_opt}>
+              <Nav.Link href="/ngo-drive" className={styles.nav_opt}>
                 Create Donation Drive
               </Nav.Link>
               {/* <Nav.Link href='#contactPage' className={styles.nav_opt}></Nav.Link> */}
