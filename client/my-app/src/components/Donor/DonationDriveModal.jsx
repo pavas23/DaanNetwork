@@ -4,7 +4,7 @@ import sampleImage from '../../images/bgd1.jpg';
 import styles from '../../css/Donor/DonorDonationDriveModal.module.css';
 import Form from 'react-bootstrap/Form'
 const temp = [{name: "Potato",quantity:10}, {name: "Tomato", quantity:20}, {name : "dine mutter",quantity:25}]
-const DonationDriveModal = () => {
+function DonationDriveModal({donationDrive}){
   const [items, setItems] = useState([{ item: "", quantity: 0 }]);
   const addItems = () => {
     setItems([...items, { item: "", quantity: 0 }]);
@@ -61,7 +61,59 @@ const DonationDriveModal = () => {
   return (
     <div >
       <div className="container mt-2">
-        <div className="row">
+        <div className="row justify-content-center">
+        <div className="col-lg-6 col-md-8 col-sm-10">
+          <div className="text-center mb-1">
+           <div className="">
+           <img src={donationDrive.description.images[0]} alt={'sampleImage'} className={"img-fluid " + styles.driveDetailsDiv} style={{ borderRadius:"1rem", maxWidth:"300px", maxHeight:"400px"  }} />
+            <h4 className="mt-3">{donationDrive.description.name}</h4>
+           </div>
+          </div>
+          <div className="border p-4">
+          <div class="row justify-content-center mb-1">
+        <div class="col">
+         <strong>
+          Start Date: 
+         </strong>
+        </div>
+        <div class="col">
+          {donationDrive.startDate}
+         </div>
+         </div>
+         <div class="row justify-content-center mb-1">
+        <div class="col">
+         <strong>
+          End Date: 
+         </strong>
+        </div>
+        <div class="col">
+          {donationDrive.endDate}
+         </div>
+         </div>
+            <strong>Reccomended Items</strong>
+            <ul style={{padding:"0"}}>
+            {
+              donationDrive.description.items.map((item) => {
+                return (
+                  <div class="row justify-content-center mb-1">
+                  <div class="col">
+                   <strong>
+                    Item: 
+                   </strong>
+                   {item.item}
+                  </div>
+                   <div class="col">
+                    <strong>Quantity:</strong>
+                    {item.quantity}
+                   </div>
+                   </div>
+                )
+              })
+            }
+            </ul>
+            <p><strong>Description: </strong>{donationDrive.description.brief}</p>
+          </div>
+          </div>
           <div className="col-lg-6 col-md-8 col-sm-10">
             <form onSubmit={handleSubmit} className="sticky-lg-top">
               {items.map((i, index) => {
@@ -173,29 +225,7 @@ const DonationDriveModal = () => {
               </button>
             </form>
           </div>
-          <div className="col-lg-6 col-md-8 col-sm-10">
-          <div className="text-center mb-4">
-           <div className="" style={{padding:"1rem"}}>
-           <img src={sampleImage} alt="Sample" className={"img-fluid " + styles.driveDetailsDiv} style={{ borderRadius:"1rem", maxWidth:"250px", maxHeight:"400px"  }} />
-            <h4 className="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, nobis.</h4>
-           </div>
-          </div>
-          <div className="border p-3">
-            <p><strong>Start Date:</strong>Lorem ipsum dolor sit.</p>
-            <p><strong>End Date:</strong>Lorem ipsum dolor sit.</p>
-            <p>Reccomended Items</p>
-            <ul>
-            {
-              temp.map((item) => {
-                return (
-                  <li>Item: {item.name} Quantity: {item.quantity}</li>
-                )
-              })
-            }
-            </ul>
-            <p><strong>Description:</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae quaerat repellat neque, ab corporis assumenda inventore ipsam, eveniet amet quasi debitis eaque reprehenderit animi esse facere voluptates nemo magni quisquam placeat at quis. Quis deserunt quaerat nobis praesentium, est natus eos, hic debitis doloribus, quas vel? Consectetur aliquid numquam quaerat?</p>
-          </div>
-          </div>
+         
         </div>
       </div>
     </div>

@@ -21,3 +21,13 @@
     font-size: 1rem;
     color: #6c757d;
 }
+
+.btn_primary{
+    background-color: #078534;
+    width: 100%;
+}
+
+.btn_primary:hover{
+    background-color:rgb(27, 197, 86);
+
+}

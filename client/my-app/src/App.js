@@ -5,8 +5,8 @@ import DonationDrive from "./components/Donor/DonationDrive";
 function App() {
   return (
     <>
-      {/* <Outlet /> */}
-      <DonationDrive/>
+      <Outlet />
+     
     </>
   );
 }

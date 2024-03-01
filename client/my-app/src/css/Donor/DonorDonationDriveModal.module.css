@@ -2,6 +2,13 @@
     max-width: 100%;
     height: auto;
   }
+
+  @media screen and (min-width: 300px) {
+    img_fluid {
+      max-width: 200px;
+      height: auto;
+    }
+  }
   
   .btn_secondary {
     width: 30%;

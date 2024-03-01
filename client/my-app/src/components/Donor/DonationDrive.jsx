@@ -1,10 +1,9 @@
-// import Modal from "react-boo tstrap/Modal";
 import { useState } from "react";
-// import Button from "react-bootstrap/Button";
 import DonationDriveModal from "./DonationDriveModal";
 import DrivePostCard from './DrivePostCard'
 import foodimg from "../../images/660-13.jpg"
 import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
+import DonorNav from './DonorNav'
 const driveList = [
   {
     startDate: '22-05-2024',
@@ -25,8 +24,9 @@ const driveList = [
           quantity:20
         }
       ],
-      images: [foodimg],
-     
+      images: [],
+      
+      brief:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolores ipsum beatae rem nobis sunt harum nesciunt voluptate nemo iure vel deserunt impedit, placeat iste? Pariatur ducimus nostrum tenetur velit, sequi enim nobis itaque fugiat harum aspernatur. Eligendi vel, illo officiis veritatis, voluptates vitae neque perferendis libero iusto, praesentium voluptatum."
     },
     ngo: {
       name:'Congress'
@@ -52,7 +52,8 @@ const driveList = [
         }
       ],
       images: [foodimg],
-     
+      
+      brief:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolores ipsum beatae rem nobis sunt harum nesciunt voluptate nemo iure vel deserunt impedit, placeat iste? Pariatur ducimus nostrum tenetur velit, sequi enim nobis itaque fugiat harum aspernatur. Eligendi vel, illo officiis veritatis, voluptates vitae neque perferendis libero iusto, praesentium voluptatum."
     },
     ngo: {
       name:'Congress'
@@ -78,7 +79,8 @@ const driveList = [
         }
       ],
       images: [foodimg],
-     
+      
+      brief:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolores ipsum beatae rem nobis sunt harum nesciunt voluptate nemo iure vel deserunt impedit, placeat iste? Pariatur ducimus nostrum tenetur velit, sequi enim nobis itaque fugiat harum aspernatur. Eligendi vel, illo officiis veritatis, voluptates vitae neque perferendis libero iusto, praesentium voluptatum."
     },
     ngo: {
       name:'Congress'
@@ -93,10 +95,10 @@ const DonationDrive = () => {
   // const handleShow = () => setShow(true);
   // const handleClose = () => setShow(false);
   return (
-    <div>
-        {/* <DonorNav /> */}
-        <Container>
-            <h1 className="text-center mt-3 mb-5">My Posts</h1>
+    <div style={{backgroundColor:'#fffff8'}}>
+        <DonorNav />
+        <Container >
+            <h1 className="text-center mt-3 mb-5">Dontation Drives</h1>
             <Row className="justify-content-center">
                 {driveList.map(drive => (
                     <Col md={4}>

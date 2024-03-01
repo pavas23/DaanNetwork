@@ -20,15 +20,17 @@ function DrivePostCard({donationDrive}) {
             <Card.Img variant="top" src={donationDrive.description.images[0]} alt={'Alt'} />
             <Card.Body>
                 {/* <Card.Title>{title}</Card.Title> */}
-                <Card.Text>
-                    <strong>Name:</strong> {donationDrive.description.name}<br />
+                <Card.Text className='text-center'>
+                    <strong className='h4'>{donationDrive.description.name}</strong><br/>
+                    </Card.Text>
+                    <Card.Text >
                      <strong>Start Date:</strong> {donationDrive.startDate}<br />
                     <strong>End Date:</strong> {donationDrive.endDate}<br />
                     <strong>Organising NGO:</strong> {donationDrive.ngo.name}<br />
                     
                 </Card.Text>
                 <div className="d-flex justify-content-between align-items-center"> {/* Align delete button to the bottom */}
-                    <Button variant="primary" onClick={handleApplyClick}>Apply!</Button>
+                    <Button  className={styles.btn_primary} onClick={handleApplyClick}>Apply!</Button>
                 </div>
             </Card.Body>
 

@@ -49,11 +49,14 @@ const DonorNav = () => {
               <Nav.Link href="#contactPage" className={styles.nav_opt}>
                 My Accepted Donations
               </Nav.Link>
+              <Nav.Link to="/donation-drive" className={styles.nav_opt}>
+                Donation Drive
+              </Nav.Link>
             </Nav>
             <Nav>
-              <Link className={styles.logout_btn} onClick={handleLogout}>
+              <Nav.Link className={styles.logout_btn} onClick={handleLogout}>
                 Logout
-              </Link>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
