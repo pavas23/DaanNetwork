@@ -30,7 +30,6 @@ const DonationDrive = () => {
         swal("Could not fetch donation drives", `${json.desc} !!`, "error");
       }
     } else {
-      console.log(typeof json.drives[0].startDate);
       setDriveList(json.drives);
     }
   };
