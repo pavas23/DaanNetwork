@@ -17,6 +17,7 @@ import DonorPosts from "./components/Donor/DonorPosts";
 import DonorAcceptedPosts from "./components/Donor/DonorAcceptedPosts";
 import NGOLogin from "./components/Ngo/NgoLogin";
 import DonationDrive from "./components/Donor/DonationDrive";
+import NgoHistory from "./components/Ngo/NgoHistory";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="donor-posts" element={<DonorPosts />} />
       <Route path="donation-drive" element={<DonationDrive/>}/>
       <Route path="donor-accpted-posts" element={<DonorAcceptedPosts/>} />
+      <Route path="ngo-history" element={<NgoHistory/>} />
     </Route>,
   ),
 );
