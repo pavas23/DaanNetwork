@@ -30,8 +30,7 @@ function DrivePostCard({ donationDrive }) {
           <br />
         </Card.Text>
         <Card.Text>
-          <strong>Start Date:</strong> {donationDrive.startDate.slice(0, 10)}
-          <br />
+          {/* <strong>Start Date:</strong> {donationDrive.startDate.slice(0,10)}<br /> */}
           <strong>End Date:</strong> {donationDrive.endDate.slice(0, 10)}
           <br />
           <strong>Organising NGO:</strong> {donationDrive.ngo.name}

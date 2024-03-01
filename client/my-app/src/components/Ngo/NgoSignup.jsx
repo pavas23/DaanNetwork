@@ -5,8 +5,6 @@ import swal from "sweetalert";
 
 function NGOsignup() {
   let navigate = useNavigate();
-  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
-
   const initialValues = {
     ngo_name: "",
     ngo_pan: "",
@@ -62,10 +60,6 @@ function NGOsignup() {
       if (!res.status) {
         setFormErrors({ error: res.desc });
       } else {
-        swal("Good job", "Successfully registered !!", "success");
-        setTimeout(() => {
-          navigate("/ngo-login", { replace: true });
-        }, 1500);
         setFormValues(initialValues);
       }
     }

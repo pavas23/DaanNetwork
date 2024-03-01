@@ -230,7 +230,7 @@ function DonationDriveModal({ donationDrive, closeModal }) {
               </div>
               <div className="form-group">
                 <label htmlFor="name" className={styles.form_label}>
-                  Start Date
+                  Pickup Date
                 </label>
                 <span style={{ color: "red" }}>*</span>{" "}
                 <Form.Control

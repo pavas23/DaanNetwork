@@ -19,7 +19,7 @@ const NgoDonationDrive = () => {
   });
 
   const [flag, setFlag] = useState(0);
-  const [items, setItems] = useState([{ item: "", quantity: 0 }]);
+  const [items, setItems] = useState([{ name: "", quantity: 0 }]);
   const [file, setFile] = useState(null);
   const inputFile = useRef(null);
 
@@ -56,7 +56,7 @@ const NgoDonationDrive = () => {
   };
 
   const addItems = () => {
-    setItems([...items, { item: "", quantity: 0 }]);
+    setItems([...items, { name: "", quantity: 0 }]);
   };
 
   const deleteItems = (index) => {
@@ -112,39 +112,28 @@ const NgoDonationDrive = () => {
           body: JSON.stringify(req),
         },
       );
-      var json = await resp.json();
-      if (!json.status) {
-        if (json.desc == "Please authenticate using a valid token") {
-          swal("Could not add donation drive", "Invalid Session", "error");
-          localStorage.removeItem("auth-token");
-          setTimeout(() => {
-            navigate("/ngo-login", { replace: true });
-          }, 1500);
-        } else {
-          swal("Could not add donation drive", `${json.desc} !!`, "error");
-        }
-      } else {
-        swal("Good job", "Donation drive created successfully !!", "success");
-        setFlag(0);
-        setItems([
-          {
-            item: "",
-            quantity: 0,
-          },
-        ]);
-        setFormData({
-          name: "",
-          description: "",
-          startDate: "",
-          endDate: "",
-        });
-        if (inputFile.current) {
-          inputFile.current.value = "";
-          inputFile.current.type = "file";
-        }
-      }
+      var data = await resp.json();
+      console.log(data);
     } catch (err) {
       console.log(err);
+    }
+
+    setFlag(0);
+    setItems([
+      {
+        name: "",
+        quantity: 0,
+      },
+    ]);
+    setFormData({
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+    });
+    if (inputFile.current) {
+      inputFile.current.value = "";
+      inputFile.current.type = "file";
     }
   };
 
@@ -201,8 +190,8 @@ const NgoDonationDrive = () => {
                             required
                             className="form-control"
                             id="name"
-                            name="item"
-                            value={i.item}
+                            name="name"
+                            value={i.name}
                             onChange={(event) => handleItemChange(index, event)}
                             onKeyPress={(event) => {
                               if (event.key === "Enter") {
