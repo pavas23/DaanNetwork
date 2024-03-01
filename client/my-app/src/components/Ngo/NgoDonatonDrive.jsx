@@ -77,16 +77,16 @@ const NgoDonationDrive = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
-    if (
-      formData.startDate == null ||
-      formData.endDate == null ||
-      formData.name == "" ||
-      formData.endDate <= formData.startDate
-    ) {
-      console.log("idhar");
-      setFlag(1);
-      return;
-    }
+    // if (
+    //   formData.startDate == null ||
+    //   formData.endDate == null ||
+    //   formData.name == "" ||
+    //   formData.endDate <= formData.startDate
+    // ) {
+    //   console.log("idhar");
+    //   setFlag(1);
+    //   return;
+    // }
 
     for (let i = 0; i < items.length; i++) {
       console.log(typeof items[i].quantity);
