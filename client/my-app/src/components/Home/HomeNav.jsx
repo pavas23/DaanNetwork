@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function HomeNav() {
-  const x =
-    `#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;font-weight:semi-bold;}
+  const x = `#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;font-weight:semi-bold;}
   .dropdown-item.active, .dropdown-item:active {background-color: #195406 !important; }
     `;
   return (
@@ -61,7 +60,10 @@ function HomeNav() {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Link to="/donor-login" style={{ textDecoration: "none",color:"inherit"}}>
+                  <Link
+                    to="/donor-login"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
                     Login as a Donor
                   </Link>
                 </NavDropdown.Item>

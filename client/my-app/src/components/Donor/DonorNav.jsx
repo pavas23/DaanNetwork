@@ -4,12 +4,21 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import styles from "../../css/Donor/DonorNav.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const x =
   "#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;fontWeight:semi-bold;}";
 
 const DonorNav = () => {
+  let navigate = useNavigate();
+  let location = useLocation();
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth-token");
+    navigate("/donor-login", { replace: true });
+  };
+
   return (
     <>
       <style>{x}</style>
@@ -42,12 +51,7 @@ const DonorNav = () => {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Link
-                className={styles.logout_btn}
-                onClick={() => {
-                  console.log("Hello");
-                }}
-              >
+              <Link className={styles.logout_btn} onClick={handleLogout}>
                 Logout
               </Link>
             </Nav>
