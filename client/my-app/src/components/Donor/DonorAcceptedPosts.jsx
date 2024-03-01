@@ -5,7 +5,7 @@ import DonorAcceptedPostCard from "./DonorAcceptedPostCard";
 import DonorNav from "./DonorNav";
 import foodimg from "../../images/foodaaaa.jpg";
 import swal from "sweetalert";
-import styles from "../../css/Donor/DonationForm.module.css";
+import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
@@ -139,6 +139,7 @@ const DonorAcceptedPosts = () => {
   return (
     <div>
       <DonorNav />
+      <div className={styles.main_body}> 
       <Container>
         <h1 className="text-center mt-3 mb-5">My Accepted Donation Requests</h1>
         <Row className="justify-content-center">
@@ -166,6 +167,7 @@ const DonorAcceptedPosts = () => {
           ))}
         </Row>
       </Container>
+      </div>
       <EditModal
         flag={flag}
         setFlag={setFlag}

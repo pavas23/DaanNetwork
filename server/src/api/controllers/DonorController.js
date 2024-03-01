@@ -213,10 +213,10 @@ module.exports.createDonationRequest = async (req, res) => {
     }
 
     // find number of requests made by this donor
-    var array = (await FoodDonation.find({ donor: donors[0]._id }));
+    var array = await FoodDonation.find({ donor: donors[0]._id });
     var maxNum = 0;
-    for(var i=0;i<array.length;i++){
-      if(array[i].donationRequestNum > maxNum){
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].donationRequestNum > maxNum) {
         maxNum = array[i].donationRequestNum;
       }
     }
@@ -235,7 +235,6 @@ module.exports.createDonationRequest = async (req, res) => {
       items: JSON.parse(items),
     });
 
-    console.log(foodDonation);
     res.status(200).json({ status: true, desc: "Donation request created" });
   } catch (error) {
     console.log(error);
@@ -260,7 +259,7 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
         .json({ status: false, desc: `No donor with email ${donorEmailId}` });
     }
 
-    var foodDonations = await FoodDonation.find({accepted:true})
+    var foodDonations = await FoodDonation.find({ accepted: true })
       .populate("donor")
       .populate("ngo")
       .exec();
@@ -316,7 +315,6 @@ module.exports.uploadDonationImages = async (req, res) => {
     let image = await UploadImage.create({
       imageName: Date.now() + path.extname(req.file.originalname),
     });
-    console.log(image);
     return res.status(200).json({ status: true, desc: "Image uploaded !!" });
   } catch (error) {
     console.log(error);
@@ -341,7 +339,7 @@ module.exports.getAllDonations = async (req, res) => {
         .json({ status: false, desc: `No donor with email ${donorEmailId}` });
     }
 
-    var foodDonations = await FoodDonation.find({accepted:false})
+    var foodDonations = await FoodDonation.find({ accepted: false })
       .populate("donor")
       .populate("ngo")
       .exec();
@@ -349,8 +347,6 @@ module.exports.getAllDonations = async (req, res) => {
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
-
-    console.log(foodDonations);
 
     if (foodDonations[0] == null) {
       return res.status(200).json({
@@ -369,7 +365,7 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => { };
+var notifyNewDonorForDrive = async (drive, donor) => {};
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
@@ -429,7 +425,7 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
  */
 module.exports.applyForDonationDrive = async (req, res) => {
   const { donorEmailId, donationDetails, donationRequestId } = req.body;
-  console.log(donationDetails);
+
   try {
     var donor = await Donor.find({ emailId: donorEmailId });
     if (donor.length == 0)
@@ -449,7 +445,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
       pickUpAddress: donationDetails.pickUpAddress,
       description: donationDetails.description,
     };
-    console.log(donor_obj);
+
     donationRequest.donors = [...donationRequest.donors, donor_obj];
     //idk why this is like this :(
     donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
@@ -527,12 +523,10 @@ module.exports.deleteDonationRequest = async (req, res) => {
     }
 
     // checking if this donation request exists or not
-    var foodDonations = await FoodDonation.find({})
+    var foodDonations = await FoodDonation.find({ accepted: false })
       .populate("donor")
       .populate("ngo")
       .exec();
-
-      console.log(foodDonations);
 
     // filtering all matching donation requests
     foodDonations = foodDonations.map((donation) => {
