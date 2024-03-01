@@ -3,8 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 module.exports.ngoVerification = async (req, res, next) => {
-    const token = req.header("auth-token");
-    console.log(token)
+  const token = req.header("auth-token");
   if (!token) {
     return res
       .status(400)

@@ -9,26 +9,37 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
 const { createSecretToken } = require("../helpers/secretToken");
 
-module.exports.NGOLogin= async (req,res)=>{
-  try{
-    const { emailId, password}=req.body;
-    const newNGO=await Ngo.findOne({emailId:emailId});
-    if(!newNGO){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+module.exports.NGOLogin = async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const newNGO = await Ngo.findOne({ emailId: emailId });
+    if (!newNGO) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
-    const validPassword=await bcrypt.compare(password,newNGO.password);
-    if(!validPassword){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    const validPassword = await bcrypt.compare(password, newNGO.password);
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
     const token = createSecretToken(newNGO._id);
 
-     res.status(201).json({status:true,token:token, message: "User logged in successfully"});
-  }
-  catch(err){
+    res
+      .status(201)
+      .json({
+        status: true,
+        token: token,
+        message: "User logged in successfully",
+      });
+  } catch (err) {
     console.log(err);
-    return res.status(500).json({status:false,desc:"Internal Server Error Occured"});
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};
 
 var notifyNGORegistration = async (ngoName, emailId) => {
   let transporter = nodemailer.createTransport({
@@ -142,7 +153,7 @@ module.exports.addNGO = async (req, res) => {
 module.exports.getAllDonationRequests = async (req, res) => {
   try {
     // this will show donation requests which are not accepted yet, along with donor details
-    var foodDonations = FoodDonation.find({ accepted: false })
+    var foodDonations = await FoodDonation.find({ accepted: false })
       .populate("donor")
       .exec();
     foodDonations = (await foodDonations).map((donation) => donation.toJSON());
@@ -160,8 +171,9 @@ module.exports.getAllDonationRequests = async (req, res) => {
  * res : { status:boolean, desc:String }
  */
 module.exports.acceptDonationRequest = async (req, res) => {
+  const ngoEmailId = req.user.emailId;
   try {
-    const { ngoEmailId, donorEmailId, donationRequestNum } = req.body;
+    const { donorEmailId, donationRequestNum } = req.body;
 
     // finding donor by email id
     const donors = await Donor.find({ emailId: donorEmailId });
@@ -379,9 +391,9 @@ module.exports.sendConfirmationMailToDonor = async (req, res) => {
  * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
-  console.log('hello')
-  const ngoEmail = req.user.emailId
-  const { startDate, endDate, description} = req.body;
+  console.log("hello");
+  const ngoEmail = req.user.emailId;
+  const { startDate, endDate, description } = req.body;
   console.log(description);
   //for now end is an int which will be added to current date
   // var someDate = new Date();
@@ -406,7 +418,7 @@ module.exports.createDonationRequest = async (req, res) => {
         name: description.name,
         items: description.items,
         images: description.images,
-        brief:description.brief
+        brief: description.brief,
       },
       ngo: ngo[0]._id,
       donors: [],

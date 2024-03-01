@@ -7,9 +7,11 @@ import DonorNav from "./DonorNav";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
-const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
 const DonationDrive = () => {
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   let navigate = useNavigate();
+
   const [driveList, setDriveList] = useState([]);
   const getData = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/donor/all-donation-drives`, {
@@ -30,7 +32,6 @@ const DonationDrive = () => {
         swal("Could not fetch donation drives", `${json.desc} !!`, "error");
       }
     } else {
-      console.log(typeof json.drives[0].startDate);
       setDriveList(json.drives);
     }
   };
@@ -43,9 +44,9 @@ const DonationDrive = () => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#fffff8" }}>
+    <div>
       <DonorNav />
-      <Container>
+      <Container style={{ backgroundColor: "#fffff8" }}>
         <h1 className="text-center mt-3 mb-5">Donation Drives</h1>
         <Row className="justify-content-center">
           {driveList.map((drive) => (

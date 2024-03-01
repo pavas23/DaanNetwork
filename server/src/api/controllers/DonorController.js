@@ -194,7 +194,7 @@ module.exports.createDonationRequest = async (req, res) => {
       req.body;
 
     const donorEmailId = req.user.emailId;
-
+    console.log(donorEmailId)
     // if no image is attached
     var imagesArray = [];
     if (req.file) {
@@ -413,6 +413,52 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   });
 };
 
+var notifyDonorApplicationNGO = async (drive, application, donor) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  const handlebarOptions = {
+    viewEngine: {
+      extName: ".handlebars",
+      partialsDir: path.resolve("../src/api/views"),
+      defaultLayout: false,
+    },
+    viewPath: path.resolve("../src/api/views"),
+    extName: ".handlebars",
+  };
+  transporter.use("compile", hbs(handlebarOptions));
+
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: drive.ngo.emailId,
+    subject:
+      `Donor has applied to ${drive.description.name}`,
+    context: {
+      title: "Successfully Applied to Donation Drive",
+      email: donor.emailId,
+      donor: donor,
+      drive: drive,
+      application: application,
+    },
+    template: "ngo_donation_drive",
+  };
+
+  transporter.sendMail(mailOptions, (err, success) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("Email sent successfully!!");
+  });
+};
+
 /** donor controller to apply for donation drive created by ngo
  * req : {donorEmailId , donationDetails, donationRequestId (i think this will be enough as we dont need
  * ngo id we can extract ngo id from the donation request)}
@@ -424,10 +470,10 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
  *   }
  */
 module.exports.applyForDonationDrive = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   console.log(req.user);
   const donorEmailId = req.user.emailId;
-  const {donationRequestId ,donationDetails} = req.body;
+  const { donationRequestId, donationDetails } = req.body;
   console.log(donationDetails);
   try {
     var donor = await Donor.find({ emailId: donorEmailId });
@@ -466,7 +512,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     var tempDriveObj = upDatedReq.toObject();
     tempDriveObj.ngo = ngo.toObject();
     donor_obj.pickUpDate = new Date(
-      donor_obj.pickUpDate.toString()
+      donor_obj.pickUpDate.toString(),
     ).toLocaleDateString("en-us", {
       weekday: "long",
       year: "numeric",
@@ -476,7 +522,11 @@ module.exports.applyForDonationDrive = async (req, res) => {
     notifySuccessfulDriveApplication(
       tempDriveObj,
       donor_obj,
-      donor[0].toObject()
+      donor[0].toObject(),
+    );
+
+    notifyDonorApplicationNGO(
+      tempDriveObj, donor_obj,donor[0].toObject()
     );
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
@@ -600,7 +650,7 @@ module.exports.getAllAppliedDrives = async (req, res) => {
     var myDonationDrives = [];
     for (let i = 0; i < donation_drives.length; i++) {
       var myDons = donation_drives[i].donors.filter((item) =>
-        item.donor.equals(donor[0]._id)
+        item.donor.equals(donor[0]._id),
       );
       // for (let j = 0; j < donation_drives[i].donors.length; j++) {
       //   // console.log(donation_drives[i].donors[j].donor)
@@ -652,7 +702,7 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
         .json({ status: false, msg: "no donation req exists" });
     var message = "";
     var newDonors = donation_drives[0].donors.filter(
-      (item) => !item.donor.equals(donor[0]._id)
+      (item) => !item.donor.equals(donor[0]._id),
     );
     if (newDonors.length === donation_drives[0].donors.length)
       message = "You have no donations in this drive";
@@ -703,7 +753,7 @@ module.exports.modifyDonationRequest = async (req, res) => {
           pickUpLocation: pickUpLocation,
           pickUpDate: pickUpDate,
         },
-      }
+      },
     );
 
     return res

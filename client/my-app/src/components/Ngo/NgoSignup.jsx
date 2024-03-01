@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import swal from "sweetalert";
 
 function NGOsignup() {
-  let navigate= useNavigate();
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+  let navigate = useNavigate();
+  
   const initialValues = {
     ngo_name: "",
     ngo_pan: "",
@@ -52,7 +54,7 @@ function NGOsignup() {
       formData.append("gstnumber", formValues.gst);
       formData.append("regnumber", formValues.reg_no);
       formData.append("reg_certificate", file);
-      var res = await fetch("http://localhost:5004/ngo/create-ngo", {
+      var res = await fetch(`${REACT_APP_APIURL}/ngo/create-ngo`, {
         method: "POST",
         body: formData,
       });
@@ -60,10 +62,6 @@ function NGOsignup() {
       if (!res.status) {
         setFormErrors({ error: res.desc });
       } else {
-        swal("Good Job","Successfully registered !! You can sign-in now", "success");
-        setTimeout(() => {
-          navigate("/ngo-login", { replace: true });
-        }, 1500);
         setFormValues(initialValues);
       }
     }

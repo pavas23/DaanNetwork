@@ -55,8 +55,12 @@ function HomeNav() {
                 }}
               >
                 <NavDropdown.Item>
-                  <Link to="/ngo-login" style={{ textDecoration: "none",color:"inherit"}}>
-                    Login as a NGO</Link>
+                  <Link
+                    to="/ngo-login"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Login as a NGO
+                  </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>

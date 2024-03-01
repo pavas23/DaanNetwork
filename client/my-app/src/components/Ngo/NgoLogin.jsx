@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
-import styles from "../../css/Ngo/NgoLogin.module.css"
+import styles from "../../css/Ngo/NgoLogin.module.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
+
 const NgoLogin = () => {
-  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   let navigate = useNavigate();
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
   const initialValues = {
     email: "",
     password: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({error: " "});
+  const [formErrors, setFormErrors] = useState({ error: " " });
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -52,18 +54,18 @@ const NgoLogin = () => {
     }
   };
 
-  const validateForm=(values)=>{
+  const validateForm = (values) => {
     const errors = { error: "" };
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/i;
-    if(values.email===""){
-      errors["error"]="Please enter your Email Id";
-    }else if(values.password===""){
-      errors["error"]="Please enter your Password";
-    }else if(!regex.test(values.email)){
-      errors["error"]="Please enter a Valid Email Id";
+    if (values.email === "") {
+      errors["error"] = "Please enter your Email Id";
+    } else if (values.password === "") {
+      errors["error"] = "Please enter your Password";
+    } else if (!regex.test(values.email)) {
+      errors["error"] = "Please enter a Valid Email Id";
     }
     return errors;
-  }
+  };
 
   return (
     <div className={styles.background_box}>
@@ -96,16 +98,23 @@ const NgoLogin = () => {
               </div>
             </div>
           </div>
-          <p className={styles.errormessage} style={{marginTop:"3%"}}>{formErrors.error}</p>
+          <p className={styles.errormessage} style={{ marginTop: "3%" }}>
+            {formErrors.error}
+          </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <button type="submit" className={styles.submit_btn}>
               Login
             </button>
           </div>
-          <div className={styles.row} style={{marginTop:"6%"}}>
+          <div className={styles.row} style={{ marginTop: "6%" }}>
             <div className={styles.login_text}>Don't have an account?</div>
-            <div className={styles.login_input_element} style={{textAlign:"right"}}>
-              <Link to="/ngo-signup" style={{color:"#0b7731"}}>Register with us!</Link>
+            <div
+              className={styles.login_input_element}
+              style={{ textAlign: "right" }}
+            >
+              <Link to="/ngo-signup" style={{ color: "#0b7731" }}>
+                Register with us!
+              </Link>
             </div>
           </div>
         </form>

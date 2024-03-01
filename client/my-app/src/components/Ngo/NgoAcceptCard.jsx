@@ -12,6 +12,10 @@ function DonorPostCard({
   description,
   pickUpLocation,
   pickUpDate,
+  donor_name,
+  donor_emailId,
+  donor_address,
+  donor_contactNumber,
   onDelete,
   onEdit,
 }) {
@@ -48,6 +52,8 @@ function DonorPostCard({
       <Card.Body>
         {/* <Card.Title>{title}</Card.Title> */}
         <Card.Text>
+          <strong>Donation Details</strong>
+          <br />
           <strong>Description:</strong> {description}
           <br />
           <strong>Items:</strong>{" "}
@@ -63,37 +69,50 @@ function DonorPostCard({
           <strong>Pick Up Date:</strong>{" "}
           {new Date(pickUpDate).toLocaleString().split(",")[0]}
           <br />
+          <br />
           <strong>Status: </strong>
           <span style={{ color: "green", fontWeight: "bold" }}>
             {accepted ? "NGO Accepted" : "Not Accepted"}
           </span>
           <br />
+          <br />
+          <strong>Donor Details</strong>
+          <br />
+          <strong>Name:</strong> {donor_name}
+          <br />
+          <strong>Email Id:</strong> {donor_emailId}
+          <br />
+          <strong>Address:</strong> {donor_address}
+          <br />
+          <strong>Contact Number:</strong> {donor_contactNumber}
+          <br />
         </Card.Text>
         <div className="d-flex justify-content-between align-items-center">
           {" "}
           {/* Align delete button to the bottom */}
-          <Button variant="primary" onClick={handleEditClick}>
-            Edit
-          </Button>
-          <Button variant="danger" onClick={handleDeleteClick}>
-            Delete
+          <Button
+            variant="success"
+            onClick={handleDeleteClick}
+            style={{ width: "100%" }}
+          >
+            Accept Donation Request
           </Button>
         </div>
       </Card.Body>
 
       <Modal show={showConfirmationModal} onHide={handleCancelDelete}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Deletion</Modal.Title>
+          <Modal.Title>Confirm Acceptance</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to delete this donation request?
+          Are you sure you want to accept this donation request?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCancelDelete}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={handleConfirmDelete}>
-            Delete
+          <Button variant="success" onClick={handleConfirmDelete}>
+            Accept
           </Button>
         </Modal.Footer>
       </Modal>

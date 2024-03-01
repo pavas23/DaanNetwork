@@ -3,10 +3,13 @@ import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
-
-const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+import swal from "sweetalert";
+import { useNavigate } from "react-router";
 
 const NgoDonationDrive = () => {
+  let navigate = useNavigate();
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
   const [startDate, setStartDate] = useState();
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +19,7 @@ const NgoDonationDrive = () => {
   });
 
   const [flag, setFlag] = useState(0);
-  const [items, setItems] = useState([{ item: "", quantity: 0 }]);
+  const [items, setItems] = useState([{ name: "", quantity: 0 }]);
   const [file, setFile] = useState(null);
   const inputFile = useRef(null);
 
@@ -53,7 +56,7 @@ const NgoDonationDrive = () => {
   };
 
   const addItems = () => {
-    setItems([...items, { item: "", quantity: 0 }]);
+    setItems([...items, { name: "", quantity: 0 }]);
   };
 
   const deleteItems = (index) => {
@@ -76,11 +79,12 @@ const NgoDonationDrive = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    if (
-      formData.endDate <= formData.startDate
-    ) {
-      console.log("idhar");
+    if (formData.endDate <= formData.startDate) {
+      swal(
+        "Could not add donation drive",
+        "Event can not end before or on start date",
+        "error",
+      );
       setFlag(1);
       return;
     }
@@ -96,7 +100,6 @@ const NgoDonationDrive = () => {
         brief: formData.description,
       },
     };
-    console.log(req);
     try {
       var resp = await fetch(
         `${REACT_APP_APIURL}/ngo/create-donation-request`,
@@ -104,7 +107,7 @@ const NgoDonationDrive = () => {
           method: "POST",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
-            "auth-token":localStorage.getItem("auth-token")
+            "auth-token": localStorage.getItem("auth-token"),
           },
           body: JSON.stringify(req),
         },
@@ -118,7 +121,7 @@ const NgoDonationDrive = () => {
     setFlag(0);
     setItems([
       {
-        item: "",
+        name: "",
         quantity: 0,
       },
     ]);
@@ -187,8 +190,8 @@ const NgoDonationDrive = () => {
                             required
                             className="form-control"
                             id="name"
-                            name="item"
-                            value={i.item}
+                            name="name"
+                            value={i.name}
                             onChange={(event) => handleItemChange(index, event)}
                             onKeyPress={(event) => {
                               if (event.key === "Enter") {
@@ -207,6 +210,7 @@ const NgoDonationDrive = () => {
                             className="form-control"
                             id="name"
                             name="quantity"
+                            min="0"
                             value={i.quantity}
                             onChange={(event) => handleItemChange(index, event)}
                             onKeyPress={(event) => {
@@ -238,7 +242,7 @@ const NgoDonationDrive = () => {
                     style={{ justifyContent: "flex-end" }}
                   >
                     <button
-                      className={"btn " + styles.btn_secondary}
+                      className={"btn " + styles.btn_ternary}
                       onClick={addItems}
                     >
                       Add New Item

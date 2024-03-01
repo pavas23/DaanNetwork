@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uploadCertificate = require("../middlewares/uploadCertificate");
 const ngoController = require("../controllers/NgoController");
-const {ngoVerification} = require('../middlewares/ngoVerify');
+const { ngoVerification } = require("../middlewares/ngoVerify");
 /**
  * @swagger
  * components:
@@ -100,23 +100,34 @@ const {ngoVerification} = require('../middlewares/ngoVerify');
  *   description: The APIs for NGO
  */
 
-router.post(
-  "/ngo-login", ngoController.NGOLogin
-);
+router.post("/ngo-login", ngoController.NGOLogin);
 
 router.post(
   "/create-ngo",
   uploadCertificate.single("reg_certificate"),
   ngoController.addNGO,
 );
-router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
-router.post("/accept-donation-request", ngoController.acceptDonationRequest);
+router.post("/ngo-login", ngoController.NGOLogin);
+router.get(
+  "/get-all-donation-requests",
+  ngoVerification,
+  ngoController.getAllDonationRequests,
+);
+router.post(
+  "/accept-donation-request",
+  ngoVerification,
+  ngoController.acceptDonationRequest,
+);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post(
   "/send-confirmation-mail",
   ngoController.sendConfirmationMailToDonor,
 );
-router.post("/create-donation-request",ngoVerification,ngoController.createDonationRequest);
+router.post(
+  "/create-donation-request",
+  ngoVerification,
+  ngoController.createDonationRequest,
+);
 router.post("/get-all-drives", ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
 
