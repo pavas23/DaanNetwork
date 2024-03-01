@@ -7,31 +7,36 @@ const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
+const { createSecretToken } = require("../helpers/secretToken");
 
-
-module.exports.NGOLogin= async (req,res)=>{
-  try{
-    const { emailId, password}=req.body;
-    const newNGO=await Ngo.findOne({emailId:emailId});
-    if(!newNGO){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+module.exports.NGOLogin = async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const newNGO = await Ngo.findOne({ emailId: emailId });
+    if (!newNGO) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
-    const validPassword=await bcrypt.compare(password,newNGO.password);
-    if(!validPassword){
-      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    const validPassword = await bcrypt.compare(password, newNGO.password);
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
     }
     const token = createSecretToken(newNGO._id);
-     res.cookie("token", token, {
-       withCredentials: true,
-       httpOnly: false,
-     });
-     res.status(201).json({status:true, message: "User logged in successfully"});
-  }
-  catch(err){
+    res.status(200).json({
+      status: true,
+      token: token,
+      message: "User logged in successfully",
+    });
+  } catch (err) {
     console.log(err);
-    return res.status(500).json({status:false,desc:"Internal Server Error Occured"});
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};
 
 var notifyNGORegistration = async (ngoName, emailId) => {
   let transporter = nodemailer.createTransport({
@@ -127,11 +132,7 @@ module.exports.addNGO = async (req, res) => {
 
     //send mail to ngo
     notifyNGORegistration(name, emailId);
-    const token = createSecretToken(newNGO._id);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
+
     return res
       .status(201)
       .json({ status: true, desc: "NGO added successfully" });
@@ -219,7 +220,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
         donationRequestNum: donationRequestNum,
       },
       { $set: foodDonation[0] },
-      { new: true },
+      { new: true }
     );
 
     return res
@@ -412,7 +413,7 @@ module.exports.createDonationRequest = async (req, res) => {
         name: description.name,
         items: description.items,
         images: description.images,
-        brief:description.brief
+        brief: description.brief,
       },
       ngo: ngo[0]._id,
       donors: [],
@@ -456,7 +457,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
     for (let i = 0; i < donation_drives.length; i++) {
       for (let j = 0; j < donation_drives[i].donors.length; j++) {
         var donor_details = await Donor.findById(
-          donation_drives[i].donors[j].donor,
+          donation_drives[i].donors[j].donor
         );
         donation_drives[i].donors[j]["donor_details"] = {
           name: donor_details.name,

@@ -105,6 +105,10 @@ router.post(
   uploadCertificate.single("reg_certificate"),
   ngoController.addNGO,
 );
+router.post(
+  "/ngo-login",
+  ngoController.NGOLogin
+);
 router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
 router.post("/accept-donation-request", ngoController.acceptDonationRequest);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
