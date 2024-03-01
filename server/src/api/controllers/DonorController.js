@@ -213,11 +213,17 @@ module.exports.createDonationRequest = async (req, res) => {
     }
 
     // find number of requests made by this donor
-    var count = (await FoodDonation.find({ donor: donors[0]._id })).length;
+    var array = (await FoodDonation.find({ donor: donors[0]._id }));
+    var maxNum = 0;
+    for(var i=0;i<array.length;i++){
+      if(array[i].donationRequestNum > maxNum){
+        maxNum = array[i].donationRequestNum;
+      }
+    }
 
     // creating food donation request
     let foodDonation = await FoodDonation.create({
-      donationRequestNum: count + 1,
+      donationRequestNum: maxNum + 1,
       quantity: quantity,
       pickUpDate: pickUpDate,
       createdAt: new Date(),

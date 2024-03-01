@@ -8,6 +8,31 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
 
+
+module.exports.NGOLogin= async (req,res)=>{
+  try{
+    const { emailId, password}=req.body;
+    const newNGO=await Ngo.findOne({emailId:emailId});
+    if(!newNGO){
+      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    }
+    const validPassword=await bcrypt.compare(password,newNGO.password);
+    if(!validPassword){
+      return res.status(400).json({status:false,desc:"Incorrect Password or Email-id"});
+    }
+    const token = createSecretToken(newNGO._id);
+     res.cookie("token", token, {
+       withCredentials: true,
+       httpOnly: false,
+     });
+     res.status(201).json({status:true, message: "User logged in successfully"});
+  }
+  catch(err){
+    console.log(err);
+    return res.status(500).json({status:false,desc:"Internal Server Error Occured"});
+  }
+}
+
 var notifyNGORegistration = async (ngoName, emailId) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -84,8 +109,7 @@ module.exports.addNGO = async (req, res) => {
       });
     }
 
-    var salt = await bcrypt.genSalt(10);
-    var hashPassword = await bcrypt.hash(password, salt);
+    var hashPassword = await bcrypt.hash(password, 10);
 
     var newNGO = await Ngo.create({
       name: name,
@@ -103,6 +127,11 @@ module.exports.addNGO = async (req, res) => {
 
     //send mail to ngo
     notifyNGORegistration(name, emailId);
+    const token = createSecretToken(newNGO._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
     return res
       .status(201)
       .json({ status: true, desc: "NGO added successfully" });

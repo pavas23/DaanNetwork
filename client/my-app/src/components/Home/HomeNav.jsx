@@ -54,9 +54,10 @@ function HomeNav() {
                   justifyContent: "center",
                 }}
               >
-                <Link style={{ textDecoration: "none" }}>
-                  <NavDropdown.Item>Login as a NGO</NavDropdown.Item>
-                </Link>
+                <NavDropdown.Item>
+                  <Link to="/ngo-login" style={{ textDecoration: "none",color:"inherit"}}>
+                    Login as a NGO</Link>
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
                   <Link
