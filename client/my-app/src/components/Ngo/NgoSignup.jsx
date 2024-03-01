@@ -6,7 +6,7 @@ import swal from "sweetalert";
 function NGOsignup() {
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   let navigate = useNavigate();
-  
+
   const initialValues = {
     ngo_name: "",
     ngo_pan: "",

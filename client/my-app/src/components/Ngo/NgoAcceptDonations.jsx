@@ -34,7 +34,7 @@ const DonorPosts = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const json = await response.json();
@@ -89,7 +89,7 @@ const DonorPosts = () => {
             donationRequestNum: num,
             donorEmailId: donorId,
           }),
-        }
+        },
       );
 
       const json = await response.json();

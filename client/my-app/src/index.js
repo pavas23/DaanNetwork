@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       <Route path="donation-drive" element={<DonationDrive />} />
       <Route path="donor-accpted-posts" element={<DonorAcceptedPosts />} />
       <Route path="ngo-donations" element={<NgoAcceptDonations />} />
-      <Route path="ngo-history" element={<NgoHistory/>} />
+      <Route path="ngo-history" element={<NgoHistory />} />
     </Route>,
   ),
 );

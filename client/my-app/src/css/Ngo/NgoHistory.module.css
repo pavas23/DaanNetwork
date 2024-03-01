@@ -1,15 +1,15 @@
-.header1{
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-    color: #2b6242;
-    border-bottom: 1px solid #e0e0e0;
+.header1 {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  color: #2b6242;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.header2{
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-    color: #2b6242;
-    border-bottom: 1px solid #e0e0e0;
+.header2 {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  color: #2b6242;
+  border-bottom: 1px solid #e0e0e0;
 }
