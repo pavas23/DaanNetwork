@@ -26,13 +26,11 @@ module.exports.NGOLogin = async (req, res) => {
     }
     const token = createSecretToken(newNGO._id);
 
-    res
-      .status(201)
-      .json({
-        status: true,
-        token: token,
-        message: "User logged in successfully",
-      });
+    res.status(201).json({
+      status: true,
+      token: token,
+      message: "User logged in successfully",
+    });
   } catch (err) {
     console.log(err);
     return res
@@ -166,6 +164,61 @@ module.exports.getAllDonationRequests = async (req, res) => {
   }
 };
 
+/** function to send confirmation mail to donor when ngo accepts the donation request
+ */
+var sendConfirmationMailToDonor = (donor, ngo) => {
+  try {
+    // send mail to donor from website id on behalf of ngo
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    const handlebarOptions = {
+      viewEngine: {
+        extName: ".handlebars",
+        partialsDir: path.resolve("../src/api/views"),
+        defaultLayout: false,
+      },
+      viewPath: path.resolve("../src/api/views/"),
+      extName: ".handlebars",
+    };
+    transporter.use("compile", hbs(handlebarOptions));
+
+    let mailOptions = {
+      from: process.env.EMAIL,
+      to: donor.emailId,
+      subject: "Daan Network",
+      context: {
+        title: "Donation Request Status Update",
+        email: donor.emailId,
+        ngoName: ngo.name,
+        name: donor.name,
+        ngo_address: ngo.address,
+        ngo_contact: ngo.contactNumber,
+        ngo_website: ngo.website,
+        ngo_email: ngo.emailId,
+      },
+      template: "index",
+    };
+
+    transporter.sendMail(mailOptions, (err, success) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("Email sent successfully!!");
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /** ngo controller to accept donation requests which have not been accepted yet
  * req body : { ngoEmailId, donorEmailId, donationRequestNum}
  * res : { status:boolean, desc:String }
@@ -223,8 +276,11 @@ module.exports.acceptDonationRequest = async (req, res) => {
         donationRequestNum: donationRequestNum,
       },
       { $set: foodDonation[0] },
-      { new: true },
+      { new: true }
     );
+
+    // send mail to donor
+    sendConfirmationMailToDonor(donors[0], ngos[0]);
 
     return res
       .status(200)
@@ -278,110 +334,6 @@ module.exports.getMyDonationRequests = async (req, res) => {
         .status(500)
         .json({ status: false, desc: "Internal Server Error Occured" });
     }
-  }
-};
-
-/** ngo controller to send mail to donor that it has accepted the donation request
- * req body {ngoEmailId, donorEmailId, donationRequestNum}
- * res : { status:boolean, desc:String }
- */
-module.exports.sendConfirmationMailToDonor = async (req, res) => {
-  try {
-    const { ngoEmailId, donorEmailId, donationRequestNum } = req.body;
-
-    // finding donor by email id
-    const donors = await Donor.find({ emailId: donorEmailId });
-    if (donors.length == 0) {
-      // no valid donor exists
-      return res.status(400).json({
-        status: false,
-        desc: "No valid donor exists with this mail id !!",
-      });
-    }
-
-    // finding ngo by email id
-    const ngos = await Ngo.find({ emailId: ngoEmailId });
-    if (ngos.length == 0) {
-      // no valid ngo exists
-      return res.status(400).json({
-        status: false,
-        desc: "No valid ngo exists with this mail id !!",
-      });
-    }
-
-    // check if this request is already accepted
-    var foodDonation = await FoodDonation.find({
-      donor: donors[0]._id,
-      donationRequestNum: donationRequestNum,
-    });
-
-    if (foodDonation.length == 0 || foodDonation[0] == null) {
-      return res
-        .status(400)
-        .json({ status: false, desc: "Such a request does not exist!" });
-    }
-    if (!foodDonation[0].accepted) {
-      return res.status(200).json({
-        status: false,
-        desc: "This donation request is not accepted, can't send mail to donor",
-      });
-    }
-
-    // send mail to donor from website id on behalf of ngo
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const handlebarOptions = {
-      viewEngine: {
-        extName: ".handlebars",
-        partialsDir: path.resolve("../src/api/views"),
-        defaultLayout: false,
-      },
-      viewPath: path.resolve("../src/api/views"),
-      extName: ".handlebars",
-    };
-    transporter.use("compile", hbs(handlebarOptions));
-
-    let mailOptions = {
-      from: process.env.EMAIL,
-      to: donorEmailId,
-      subject: "Daan Network",
-      context: {
-        title: "Donation Request Status Update",
-        email: donorEmailId,
-        ngoName: ngos[0].name,
-        name: donors[0].name,
-        ngo_address: ngos[0].address,
-        ngo_contact: ngos[0].contactNumber,
-        ngo_website: ngos[0].website,
-        ngo_email: ngos[0].emailId,
-      },
-      template: "index",
-    };
-
-    transporter.sendMail(mailOptions, (err, success) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log("Email sent successfully!!");
-    });
-
-    return res
-      .status(200)
-      .json({ status: true, desc: "Mail sent successfully" });
-  } catch (error) {
-    console.log(error);
-    return res
-      .status(500)
-      .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
 
@@ -462,7 +414,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
     for (let i = 0; i < donation_drives.length; i++) {
       for (let j = 0; j < donation_drives[i].donors.length; j++) {
         var donor_details = await Donor.findById(
-          donation_drives[i].donors[j].donor,
+          donation_drives[i].donors[j].donor
         );
         donation_drives[i].donors[j]["donor_details"] = {
           name: donor_details.name,
