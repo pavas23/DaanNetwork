@@ -11,11 +11,11 @@ const DonationForm = () => {
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-  useEffect(() => {
-    if (!localStorage.getItem("auth-token")) {
-      navigate("/donor-login", { replace: true });
-    }
-  });
+  // useEffect(() => {
+  //   if (!localStorage.getItem("auth-token")) {
+  //     navigate("/donor-login", { replace: true });
+  //   }
+  // });
 
   // TODO : make sure image covers entire background for phone also
 
@@ -125,7 +125,7 @@ const DonationForm = () => {
     });
 
     const json = await response.json();
-    
+
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
         swal("Could not send donation request", "Invalid Session", "error");
@@ -294,7 +294,7 @@ const DonationForm = () => {
                       style={{ justifyContent: "flex-end" }}
                     >
                       <button
-                        className={"btn " + styles.btn_secondary}
+                        className={"btn " + styles.btn_ternary}
                         id="button"
                         onClick={(event) => {
                           event.preventDefault();
