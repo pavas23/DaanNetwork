@@ -78,9 +78,6 @@ const NgoDonationDrive = () => {
     e.preventDefault();
     // Handle form submission here
     if (
-      formData.startDate == null ||
-      formData.endDate == null ||
-      formData.name == "" ||
       formData.endDate <= formData.startDate
     ) {
       console.log("idhar");
@@ -88,17 +85,6 @@ const NgoDonationDrive = () => {
       return;
     }
 
-    for (let i = 0; i < items.length; i++) {
-      console.log(typeof items[i].quantity);
-      if (typeof items[i].quantity === typeof "5")
-        items[i].quantity = parseInt(items[i].quantity);
-      console.log(typeof items[i].quantity);
-      if (items[i].name === "" || items[i].quantity === 0) {
-        console.log(items[i].name, items[i].quantity);
-        setFlag(1);
-        return;
-      }
-    }
     console.log(formData);
     var req = {
       startDate: formData.startDate,
@@ -109,7 +95,6 @@ const NgoDonationDrive = () => {
         images: [],
         brief: formData.description,
       },
-      ngoEmail: "pavasaahar@kammo.com",
     };
     console.log(req);
     try {
@@ -117,10 +102,11 @@ const NgoDonationDrive = () => {
         `${REACT_APP_APIURL}/ngo/create-donation-request`,
         {
           method: "POST",
-          body: JSON.stringify(req),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
+            "auth-token":localStorage.getItem("auth-token")
           },
+          body: JSON.stringify(req),
         },
       );
       var data = await resp.json();
@@ -177,6 +163,7 @@ const NgoDonationDrive = () => {
                       className="form-control"
                       id="name"
                       name="name"
+                      required
                       value={formData.name}
                       onChange={handleChange}
                       onKeyPress={(event) => {
@@ -197,6 +184,7 @@ const NgoDonationDrive = () => {
                           <span style={{ color: "red" }}>*</span>{" "}
                           <input
                             type="text"
+                            required
                             className="form-control"
                             id="name"
                             name="item"

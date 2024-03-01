@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const uploadCertificate = require("../middlewares/uploadCertificate");
 const ngoController = require("../controllers/NgoController");
-
+const {ngoVerification} = require('../middlewares/ngoVerify');
 /**
  * @swagger
  * components:
@@ -116,7 +116,7 @@ router.post(
   "/send-confirmation-mail",
   ngoController.sendConfirmationMailToDonor,
 );
-router.post("/create-donation-request", ngoController.createDonationRequest);
+router.post("/create-donation-request",ngoVerification,ngoController.createDonationRequest);
 router.post("/get-all-drives", ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
 

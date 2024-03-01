@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "../../css/Ngo/NgoLogin.module.css"
 import React, { useState, useEffect } from "react";
-
-const DonorLogin = () => {
+import { useNavigate } from "react-router";
+import swal from "sweetalert";
+const NgoLogin = () => {
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+  let navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
@@ -41,6 +43,11 @@ const DonorLogin = () => {
       if (!res.status) {
         setFormErrors({ error: res.desc });
       } else {
+        localStorage.setItem("auth-token", res.token);
+        swal("Good job", "Login Successful !!", "success");
+        setTimeout(() => {
+          navigate("/ngo-drive", { replace: true });
+        }, 1500);
         setFormValues(initialValues);
       }
     }
@@ -108,4 +115,4 @@ const DonorLogin = () => {
   );
 };
 
-export default DonorLogin;
+export default NgoLogin;
