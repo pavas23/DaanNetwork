@@ -53,7 +53,7 @@ function DonorPostCard({
           <strong>Items:</strong>{" "}
           {items.map(
             (item, index) =>
-              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`
+              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`,
           )}
           <br />
           <strong>Total Quantity:</strong> {quantity} kg
@@ -64,7 +64,9 @@ function DonorPostCard({
           {new Date(pickUpDate).toLocaleString().split(",")[0]}
           <br />
           <strong>Status: </strong>
-          <span style={{color:"green",fontWeight:"bold"}}>{accepted ? "NGO Accepted" : "Not Accepted"}</span>
+          <span style={{ color: "green", fontWeight: "bold" }}>
+            {accepted ? "NGO Accepted" : "Not Accepted"}
+          </span>
           <br />
         </Card.Text>
         <div className="d-flex justify-content-between align-items-center">
@@ -83,7 +85,9 @@ function DonorPostCard({
         <Modal.Header closeButton>
           <Modal.Title>Confirm Deletion</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this donation request?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to delete this donation request?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCancelDelete}>
             Cancel

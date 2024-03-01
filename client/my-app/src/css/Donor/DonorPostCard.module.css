@@ -1,33 +1,32 @@
 .card {
-    border: 1px solid #ced0d1;
-    border-radius: 10px;
-    transition: box-shadow 0.3s;
+  border: 1px solid #ced0d1;
+  border-radius: 10px;
+  transition: box-shadow 0.3s;
 }
 
 .card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .card-body {
-    padding: 20px;
+  padding: 20px;
 }
 
 .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
 .card-text {
-    font-size: 1rem;
-    color: #6c757d;
+  font-size: 1rem;
+  color: #6c757d;
 }
 
-.btn_primary{
-    background-color: #078534;
-    width: 100%;
+.btn_primary {
+  background-color: #078534;
+  width: 100%;
 }
 
-.btn_primary:hover{
-    background-color:rgb(27, 197, 86);
-
+.btn_primary:hover {
+  background-color: rgb(27, 197, 86);
 }

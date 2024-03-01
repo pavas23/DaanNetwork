@@ -7,8 +7,8 @@
   height: 100%;
 }
 
-h1{
-    padding-top: 2vh;
+h1 {
+  padding-top: 2vh;
 }
 
 .container {
@@ -39,7 +39,9 @@ h1{
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 20px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .img_fluid {

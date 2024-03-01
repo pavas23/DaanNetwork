@@ -3,8 +3,10 @@ import styles from "../../css/Ngo/NgoLogin.module.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
+import { useNavigate } from "react-router";
+import swal from "sweetalert";
 
-const DonorLogin = () => {
+const NgoLogin = () => {
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
@@ -124,4 +126,4 @@ const DonorLogin = () => {
   );
 };
 
-export default DonorLogin;
+export default NgoLogin;

@@ -125,7 +125,7 @@ const DonationForm = () => {
     });
 
     const json = await response.json();
-    
+
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
         swal("Could not send donation request", "Invalid Session", "error");

@@ -242,7 +242,11 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
  *               type: array
  *               items:
  */
-router.post("/get-donation-history",donorVerification, donorController.getAllDonations);
+router.post(
+  "/get-donation-history",
+  donorVerification,
+  donorController.getAllDonations,
+);
 
 /**
  * @swagger
@@ -275,7 +279,11 @@ router.post("/get-donation-history",donorVerification, donorController.getAllDon
  *               items:
  *                  $ref: '#/components/schemas/NgoDonationRequest'
  */
-router.post("/apply-for-donation-drive", donorVerification,donorController.applyForDonationDrive);
+router.post(
+  "/apply-for-donation-drive",
+  donorVerification,
+  donorController.applyForDonationDrive,
+);
 
 /**
  * @swagger
@@ -364,7 +372,7 @@ router.post(
 router.post(
   "/modify-donation-request",
   donorVerification,
-  donorController.modifyDonationRequest
+  donorController.modifyDonationRequest,
 );
 
 module.exports = router;

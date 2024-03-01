@@ -424,10 +424,10 @@ var notifySuccessfulDriveApplication = async (drive, application, donor) => {
  *   }
  */
 module.exports.applyForDonationDrive = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   console.log(req.user);
   const donorEmailId = req.user.emailId;
-  const {donationRequestId ,donationDetails} = req.body;
+  const { donationRequestId, donationDetails } = req.body;
   console.log(donationDetails);
   try {
     var donor = await Donor.find({ emailId: donorEmailId });
@@ -466,7 +466,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     var tempDriveObj = upDatedReq.toObject();
     tempDriveObj.ngo = ngo.toObject();
     donor_obj.pickUpDate = new Date(
-      donor_obj.pickUpDate.toString()
+      donor_obj.pickUpDate.toString(),
     ).toLocaleDateString("en-us", {
       weekday: "long",
       year: "numeric",
@@ -476,7 +476,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     notifySuccessfulDriveApplication(
       tempDriveObj,
       donor_obj,
-      donor[0].toObject()
+      donor[0].toObject(),
     );
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
@@ -600,7 +600,7 @@ module.exports.getAllAppliedDrives = async (req, res) => {
     var myDonationDrives = [];
     for (let i = 0; i < donation_drives.length; i++) {
       var myDons = donation_drives[i].donors.filter((item) =>
-        item.donor.equals(donor[0]._id)
+        item.donor.equals(donor[0]._id),
       );
       // for (let j = 0; j < donation_drives[i].donors.length; j++) {
       //   // console.log(donation_drives[i].donors[j].donor)
@@ -652,7 +652,7 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
         .json({ status: false, msg: "no donation req exists" });
     var message = "";
     var newDonors = donation_drives[0].donors.filter(
-      (item) => !item.donor.equals(donor[0]._id)
+      (item) => !item.donor.equals(donor[0]._id),
     );
     if (newDonors.length === donation_drives[0].donors.length)
       message = "You have no donations in this drive";
@@ -703,7 +703,7 @@ module.exports.modifyDonationRequest = async (req, res) => {
           pickUpLocation: pickUpLocation,
           pickUpDate: pickUpDate,
         },
-      }
+      },
     );
 
     return res

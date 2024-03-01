@@ -58,7 +58,7 @@ function DonorAcceptedPostCard({
           <strong>Items:</strong>{" "}
           {items.map(
             (item, index) =>
-              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`
+              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`,
           )}
           <br />
           <strong>Total Quantity:</strong> {quantity} kg

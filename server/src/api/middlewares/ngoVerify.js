@@ -2,7 +2,7 @@ const Ngo = require("../models/ngo");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-module.exports.donorVerification = async (req, res, next) => {
+module.exports.ngoVerification = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
     return res

@@ -7,9 +7,11 @@ import DonorNav from "./DonorNav";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
-const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
 const DonationDrive = () => {
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   let navigate = useNavigate();
+
   const [driveList, setDriveList] = useState([]);
   const getData = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/donor/all-donation-drives`, {
