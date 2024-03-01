@@ -294,7 +294,7 @@ const DonationForm = () => {
                       style={{ justifyContent: "flex-end" }}
                     >
                       <button
-                        className={"btn " + styles.btn_secondary}
+                        className={"btn " + styles.btn_ternary}
                         id="button"
                         onClick={(event) => {
                           event.preventDefault();
