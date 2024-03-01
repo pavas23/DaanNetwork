@@ -6,7 +6,7 @@ const multer = require("multer");
 // middleware to upload images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.resolve("../src/images"));
+    cb(null, path.resolve("../../client/my-app/src/images"));
   },
   filename: (req, file, cb) => {
     cb(null, new Date().getMinutes() + file.originalname);

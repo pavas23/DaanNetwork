@@ -99,7 +99,11 @@ const DonationForm = () => {
       if (typeof items[i].quantity === typeof "1")
         items[i].quantity = parseInt(items[i].quantity);
       if (items[i].name === "" || items[i].quantity === 0) {
-        setFlag(1);
+        swal(
+          "Could not send donation request",
+          "Item list can not contain items having empty name or 0 quantity !",
+          "error",
+        );
         return;
       }
     }
@@ -121,6 +125,7 @@ const DonationForm = () => {
     });
 
     const json = await response.json();
+    
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
         swal("Could not send donation request", "Invalid Session", "error");

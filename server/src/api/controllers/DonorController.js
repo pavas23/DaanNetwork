@@ -244,41 +244,41 @@ module.exports.createDonationRequest = async (req, res) => {
  * res : { status:boolean, desc:string }
  */
 module.exports.getAllAcceptedDonationRequests = async (req, res) => {
+  const donorEmailId = req.user.emailId;
   try {
-    const { donorEmailId } = req.body;
-
-    // finding donor by email id
     const donors = await Donor.find({ emailId: donorEmailId });
+    // no donor with given email
     if (donors.length == 0) {
-      // no valid donor exists
-      return res.status(400).json({
-        status: false,
-        desc: "No valid donor exists with this mail id !!",
-      });
+      return res
+        .status(400)
+        .json({ status: false, desc: `No donor with email ${donorEmailId}` });
     }
 
-    var foodDonations = await FoodDonation.find({ accepted: true })
+    var foodDonations = await FoodDonation.find({accepted:true})
       .populate("donor")
       .populate("ngo")
       .exec();
+
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
 
-    // empty list
+    console.log(foodDonations);
+
     if (foodDonations[0] == null) {
-      return res
-        .status(200)
-        .json({ status: false, foodDonations: foodDonations });
+      return res.status(200).json({
+        status: true,
+        foodDonations: foodDonations,
+        desc: "Donate Now",
+      });
     }
+
     return res.status(200).json({ status: true, foodDonations: foodDonations });
-  } catch (error) {
-    if (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json({ status: false, desc: "Internal Server Error Occured" });
-    }
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
 
@@ -320,13 +320,12 @@ module.exports.uploadDonationImages = async (req, res) => {
   }
 };
 
-/** donor controller to see my all donation requests
+/** donor controller to see my all pending donation requests
  * req body { donorEmailId }
  * res : { status:boolean, desc:string | foodDonations: List }
  */
 module.exports.getAllDonations = async (req, res) => {
-  const { donorEmailId } = req.body;
-
+  const donorEmailId = req.user.emailId;
   try {
     const donors = await Donor.find({ emailId: donorEmailId });
     // no donor with given email
@@ -336,7 +335,7 @@ module.exports.getAllDonations = async (req, res) => {
         .json({ status: false, desc: `No donor with email ${donorEmailId}` });
     }
 
-    var foodDonations = await FoodDonation.find({})
+    var foodDonations = await FoodDonation.find({accepted:false})
       .populate("donor")
       .populate("ngo")
       .exec();
@@ -345,21 +344,26 @@ module.exports.getAllDonations = async (req, res) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
 
+    console.log(foodDonations);
+
     if (foodDonations[0] == null) {
-      return res
-        .status(200)
-        .json({ status: false, foodDonations: foodDonations });
+      return res.status(200).json({
+        status: true,
+        foodDonations: foodDonations,
+        desc: "Donate Now",
+      });
     }
+
     return res.status(200).json({ status: true, foodDonations: foodDonations });
   } catch (err) {
-    console.log(error);
+    console.log(err);
     return res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => {};
+var notifyNewDonorForDrive = async (drive, donor) => { };
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
@@ -457,7 +461,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     var tempDriveObj = upDatedReq.toObject();
     tempDriveObj.ngo = ngo.toObject();
     donor_obj.pickUpDate = new Date(
-      donor_obj.pickUpDate.toString(),
+      donor_obj.pickUpDate.toString()
     ).toLocaleDateString("en-us", {
       weekday: "long",
       year: "numeric",
@@ -467,7 +471,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     notifySuccessfulDriveApplication(
       tempDriveObj,
       donor_obj,
-      donor[0].toObject(),
+      donor[0].toObject()
     );
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
@@ -502,8 +506,9 @@ module.exports.getAllDrives = async (req, res) => {
  * res: res : { status:boolean, desc:string }
  */
 module.exports.deleteDonationRequest = async (req, res) => {
+  const donorEmailId = req.user.emailId;
   try {
-    const { donorEmailId, donationRequestNum } = req.body;
+    const { donationRequestNum } = req.body;
 
     // finding donor by email id
     const donors = await Donor.find({ emailId: donorEmailId });
@@ -520,6 +525,8 @@ module.exports.deleteDonationRequest = async (req, res) => {
       .populate("donor")
       .populate("ngo")
       .exec();
+
+      console.log(foodDonations);
 
     // filtering all matching donation requests
     foodDonations = foodDonations.map((donation) => {
@@ -590,7 +597,7 @@ module.exports.getAllAppliedDrives = async (req, res) => {
     var myDonationDrives = [];
     for (let i = 0; i < donation_drives.length; i++) {
       var myDons = donation_drives[i].donors.filter((item) =>
-        item.donor.equals(donor[0]._id),
+        item.donor.equals(donor[0]._id)
       );
       // for (let j = 0; j < donation_drives[i].donors.length; j++) {
       //   // console.log(donation_drives[i].donors[j].donor)
@@ -642,7 +649,7 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
         .json({ status: false, msg: "no donation req exists" });
     var message = "";
     var newDonors = donation_drives[0].donors.filter(
-      (item) => !item.donor.equals(donor[0]._id),
+      (item) => !item.donor.equals(donor[0]._id)
     );
     if (newDonors.length === donation_drives[0].donors.length)
       message = "You have no donations in this drive";
@@ -653,5 +660,58 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
     res.status(200).json({ status: true, msg: message });
   } catch (err) {
     return res.status(500).json({ status: false, msg: err });
+  }
+};
+
+/** donor controller to modify the donation
+ *
+ */
+module.exports.modifyDonationRequest = async (req, res) => {
+  const donorEmailId = req.user.emailId;
+
+  try {
+    const {
+      donationRequestNum,
+      description,
+      items,
+      quantity,
+      pickUpLocation,
+      pickUpDate,
+    } = req.body;
+
+    // finding donor by email id
+    const donors = await Donor.find({ emailId: donorEmailId });
+    if (donors.length == 0) {
+      // no valid donor exists
+      return res.status(400).json({
+        status: false,
+        desc: "No valid donor exists with this mail id !!",
+      });
+    }
+
+    // updating the donation request
+    const updatedResult = await FoodDonation.findOneAndUpdate(
+      { donationRequestNum: donationRequestNum, donor: donors[0]._id },
+      {
+        $set: {
+          description: description,
+          items: items,
+          quantity: quantity,
+          pickUpLocation: pickUpLocation,
+          pickUpDate: pickUpDate,
+        },
+      }
+    );
+
+    return res
+      .status(200)
+      .json({ status: true, desc: "Donation request updated successfully" });
+  } catch (error) {
+    if (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ status: false, desc: "Internal Server Error Occured" });
+    }
   }
 };
