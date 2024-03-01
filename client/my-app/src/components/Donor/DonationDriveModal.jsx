@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import sampleImage from '../../images/bgd1.jpg'; 
 import styles from '../../css/Donor/DonorDonationDriveModal.module.css';
 import Form from 'react-bootstrap/Form'
-
+const temp = [{name: "Potato",quantity:10}, {name: "Tomato", quantity:20}, {name : "dine mutter",quantity:25}]
 const DonationDriveModal = () => {
   const [items, setItems] = useState([{ item: "", quantity: 0 }]);
   const addItems = () => {
@@ -63,7 +63,7 @@ const DonationDriveModal = () => {
       <div className="container mt-2">
         <div className="row">
           <div className="col-lg-6 col-md-8 col-sm-10">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="sticky-lg-top">
               {items.map((i, index) => {
                 return (
                   <div className="row mb-3">
@@ -183,6 +183,16 @@ const DonationDriveModal = () => {
           <div className="border p-3">
             <p><strong>Start Date:</strong>Lorem ipsum dolor sit.</p>
             <p><strong>End Date:</strong>Lorem ipsum dolor sit.</p>
+            <p>Reccomended Items</p>
+            <ul>
+            {
+              temp.map((item) => {
+                return (
+                  <li>Item: {item.name} Quantity: {item.quantity}</li>
+                )
+              })
+            }
+            </ul>
             <p><strong>Description:</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae quaerat repellat neque, ab corporis assumenda inventore ipsam, eveniet amet quasi debitis eaque reprehenderit animi esse facere voluptates nemo magni quisquam placeat at quis. Quis deserunt quaerat nobis praesentium, est natus eos, hic debitis doloribus, quas vel? Consectetur aliquid numquam quaerat?</p>
           </div>
           </div>

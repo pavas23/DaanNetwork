@@ -1,39 +1,112 @@
-import Modal from "react-bootstrap/Modal";
+// import Modal from "react-boo tstrap/Modal";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import DonationDriveModal from "./DonationDriveModal";
+import DrivePostCard from './DrivePostCard'
+import foodimg from "../../images/660-13.jpg"
+import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap';
+const driveList = [
+  {
+    startDate: '22-05-2024',
+    endDate: '22-06-2024',
+    description:{
+      name: 'Bharat Jodo',
+      items : [
+        {
+          item:'potato',
+          quantity:12
+        },
+        {
+          item:'tomato',
+          quantity:50
+        },
+        {
+          item:'cumin',
+          quantity:20
+        }
+      ],
+      images: [foodimg],
+     
+    },
+    ngo: {
+      name:'Congress'
+    }
+  },
+  {
+    startDate: '22-05-2024',
+    endDate: '22-06-2024',
+    description:{
+      name: 'Bharat Jodo',
+      items : [
+        {
+          item:'potato',
+          quantity:12
+        },
+        {
+          item:'tomato',
+          quantity:50
+        },
+        {
+          item:'cumin',
+          quantity:20
+        }
+      ],
+      images: [foodimg],
+     
+    },
+    ngo: {
+      name:'Congress'
+    }
+  },
+  {
+    startDate: '22-05-2024',
+    endDate: '22-06-2024',
+    description:{
+      name: 'Bharat Jodo',
+      items : [
+        {
+          item:'potato',
+          quantity:12
+        },
+        {
+          item:'tomato',
+          quantity:50
+        },
+        {
+          item:'cumin',
+          quantity:20
+        }
+      ],
+      images: [foodimg],
+     
+    },
+    ngo: {
+      name:'Congress'
+    }
+  },
+ 
 
+
+]
 const DonationDrive = () => {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  // const [show, setShow] = useState(false);
+  // const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
   return (
     <div>
-      <Button varient="primary" onClick={handleShow}>
-        Click for Modal
-      </Button>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        scrollable={true}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Apply For Donation Drive!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <DonationDriveModal/>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        {/* <DonorNav /> */}
+        <Container>
+            <h1 className="text-center mt-3 mb-5">My Posts</h1>
+            <Row className="justify-content-center">
+                {driveList.map(drive => (
+                    <Col md={4}>
+                        <DrivePostCard donationDrive={drive}/>
+                    </Col>
+                ))}
+            </Row>
+        </Container>
     </div>
-  );
-};
+);
+}
+
 export default DonationDrive;
