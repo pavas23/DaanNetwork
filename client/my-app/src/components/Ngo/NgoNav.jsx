@@ -15,6 +15,7 @@ const NgoNavBar = () => {
     localStorage.removeItem("auth-token");
     navigate("/", { replace: true });
   };
+
   return (
     <div style={{ backgroundColor: "#f6f6f6" }}>
       <style>{x}</style>

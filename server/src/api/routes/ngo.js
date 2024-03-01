@@ -108,8 +108,16 @@ router.post(
   ngoController.addNGO,
 );
 router.post("/ngo-login", ngoController.NGOLogin);
-router.get("/get-all-donation-requests", ngoController.getAllDonationRequests);
-router.post("/accept-donation-request", ngoController.acceptDonationRequest);
+router.get(
+  "/get-all-donation-requests",
+  ngoVerification,
+  ngoController.getAllDonationRequests,
+);
+router.post(
+  "/accept-donation-request",
+  ngoVerification,
+  ngoController.acceptDonationRequest,
+);
 router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
 router.post(
   "/send-confirmation-mail",

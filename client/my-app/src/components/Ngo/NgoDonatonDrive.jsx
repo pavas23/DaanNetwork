@@ -3,10 +3,13 @@ import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
-
-const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+import swal from "sweetalert";
+import { useNavigate } from "react-router";
 
 const NgoDonationDrive = () => {
+  let navigate = useNavigate();
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
   const [startDate, setStartDate] = useState();
   const [formData, setFormData] = useState({
     name: "",
@@ -77,6 +80,11 @@ const NgoDonationDrive = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.endDate <= formData.startDate) {
+      swal(
+        "Could not add donation drive",
+        "Event can not end before or on start date",
+        "error",
+      );
       setFlag(1);
       return;
     }
@@ -92,7 +100,6 @@ const NgoDonationDrive = () => {
         brief: formData.description,
       },
     };
-    console.log(req);
     try {
       var resp = await fetch(
         `${REACT_APP_APIURL}/ngo/create-donation-request`,
@@ -105,28 +112,39 @@ const NgoDonationDrive = () => {
           body: JSON.stringify(req),
         },
       );
-      var data = await resp.json();
-      console.log(data);
+      var json = await resp.json();
+      if (!json.status) {
+        if (json.desc == "Please authenticate using a valid token") {
+          swal("Could not add donation drive", "Invalid Session", "error");
+          localStorage.removeItem("auth-token");
+          setTimeout(() => {
+            navigate("/ngo-login", { replace: true });
+          }, 1500);
+        } else {
+          swal("Could not add donation drive", `${json.desc} !!`, "error");
+        }
+      } else {
+        swal("Good job", "Donation drive created successfully !!", "success");
+        setFlag(0);
+        setItems([
+          {
+            item: "",
+            quantity: 0,
+          },
+        ]);
+        setFormData({
+          name: "",
+          description: "",
+          startDate: "",
+          endDate: "",
+        });
+        if (inputFile.current) {
+          inputFile.current.value = "";
+          inputFile.current.type = "file";
+        }
+      }
     } catch (err) {
       console.log(err);
-    }
-
-    setFlag(0);
-    setItems([
-      {
-        item: "",
-        quantity: 0,
-      },
-    ]);
-    setFormData({
-      name: "",
-      description: "",
-      startDate: "",
-      endDate: "",
-    });
-    if (inputFile.current) {
-      inputFile.current.value = "";
-      inputFile.current.type = "file";
     }
   };
 
@@ -203,6 +221,7 @@ const NgoDonationDrive = () => {
                             className="form-control"
                             id="name"
                             name="quantity"
+                            min="0"
                             value={i.quantity}
                             onChange={(event) => handleItemChange(index, event)}
                             onKeyPress={(event) => {

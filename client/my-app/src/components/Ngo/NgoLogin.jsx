@@ -3,8 +3,6 @@ import styles from "../../css/Ngo/NgoLogin.module.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
-import { useNavigate } from "react-router";
-import swal from "sweetalert";
 
 const NgoLogin = () => {
   let navigate = useNavigate();

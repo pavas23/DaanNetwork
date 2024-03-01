@@ -34,7 +34,7 @@ const DonorAcceptedPosts = () => {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
         },
-      }
+      },
     );
 
     const json = await response.json();
@@ -43,7 +43,7 @@ const DonorAcceptedPosts = () => {
         swal(
           "Could not fetch your accepted donation requests",
           "Invalid Session",
-          "error"
+          "error",
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
@@ -53,7 +53,7 @@ const DonorAcceptedPosts = () => {
         swal(
           "Could not fetch your accepted donation requests",
           `${json.desc} !!`,
-          "error"
+          "error",
         );
       }
     } else {
@@ -61,7 +61,7 @@ const DonorAcceptedPosts = () => {
         swal(
           "No accepted donation requests to show",
           `${json.desc} !!`,
-          "error"
+          "error",
         );
       }
       setFoodDonations(json.foodDonations);
@@ -90,7 +90,7 @@ const DonorAcceptedPosts = () => {
           body: JSON.stringify({
             donationRequestNum: donationRequestNum[0],
           }),
-        }
+        },
       );
 
       const json = await response.json();
@@ -99,7 +99,7 @@ const DonorAcceptedPosts = () => {
           swal(
             "Could not fetch your donation requests",
             "Invalid Session",
-            "error"
+            "error",
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -109,7 +109,7 @@ const DonorAcceptedPosts = () => {
           swal(
             "Could not delete your donation request",
             `${json.desc} !!`,
-            "error"
+            "error",
           );
         }
       } else {
@@ -193,19 +193,19 @@ const EditModal = ({
   let navigate = useNavigate();
 
   const [editedDescription, setEditedDescription] = useState(
-    editedCard ? editedCard.description : ""
+    editedCard ? editedCard.description : "",
   );
   const [editedQuantity, setEditedQuantity] = useState(
-    editedCard ? editedCard.quantity : ""
+    editedCard ? editedCard.quantity : "",
   );
   const [editedPickUpLocation, setEditedPickUpLocation] = useState(
-    editedCard ? editedCard.pickUpLocation : ""
+    editedCard ? editedCard.pickUpLocation : "",
   );
   const [editedPickUpDate, setEditedPickUpDate] = useState(
-    editedCard ? editedCard.pickUpDate : ""
+    editedCard ? editedCard.pickUpDate : "",
   );
   const [editedItems, setEditedItems] = useState(
-    editedCard ? editedCard.items : []
+    editedCard ? editedCard.items : [],
   );
 
   const addItems = () => {
@@ -255,7 +255,7 @@ const EditModal = ({
             "Content-type": "application/json",
           },
           body: JSON.stringify(updatedCard),
-        }
+        },
       );
 
       const json = await response.json();
@@ -264,7 +264,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             "Invalid Session",
-            "error"
+            "error",
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -274,7 +274,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             `${json.desc} !!`,
-            "error"
+            "error",
           );
         }
       } else {
