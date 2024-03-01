@@ -53,9 +53,8 @@ const DonorLogin = () => {
         setFormErrors({ error: res.desc });
       } else {
         localStorage.setItem("auth-token", res.token);
-        swal("Good job", "Login Successful !!", "success");
         setTimeout(() => {
-          navigate("/donor-post", { replace: true });
+          navigate("/donation-drive", { replace: true });
         }, 1500);
         setFormValues(initialValues);
       }

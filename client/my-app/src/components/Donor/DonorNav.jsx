@@ -24,7 +24,7 @@ const DonorNav = () => {
       <style>{x}</style>
       <Navbar collapseOnSelect expand="lg">
         <Container>
-          <Nav.Link href="#" className={styles.nav_opt}>
+          <Nav.Link href="/donation-drive" className={styles.nav_opt}>
             <Navbar.Brand
               className={styles.kaushan_script_regular}
               style={{
@@ -49,9 +49,9 @@ const DonorNav = () => {
               <Nav.Link href="/donor-accpted-posts" className={styles.nav_opt}>
                 My Accepted Donations
               </Nav.Link>
-              <Nav.Link href="/donation-drive" className={styles.nav_opt}>
+              {/* <Nav.Link href="/donation-drive" className={styles.nav_opt}>
                 Donation Drive
-              </Nav.Link>
+              </Nav.Link> */}
             </Nav>
             <Nav>
               <Nav.Link className={styles.logout_btn} onClick={handleLogout}>
