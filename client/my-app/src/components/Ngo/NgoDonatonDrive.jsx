@@ -16,7 +16,7 @@ const NgoDonationDrive = () => {
   });
 
   const [flag, setFlag] = useState(0);
-  const [items, setItems] = useState([{ item: "", quantity: 0 }]);
+  const [items, setItems] = useState([{ name: "", quantity: 0 }]);
   const [file, setFile] = useState(null);
   const inputFile = useRef(null);
 
@@ -53,7 +53,7 @@ const NgoDonationDrive = () => {
   };
 
   const addItems = () => {
-    setItems([...items, { item: "", quantity: 0 }]);
+    setItems([...items, { name: "", quantity: 0 }]);
   };
 
   const deleteItems = (index) => {
@@ -118,7 +118,7 @@ const NgoDonationDrive = () => {
     setFlag(0);
     setItems([
       {
-        item: "",
+        name: "",
         quantity: 0,
       },
     ]);
@@ -187,8 +187,8 @@ const NgoDonationDrive = () => {
                             required
                             className="form-control"
                             id="name"
-                            name="item"
-                            value={i.item}
+                            name="name"
+                            value={i.name}
                             onChange={(event) => handleItemChange(index, event)}
                             onKeyPress={(event) => {
                               if (event.key === "Enter") {
