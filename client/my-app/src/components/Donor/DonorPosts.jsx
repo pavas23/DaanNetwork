@@ -3,9 +3,8 @@ import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DonorPostCard from "./DonorPostCard";
 import DonorNav from "./DonorNav";
-import foodimg from "../../images/foodaaaa.jpg";
 import swal from "sweetalert";
-import styles from "../../css/Donor/DonationForm.module.css";
+import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
@@ -134,8 +133,9 @@ const DonorPosts = () => {
   return (
     <div>
       <DonorNav />
+      <div className={styles.main_body}>
       <Container>
-        <h1 className="text-center mt-3 mb-5">My Pending Donation Requests</h1>
+        <h1 className="text-center mt-3 mb-5" style={{color:"black"}}>My Pending Donation Requests</h1>
         <Row className="justify-content-center">
           {cards.map((card) => (
             <Col md={4} key={card._id}>
@@ -164,6 +164,7 @@ const DonorPosts = () => {
         editedCard={editedCard}
         onSaveChanges={handleSaveChanges}
       />
+    </div>
     </div>
   );
 };
@@ -277,29 +278,41 @@ const EditModal = ({
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Post</Modal.Title>
+        <Modal.Title>Edit Donation Request</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group controlId="formDescription">
-            <Form.Label>Description</Form.Label>
+            <Form.Label className={styles.form_label}>Description </Form.Label>
+            <span style={{ color: "red" }}>*</span>{" "}
             <Form.Control
               type="text"
               value={editedDescription}
               onChange={(e) => setEditedDescription(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                }
+              }}
             />
           </Form.Group>
+          <br/>
           <Form.Group controlId="formQuantity">
-            <Form.Label>Quantity</Form.Label>
+            <Form.Label className={styles.form_label}>Quantity</Form.Label>
+            <span style={{ color: "red" }}>*</span>{" "}
             <Form.Control
               type="number"
               value={editedQuantity}
               onChange={(e) => setEditedQuantity(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                }
+              }}
             />
           </Form.Group>
+          <br/>
           <Form.Group controlId="formDaysBeforeExpiry">
-            <Form.Label>Items</Form.Label>
-
             {editedItems.map((i, index) => {
               return (
                 <div className="row mb-3">
@@ -375,22 +388,37 @@ const EditModal = ({
               </button>
             </div>
           </Form.Group>
+          <br/>
           <Form.Group controlId="formPickUpLocation">
-            <Form.Label>Pick Up Location</Form.Label>
+            <Form.Label className={styles.form_label}>Pick Up Location</Form.Label>
+            <span style={{ color: "red" }}>*</span>{" "}
             <Form.Control
               type="text"
               value={editedPickUpLocation}
               onChange={(e) => setEditedPickUpLocation(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                }
+              }}
             />
           </Form.Group>
+          <br/>
           <Form.Group controlId="formPickUpDate">
-            <Form.Label>Pick Up Date</Form.Label>
+            <Form.Label className={styles.form_label}>Pick Up Date</Form.Label>
+            <span style={{ color: "red" }}>*</span>{" "}
             <Form.Control
               type="date"
               value={editedPickUpDate}
               onChange={(e) => setEditedPickUpDate(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                }
+              }}
             />
           </Form.Group>
+          <br/>
         </Form>
       </Modal.Body>
       <Modal.Footer>
