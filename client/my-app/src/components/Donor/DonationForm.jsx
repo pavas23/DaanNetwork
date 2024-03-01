@@ -11,11 +11,11 @@ const DonationForm = () => {
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("auth-token")) {
-  //     navigate("/donor-login", { replace: true });
-  //   }
-  // });
+  useEffect(() => {
+    if (!localStorage.getItem("auth-token")) {
+      navigate("/donor-login", { replace: true });
+    }
+  });
 
   // TODO : make sure image covers entire background for phone also
 
