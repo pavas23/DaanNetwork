@@ -7,12 +7,12 @@ function DonorSignup() {
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-  useEffect(() => {
-    // if logged in user tries to access this page, redirect to prev. page
-    if (localStorage.getItem("auth-token")) {
-      navigate(-1);
-    }
-  });
+  // useEffect(() => {
+  //   // if logged in user tries to access this page, redirect to prev. page
+  //   if (localStorage.getItem("auth-token")) {
+  //     navigate(-1);
+  //   }
+  // });
 
   const date = new Date();
 

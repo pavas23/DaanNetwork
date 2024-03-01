@@ -443,7 +443,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
         .status(400)
         .json({ status: false, msg: "No ngo with this email" });
 
-    //lean() is used to convert it to normal object rather than mongo doc
+    // lean() is used to convert it to normal object rather than mongo doc
     var donation_drives = await NgoDonationRequest.find({ ngo: ngo[0]._id })
       .lean()
       .exec();

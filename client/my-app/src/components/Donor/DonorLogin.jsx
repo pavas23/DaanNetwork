@@ -7,12 +7,12 @@ import swal from "sweetalert";
 const DonorLogin = () => {
   let navigate = useNavigate();
 
-  useEffect(() => {
-    // if logged in user tries to access this page, redirect to prev. page
-    if (localStorage.getItem("auth-token")) {
-      navigate(-1);
-    }
-  });
+  // useEffect(() => {
+  //   // if logged in user tries to access this page, redirect to prev. page
+  //   if (localStorage.getItem("auth-token")) {
+  //     navigate(-1);
+  //   }
+  // });
 
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const initialValues = {

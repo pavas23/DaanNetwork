@@ -166,6 +166,7 @@ router.post(
  */
 router.delete(
   "/delete-donation-request",
+  donorVerification,
   donorController.deleteDonationRequest,
 );
 
@@ -193,6 +194,7 @@ router.delete(
  */
 router.post(
   "/my-accepted-donation-requests",
+  donorVerification,
   donorController.getAllAcceptedDonationRequests,
 );
 
@@ -240,7 +242,7 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
  *               type: array
  *               items:
  */
-router.post("/get-donation-history", donorController.getAllDonations);
+router.post("/get-donation-history",donorVerification, donorController.getAllDonations);
 
 /**
  * @swagger
@@ -357,6 +359,12 @@ router.post("/my-donation-drives", donorController.getAllAppliedDrives);
 router.post(
   "/delete-drive-application",
   donorController.deleteApplicationToDrive,
+);
+
+router.post(
+  "/modify-donation-request",
+  donorVerification,
+  donorController.modifyDonationRequest
 );
 
 module.exports = router;
