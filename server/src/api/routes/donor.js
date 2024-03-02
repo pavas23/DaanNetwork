@@ -139,7 +139,6 @@ router.post("/donor-login", donorController.donorLogin);
 router.post(
   "/donation-request",
   donorVerification,
-  uploadImage.single("file"),
   donorController.createDonationRequest
 );
 

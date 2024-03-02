@@ -61,6 +61,7 @@ const DonorPosts = () => {
       }
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
+      console.log(json.foodDonations);
     }
   };
 

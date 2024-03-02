@@ -193,17 +193,18 @@ module.exports.createDonor = async (req, res) => {
  */
 module.exports.createDonationRequest = async (req, res) => {
   try {
-    const { quantity, pickUpDate, description, pickUpLocation, items } =
+    const { quantity, pickUpDate, description, pickUpLocation, items, imageUrl } =
       req.body;
 
     const donorEmailId = req.user.emailId;
-    console.log(donorEmailId)
+    
     // if no image is attached
     var imagesArray = [];
-    if (req.file) {
-      let imageName = new Date().getMinutes() + req.file.originalname;
-      imagesArray = [imageName.toString()];
-    }
+    imagesArray = [imageUrl];
+    // if (req.file) {
+    //   let imageName = new Date().getMinutes() + req.file.originalname;
+    //   imagesArray = [imageName.toString()];
+    // }
 
     // finding donor by email id
     const donors = await Donor.find({ emailId: donorEmailId });
@@ -235,7 +236,7 @@ module.exports.createDonationRequest = async (req, res) => {
       pickUpLocation: pickUpLocation,
       donor: donors[0]._id,
       accepted: false,
-      items: JSON.parse(items),
+      items: items,
     });
 
     res.status(200).json({ status: true, desc: "Donation request created" });

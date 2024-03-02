@@ -6,18 +6,76 @@ import Form from "react-bootstrap/Form";
 import { Button, Modal } from "react-bootstrap";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../../firebase";
 
 const DonationForm = () => {
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
+  const [downloadUrl, setDownloadUrl] = useState("");
+
+  const uploadFile = (file) => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, "images/" + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            console.log(error);
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("DownloadURL - ", downloadURL);
+          console.log();
+          setDownloadUrl(downloadURL);
+        });
+      }
+    );
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
       navigate("/donor-login", { replace: true });
     }
   });
-
-  // TODO : make sure image covers entire background for phone also
 
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -31,6 +89,7 @@ const DonationForm = () => {
     description: "",
     pickUpLocation: "",
     pickUpDate: null,
+    imageUrl: "",
   });
 
   const [file, setFile] = useState(null);
@@ -72,16 +131,23 @@ const DonationForm = () => {
   const handleUpload = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
+    uploadFile(e.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    console.log(file)
+    if (file != null && downloadUrl === "") {
+      swal("Could not send donation request", `Image is uploading, Try again !`, "error");
+      return;
+    }
+
     if (formData.pickUpDate == null) {
       swal(
         "Could not send donation request",
         "Pick up date can not be null !",
-        "error",
+        "error"
       );
       return;
     }
@@ -90,7 +156,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         "Item list can not be empty !",
-        "error",
+        "error"
       );
       return;
     }
@@ -102,26 +168,23 @@ const DonationForm = () => {
         swal(
           "Could not send donation request",
           "Item list can not contain items having empty name or 0 quantity !",
-          "error",
+          "error"
         );
         return;
       }
     }
 
-    const formDataNew = new FormData();
-    formDataNew.append("quantity", formData.quantity);
-    formDataNew.append("description", formData.description);
-    formDataNew.append("pickUpLocation", formData.pickUpLocation);
-    formDataNew.append("pickUpDate", formData.pickUpDate);
-    formDataNew.append("items", JSON.stringify(items));
-    formDataNew.append("file", file);
-
     const response = await fetch(`${REACT_APP_APIURL}/donor/donation-request`, {
       method: "POST",
       headers: {
         "auth-token": localStorage.getItem("auth-token"),
+        "Content-Type": "application/json",
       },
-      body: formDataNew,
+      body: JSON.stringify({
+        ...formData,
+        imageUrl: downloadUrl,
+        items: items,
+      }),
     });
 
     const json = await response.json();
@@ -150,6 +213,8 @@ const DonationForm = () => {
         inputFile.current.value = "";
         inputFile.current.type = "file";
       }
+      setFile(null);
+      setDownloadUrl("");
     }
   };
 
