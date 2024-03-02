@@ -36,14 +36,14 @@ function DonorPostCard({
 
   return (
     <Card className={`${styles.card} mb-4`}>
-      {/* <Card.Img
+      <Card.Img
         variant="top"
         src={
-          `${image}`
+         image.length>0 ? `${image}`:"https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"
         }
         
         style={{ height: "35vh" }}
-      /> */}
+      />
       <Card.Body>
         {/* <Card.Title>{title}</Card.Title> */}
         <Card.Text>

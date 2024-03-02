@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d0f762d1.css",
+    "main.js": "/static/js/main.e07325a3.js",
+    "static/media/group.jpg": "/static/media/group.309a94938807544707f3.jpg",
+    "static/media/donor-page-bg.jpeg": "/static/media/donor-page-bg.018d6571f4e4fb1fcdd2.jpeg",
+    "static/media/signup_bg_1.jpg": "/static/media/signup_bg_1.28cb23758a7d86bba37e.jpg",
+    "static/media/bgd5.jpg": "/static/media/bgd5.3eb3e2cb63b45eac5e55.jpg",
+    "static/media/bgd1.jpg": "/static/media/bgd1.5f4b4b24fe302e74b81e.jpg",
+    "static/media/Daan.jpeg": "/static/media/Daan.8c56ca2bec2590011f9b.jpeg",
+    "static/media/660-13.jpg": "/static/media/660-13.f7c6d8d6057ce7bd5cb7.jpg",
+    "static/media/childrenSmiling.jpg": "/static/media/childrenSmiling.98814b039d5f4a6f5e30.jpg",
+    "static/media/bgd2.jpg": "/static/media/bgd2.a9710c54a2fce8327cc0.jpg",
+    "static/media/foodaaaa.jpg": "/static/media/foodaaaa.1c01a0919af5390da474.jpg",
+    "static/media/dsignup.jpg": "/static/media/dsignup.2b1678c17dd94dca71a2.jpg",
+    "static/media/ngo-drive.jpeg": "/static/media/ngo-drive.7d3b491b1912a8fbb6dc.jpeg",
+    "index.html": "/index.html",
+    "main.d0f762d1.css.map": "/static/css/main.d0f762d1.css.map",
+    "main.e07325a3.js.map": "/static/js/main.e07325a3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d0f762d1.css",
+    "static/js/main.e07325a3.js"
+  ]
+}
