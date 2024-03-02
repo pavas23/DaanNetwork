@@ -1,16 +1,22 @@
 import NgoNav from './NgoNav';
+import NgoDonationsAcceptedView from './NgoDonationsAcceptedView';
+import NgoHistoryDrivesView from './NgoHistoryDrivesView';
+import "bootstrap/dist/css/bootstrap.min.css";
 import styles from '../../css/Ngo/NgoHistory.module.css';
 
+
 const NgoHistory = () => {
+    
     return (
         <div>
             <NgoNav />
             <div>
-                <div className={styles.header1}>
-                    <h2>Accepted Donations</h2>
+                <div>
+                    <NgoDonationsAcceptedView/>
                 </div>
-                <div className={styles.header2}>
-                    <h2>Past held Donation Drives</h2>
+                <div className={styles.line}></div>
+                <div>
+                    <NgoHistoryDrivesView/>
                 </div>
             </div>
         </div>

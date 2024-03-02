@@ -3,7 +3,6 @@
     justify-content: center;
     padding: 20px 0;
     color: #2b6242;
-    border-bottom: 1px solid #e0e0e0;
 }
 
 .header2{
@@ -11,5 +10,10 @@
     justify-content: center;
     padding: 20px 0;
     color: #2b6242;
-    border-bottom: 1px solid #e0e0e0;
 }
+
+.line {
+    border-top: solid 0.17rem black;
+    width: 90%;
+    margin: 2% auto 0 auto;
+  }

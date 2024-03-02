@@ -118,7 +118,7 @@ router.post(
   ngoVerification,
   ngoController.acceptDonationRequest,
 );
-router.post("/get-my-donation-requests", ngoController.getMyDonationRequests);
+router.post("/get-my-donation-requests", ngoVerification, ngoController.getMyDonationRequests);
 router.post(
   "/send-confirmation-mail",
   ngoController.sendConfirmationMailToDonor,
@@ -128,7 +128,7 @@ router.post(
   ngoVerification,
   ngoController.createDonationRequest,
 );
-router.post("/get-all-drives", ngoController.getAllDonationDrives);
+router.post("/get-all-drives",ngoVerification, ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
 
 module.exports = router;

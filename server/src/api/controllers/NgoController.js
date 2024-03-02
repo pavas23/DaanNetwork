@@ -243,8 +243,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
  */
 module.exports.getMyDonationRequests = async (req, res) => {
   try {
-    const { ngoEmailId } = req.body;
-
+    const ngoEmailId  = req.user.emailId;
     // finding ngo by email id
     const ngos = await Ngo.find({ emailId: ngoEmailId });
     if (ngos.length == 0) {
@@ -442,7 +441,7 @@ module.exports.createDonationRequest = async (req, res) => {
  * res : { status:boolean, desc:String}
  */
 module.exports.getAllDonationDrives = async (req, res) => {
-  const { ngoEmail } = req.body;
+  const ngoEmail  = req.user.emailId;
   try {
     var ngo = await Ngo.find({ emailId: ngoEmail });
     if (ngo.length == 0)
@@ -472,7 +471,6 @@ module.exports.getAllDonationDrives = async (req, res) => {
         };
       }
     }
-    console.log(donation_drives);
     res.status(200).json({ status: true, drives: donation_drives });
   } catch (err) {
     return res.status(500).json({ status: false, msg: err });
