@@ -23,6 +23,7 @@ const NgoNavBar = () => {
         <Container>
           <Navbar.Brand
             className={styles.kaushan_script_regular}
+            href="/ngo-donations"
             style={{
               color: "#078534",
               fontWeight: "bold",
@@ -35,11 +36,11 @@ const NgoNavBar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" id="dekho_zara">
-              <Nav.Link href="/ngo-donations" className={styles.nav_opt}>
-                Donations
-              </Nav.Link>
               <Nav.Link href="/ngo-drive" className={styles.nav_opt}>
                 Create Donation Drive
+              </Nav.Link>
+              <Nav.Link href="/ngo-history" className={styles.nav_opt}>
+                Profile History
               </Nav.Link>
               {/* <Nav.Link href='#contactPage' className={styles.nav_opt}></Nav.Link> */}
             </Nav>

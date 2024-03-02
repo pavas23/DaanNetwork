@@ -46,7 +46,9 @@ const NgoLogin = () => {
         setFormErrors({ error: res.desc });
       } else {
         localStorage.setItem("auth-token", res.token);
-        navigate("/ngo-drive", { replace: true });
+        setTimeout(() => {
+          navigate("/ngo-donations", { replace: true });
+        }, 1500);
         setFormValues(initialValues);
       }
     }

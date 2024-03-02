@@ -16,7 +16,7 @@ const DonorPosts = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
-      navigate("/donor-login", { replace: true });
+      navigate("/", { replace: true });
     } else {
       getData();
       setFlag(false);
