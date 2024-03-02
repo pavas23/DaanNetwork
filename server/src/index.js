@@ -11,6 +11,11 @@ const cookieParser = require("cookie-parser");
 
 app.use(cors());
 app.use(express.json());
+
+const _dirname = path.dirname("");
+const buildpath = path.join(_dirname, "../../client/my-app/build");
+app.use(express.static(buildpath));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
@@ -18,7 +23,9 @@ const PORT = process.env.PORT || 5004;
 
 // use express router
 app.use("/", require("./api/routes"));
-app.use(cors());
+app.use(cors({
+  "origin": "*",
+}));
 
 app.listen(PORT, (err) => {
   if (err) {

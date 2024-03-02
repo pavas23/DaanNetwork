@@ -41,7 +41,7 @@ function DonorAcceptedPostCard({
 
   return (
     <Card className={`${styles.card} mb-4`}>
-      <Card.Img
+      {/* <Card.Img
         variant="top"
         src={
           image.length !== 0
@@ -49,7 +49,7 @@ function DonorAcceptedPostCard({
             : require("../../images/no_image.jpeg")
         }
         style={{ height: "35vh" }}
-      />
+      /> */}
       <Card.Body>
         {/* <Card.Title>{title}</Card.Title> */}
         <Card.Text>
