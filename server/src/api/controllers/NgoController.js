@@ -9,6 +9,9 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
 const { createSecretToken } = require("../helpers/secretToken");
 
+/** ngo controller, which will send auth-token on successful login
+ *  res : { status: boolean, token: string, desc: string }
+ */
 module.exports.NGOLogin = async (req, res) => {
   try {
     const { emailId, password } = req.body;
@@ -39,6 +42,9 @@ module.exports.NGOLogin = async (req, res) => {
   }
 };
 
+/** function to send email to ngo after successful registration
+ *  params : (ngoName, emailId)
+ */
 var notifyNGORegistration = async (ngoName, emailId) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -165,6 +171,7 @@ module.exports.getAllDonationRequests = async (req, res) => {
 };
 
 /** function to send confirmation mail to donor when ngo accepts the donation request
+ * params : (donor, ngo)
  */
 var sendConfirmationMailToDonor = (donor, ngo) => {
   try {
@@ -390,7 +397,7 @@ module.exports.createDonationRequest = async (req, res) => {
 
 /**
  * ngo controller to show all donation requests created by a given ngo
- * req = {ngoEmail}
+ * req body : {ngoEmail}
  * res : { status:boolean, desc:String}
  */
 module.exports.getAllDonationDrives = async (req, res) => {
@@ -434,7 +441,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
 //send email to Donor and NGO about applied donation drive
 
 /** delete donation drive
- * req = { ngoEmail, donationDriveId }
+ * req body : { ngoEmail, donationDriveId }
  */
 module.exports.deleteDonationDrive = async (req, res) => {
   const { ngoEmail, donationDriveId } = req.body;
