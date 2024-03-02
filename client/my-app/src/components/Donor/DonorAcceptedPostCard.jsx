@@ -44,9 +44,7 @@ function DonorAcceptedPostCard({
       {/* <Card.Img
         variant="top"
         src={
-          image.length !== 0
-            ? require(`../../images/${image}`)
-            : require("../../images/no_image.jpeg")
+          `${image}`
         }
         style={{ height: "35vh" }}
       /> */}
