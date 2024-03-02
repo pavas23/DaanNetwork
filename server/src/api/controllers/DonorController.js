@@ -274,15 +274,21 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
 
     console.log(foodDonations);
 
-    if (foodDonations[0] == null) {
-      return res.status(200).json({
-        status: true,
-        foodDonations: foodDonations,
-        desc: "Donate Now",
-      });
-    }
+        // removing null objects
+        foodDonationsUpdated = [];
+        for (var i = 0; i < foodDonations.length; i++) {
+          if (foodDonations[i] != undefined) {
+            foodDonationsUpdated.push(foodDonations[i]);
+          }
+        }
+    
+        if (foodDonationsUpdated.length == 0) {
+          return res
+            .status(200)
+            .json({ status: false, desc: "No donation request exists" });
+        }
 
-    return res.status(200).json({ status: true, foodDonations: foodDonations });
+    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
     console.log(err);
     return res
@@ -352,15 +358,25 @@ module.exports.getAllDonations = async (req, res) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
 
-    if (foodDonations[0] == null) {
-      return res.status(200).json({
-        status: true,
-        foodDonations: foodDonations,
-        desc: "Donate Now",
-      });
-    }
+   
 
-    return res.status(200).json({ status: true, foodDonations: foodDonations });
+        // removing null objects
+        foodDonationsUpdated = [];
+        for (var i = 0; i < foodDonations.length; i++) {
+          if (foodDonations[i] != undefined) {
+            foodDonationsUpdated.push(foodDonations[i]);
+          }
+        }
+    
+        console.log(foodDonationsUpdated)
+        if (foodDonationsUpdated.length == 0) {
+          return res
+            .status(200)
+            .json({ status: false, desc: "No donation request exists" });
+        }
+
+
+    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
     console.log(err);
     return res

@@ -148,23 +148,29 @@ const DonorPosts = () => {
             My Pending Donation Requests
           </h1>
           <Row className="justify-content-center">
-            {cards.map((card) => (
-              <Col md={4} key={card._id}>
-                <DonorPostCard
-                  image={card.images.length !== 0 ? card.images[0] : ""}
-                  _id={card._id}
-                  donationRequestNum={card.donationRequestNum}
-                  accepted={card.accepted}
-                  description={card.description}
-                  items={card.items}
-                  quantity={card.quantity}
-                  pickUpLocation={card.pickUpLocation}
-                  pickUpDate={card.pickUpDate}
-                  onDelete={handleDelete}
-                  onEdit={handleEdit}
-                />
-              </Col>
-            ))}
+            {cards.map((card) => {
+              if(card!==null){
+                return (
+                  <Col md={4} key={card._id}>
+                    <DonorPostCard
+                      image={(card.images.length !== 0) ? card.images[0] : ""}
+                      _id={card._id}
+                      donationRequestNum={card.donationRequestNum}
+                      accepted={card.accepted}
+                      description={card.description}
+                      items={card.items}
+                      quantity={card.quantity}
+                      pickUpLocation={card.pickUpLocation}
+                      pickUpDate={card.pickUpDate}
+                      onDelete={handleDelete}
+                      onEdit={handleEdit}
+                    />
+                  </Col>
+                )
+              }else {
+                return (<></>)
+              }
+            })}
           </Row>
         </Container>
         <EditModal
