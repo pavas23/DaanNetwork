@@ -62,6 +62,10 @@ function NGOsignup() {
       if (!res.status) {
         setFormErrors({ error: res.desc });
       } else {
+        swal("Good job", "Successfully registered !!", "success");
+        setTimeout(() => {
+          navigate("/ngo-login", { replace: true });
+        }, 1500);
         setFormValues(initialValues);
       }
     }

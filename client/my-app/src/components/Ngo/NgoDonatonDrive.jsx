@@ -5,6 +5,13 @@ import styles from "../../css/Ngo/NgoDonationDrive.module.css";
 import Form from "react-bootstrap/Form";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../../firebase";
 
 const NgoDonationDrive = () => {
   let navigate = useNavigate();
@@ -75,10 +82,66 @@ const NgoDonationDrive = () => {
   const handleUpload = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
+    uploadFile(e.target.files[0])
+  };
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const uploadFile = (file) => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, "images/" + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            console.log(error);
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("DownloadURL - ", downloadURL);
+          console.log();
+          setDownloadUrl(downloadURL);
+        });
+      }
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (file != null && downloadUrl === "") {
+      swal("Could not send donation request", `Image is uploading, Try again !`, "error");
+      return;
+    }
     if (formData.endDate <= formData.startDate) {
       swal(
         "Could not add donation drive",
@@ -96,7 +159,7 @@ const NgoDonationDrive = () => {
       description: {
         name: formData.name,
         items: items,
-        images: [],
+        images: [downloadUrl],
         brief: formData.description,
       },
     };
@@ -113,7 +176,18 @@ const NgoDonationDrive = () => {
         },
       );
       var data = await resp.json();
-      console.log(data);
+      // console.log(data);
+      if(data.status){
+        swal("Good job", "Successfully registered !!", "success");
+        
+        
+      }else{
+        swal(
+          "Could not add donation drive",
+          "Internal Server Error",
+          "error",
+        );
+      }
     } catch (err) {
       console.log(err);
     }

@@ -49,7 +49,7 @@ const NgoDonationsAcceptedView=()=>{
         }
       } else {
         if (json.foodDonations[0] == null) {
-          swal("No donations accepted till now", "Empty list", "error");
+          // swal("No donations accepted till now", "Empty list", "error");
         }
         setFoodDonations(json.foodDonations);
         setCards(json.foodDonations);

@@ -16,7 +16,7 @@ function DrivePostCard({ donationDrive }) {
       <Card.Img
         variant="top"
         src={
-          donationDrive.description.images.length > 0
+          (donationDrive.description.images.length > 0 && donationDrive.description.images[0].length>0)
             ? donationDrive.description.images[0]
             : "https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"
         }

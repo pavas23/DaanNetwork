@@ -57,13 +57,6 @@ const DonorAcceptedPosts = () => {
         );
       }
     } else {
-      if (json.foodDonations[0] == null) {
-        swal(
-          "No accepted donation requests to show",
-          `${json.desc} !!`,
-          "error",
-        );
-      }
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
       console.log(json.foodDonations);

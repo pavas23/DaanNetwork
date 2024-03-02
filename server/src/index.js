@@ -8,7 +8,9 @@ const swaggerUI = require("swagger-ui-express");
 const specs = require("../src/config/swagger/index");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-
+app.use(cors({
+  "origin":"*"
+}));
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +20,7 @@ const PORT = process.env.PORT || 5004;
 
 // use express router
 app.use("/", require("./api/routes"));
-app.use(cors());
+
 
 app.listen(PORT, (err) => {
   if (err) {
