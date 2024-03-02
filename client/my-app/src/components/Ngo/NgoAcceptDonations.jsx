@@ -61,12 +61,10 @@ const DonorPosts = () => {
   const [showModal, setShowModal] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
 
-  const handleDelete = async (id) => {
+  const handleAccept = async (id) => {
     const selectedCard = cards.map((card) => {
       if (card._id == id) return card;
     });
-
-    console.log(selectedCard);
 
     var num = 0;
     var donorId = "";
@@ -152,7 +150,7 @@ const DonorPosts = () => {
                   donor_emailId={card.donor.emailId}
                   donor_address={card.donor.address}
                   donor_contactNumber={card.donor.contactNumber}
-                  onDelete={handleDelete}
+                  onDelete={handleAccept}
                   onEdit={handleEdit}
                 />
               </Col>

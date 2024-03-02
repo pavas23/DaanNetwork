@@ -14,8 +14,8 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const bcrypt = require("bcrypt");
 const { createSecretToken } = require("../helpers/secretToken");
 
-/** donor controller, which will send token on successful login
- * res : { status: boolean, token: string, desc: string }
+/** donor controller, which will send auth-token on successful login
+ *  res : { status: boolean, token: string, desc: string }
  */
 module.exports.donorLogin = async (req, res) => {
   try {
@@ -49,6 +49,9 @@ module.exports.donorLogin = async (req, res) => {
   }
 };
 
+/** function to send email to donor after successful registration
+ *  params : (name, emailId)
+ */
 var notifyDonorRegistration = async (name, emailId) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -245,7 +248,7 @@ module.exports.createDonationRequest = async (req, res) => {
 };
 
 /** donor controller to see my all accepted donation requests
- * req body { donorEmailId }
+ * req user : { donorEmailId }
  * res : { status:boolean, desc:string }
  */
 module.exports.getAllAcceptedDonationRequests = async (req, res) => {
@@ -325,7 +328,7 @@ module.exports.uploadDonationImages = async (req, res) => {
 };
 
 /** donor controller to see my all pending donation requests
- * req body { donorEmailId }
+ * req user : { donorEmailId }
  * res : { status:boolean, desc:string | foodDonations: List }
  */
 module.exports.getAllDonations = async (req, res) => {
@@ -365,7 +368,10 @@ module.exports.getAllDonations = async (req, res) => {
   }
 };
 
-var notifyNewDonorForDrive = async (drive, donor) => {};
+/** function to notify donor about their successful application to donation drive
+ * params: (drive, donor)
+ */
+var notifyNewDonorForDrive = async (drive, donor) => { };
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
@@ -460,8 +466,8 @@ var notifyDonorApplicationNGO = async (drive, application, donor) => {
 };
 
 /** donor controller to apply for donation drive created by ngo
- * req : {donorEmailId , donationDetails, donationRequestId (i think this will be enough as we dont need
- * ngo id we can extract ngo id from the donation request)}
+ * req user : { donorEmailId }
+ * req : { donationDetails, donationRequestId }
  *   donationDetails: {
  *      items: Array,
  *      pickUpDate: Date,
@@ -470,11 +476,9 @@ var notifyDonorApplicationNGO = async (drive, application, donor) => {
  *   }
  */
 module.exports.applyForDonationDrive = async (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
   const donorEmailId = req.user.emailId;
   const { donationRequestId, donationDetails } = req.body;
-  console.log(donationDetails);
+
   try {
     var donor = await Donor.find({ emailId: donorEmailId });
     if (donor.length == 0)
@@ -496,7 +500,6 @@ module.exports.applyForDonationDrive = async (req, res) => {
     };
 
     donationRequest.donors = [...donationRequest.donors, donor_obj];
-    //idk why this is like this :(
     donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
       donor_obj.donation_items;
     console.log(donationRequest);
@@ -526,7 +529,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
     );
 
     notifyDonorApplicationNGO(
-      tempDriveObj, donor_obj,donor[0].toObject()
+      tempDriveObj, donor_obj, donor[0].toObject()
     );
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
@@ -538,7 +541,6 @@ module.exports.applyForDonationDrive = async (req, res) => {
 
 /** donor controller to get all ngo donation drives
  * view all donation drives
- * returns whole thing but pls remove ngo password and donors fields later
  */
 module.exports.getAllDrives = async (req, res) => {
   try {
@@ -557,7 +559,8 @@ module.exports.getAllDrives = async (req, res) => {
 };
 
 /** donor controller to delete donation request
- * req body : { donorEmailId, donationRequestNum }
+ * req user : { donorEmailId }
+ * req body : { donationRequestNum }
  * res: res : { status:boolean, desc:string }
  */
 module.exports.deleteDonationRequest = async (req, res) => {
@@ -630,7 +633,7 @@ module.exports.deleteDonationRequest = async (req, res) => {
 
 /** delete application to donation drive
  * get donation drives donor has applied to
- * req = { donorEmailId }
+ * req body: { donorEmailId }
  */
 module.exports.getAllAppliedDrives = async (req, res) => {
   const { donorEmailId } = req.body;
@@ -717,7 +720,9 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
 };
 
 /** donor controller to modify the donation
- *
+ *  req user : { donorEmailId }
+ *  req body : { donationRequestNum, description, items, quantity, pickUpLocation, pickUpDate }
+ *  res : res : { status:boolean, desc:string }
  */
 module.exports.modifyDonationRequest = async (req, res) => {
   const donorEmailId = req.user.emailId;

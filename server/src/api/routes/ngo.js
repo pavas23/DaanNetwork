@@ -105,28 +105,24 @@ router.post("/ngo-login", ngoController.NGOLogin);
 router.post(
   "/create-ngo",
   uploadCertificate.single("reg_certificate"),
-  ngoController.addNGO,
+  ngoController.addNGO
 );
 router.post("/ngo-login", ngoController.NGOLogin);
 router.get(
   "/get-all-donation-requests",
   ngoVerification,
-  ngoController.getAllDonationRequests,
+  ngoController.getAllDonationRequests
 );
 router.post(
   "/accept-donation-request",
   ngoVerification,
-  ngoController.acceptDonationRequest,
+  ngoController.acceptDonationRequest
 );
 router.post("/get-my-donation-requests", ngoVerification, ngoController.getMyDonationRequests);
 router.post(
-  "/send-confirmation-mail",
-  ngoController.sendConfirmationMailToDonor,
-);
-router.post(
   "/create-donation-request",
   ngoVerification,
-  ngoController.createDonationRequest,
+  ngoController.createDonationRequest
 );
 router.post("/get-all-drives",ngoVerification, ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
