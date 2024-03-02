@@ -307,6 +307,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
 module.exports.getMyDonationRequests = async (req, res) => {
   try {
     const ngoEmailId  = req.user.emailId;
+    console.log(ngoEmailId)
     // finding ngo by email id
     const ngos = await Ngo.find({ emailId: ngoEmailId });
     if (ngos.length == 0) {
@@ -316,23 +317,35 @@ module.exports.getMyDonationRequests = async (req, res) => {
         desc: "No valid ngo exists with this mail id !!",
       });
     }
-
+    console.log(ngos)
     // get donation requests which are accepted by this ngo
-    var foodDonations = FoodDonation.find({ accepted: true })
+    var foodDonations = await FoodDonation.find({ accepted: true })
       .populate("donor")
       .populate("ngo")
       .exec();
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.ngo.emailId == ngoEmailId) return donation.toJSON();
     });
-
+    // console.log(foodDonations)
+    foodDonationsUpdated = [];
+        for (var i = 0; i < foodDonations.length; i++) {
+          if (foodDonations[i] != undefined) {
+            foodDonationsUpdated.push(foodDonations[i]);
+          }
+        }
+    
+        if (foodDonationsUpdated.length == 0) {
+          return res
+            .status(200)
+            .json({ status: false, desc: "No donation request exists" });
+        }
     // empty list
-    if (foodDonations[0] == null) {
-      return res
-        .status(200)
-        .json({ status: false, foodDonations: foodDonations });
-    }
-    return res.status(200).json({ status: true, foodDonations: foodDonations });
+    // if (foodDonations[0] == null) {
+    //   return res
+    //     .status(200)
+    //     .json({ status: false, foodDonations: foodDonations });
+    // }
+    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (error) {
     if (error) {
       console.log(error);

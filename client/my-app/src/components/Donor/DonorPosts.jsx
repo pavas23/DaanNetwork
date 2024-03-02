@@ -56,9 +56,6 @@ const DonorPosts = () => {
         );
       }
     } else {
-      if (json.foodDonations[0] == null) {
-        swal("No donation requests to show", `${json.desc} !!`, "error");
-      }
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
       console.log(json.foodDonations);

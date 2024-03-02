@@ -28,7 +28,7 @@ const NgoDonationsAcceptedView=()=>{
             navigate("/donor-posts", { replace: true });
           }, 1500);
         } else {
-          swal("Could not fetch donation drives", `${json.desc} !!`, "error");
+          // swal("Could not fetch donation drives", `${json.desc} !!`, "error");
         }
       } else {
         setDriveList(json.drives);
