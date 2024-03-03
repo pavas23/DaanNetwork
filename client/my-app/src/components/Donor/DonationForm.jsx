@@ -137,9 +137,13 @@ const DonationForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(file)
+    console.log(file);
     if (file != null && downloadUrl === "") {
-      swal("Could not send donation request", `Image is uploading, Try again !`, "error");
+      swal(
+        "Could not send donation request",
+        `Image is uploading, Try again !`,
+        "error"
+      );
       return;
     }
 

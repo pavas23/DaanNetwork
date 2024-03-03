@@ -70,7 +70,7 @@ function DonationDriveModal({ donationDrive, closeModal }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(donationDetails),
-      },
+      }
     );
     const json = await response.json();
     if (!json.status) {
@@ -103,7 +103,12 @@ function DonationDriveModal({ donationDrive, closeModal }) {
             <div className="text-center mb-1">
               <div className="">
                 <img
-                  src={(donationDrive.description.images.length>0 && donationDrive.description.images[0].length>0)?`${donationDrive.description.images[0]}`:"https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"}
+                  src={
+                    donationDrive.description.images.length > 0 &&
+                    donationDrive.description.images[0].length > 0
+                      ? `${donationDrive.description.images[0]}`
+                      : "https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"
+                  }
                   alt={"sampleImage"}
                   className={"img-fluid " + styles.driveDetailsDiv}
                   style={{

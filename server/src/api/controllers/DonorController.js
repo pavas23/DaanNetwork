@@ -197,7 +197,7 @@ module.exports.createDonationRequest = async (req, res) => {
       req.body;
 
     const donorEmailId = req.user.emailId;
-    
+
     // if no image is attached
     var imagesArray = [];
     imagesArray = [imageUrl];
@@ -274,19 +274,19 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
 
     console.log(foodDonations);
 
-        // removing null objects
-        foodDonationsUpdated = [];
-        for (var i = 0; i < foodDonations.length; i++) {
-          if (foodDonations[i] != undefined) {
-            foodDonationsUpdated.push(foodDonations[i]);
-          }
-        }
-    
-        if (foodDonationsUpdated.length == 0) {
-          return res
-            .status(200)
-            .json({ status: false, desc: "No donation request exists" });
-        }
+    // removing null objects
+    foodDonationsUpdated = [];
+    for (var i = 0; i < foodDonations.length; i++) {
+      if (foodDonations[i] != undefined) {
+        foodDonationsUpdated.push(foodDonations[i]);
+      }
+    }
+
+    if (foodDonationsUpdated.length == 0) {
+      return res
+        .status(200)
+        .json({ status: false, desc: "No donation request exists" });
+    }
 
     return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
@@ -358,23 +358,19 @@ module.exports.getAllDonations = async (req, res) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
 
-   
+    // removing null objects
+    foodDonationsUpdated = [];
+    for (var i = 0; i < foodDonations.length; i++) {
+      if (foodDonations[i] != undefined) {
+        foodDonationsUpdated.push(foodDonations[i]);
+      }
+    }
 
-        // removing null objects
-        foodDonationsUpdated = [];
-        for (var i = 0; i < foodDonations.length; i++) {
-          if (foodDonations[i] != undefined) {
-            foodDonationsUpdated.push(foodDonations[i]);
-          }
-        }
-    
-        console.log(foodDonationsUpdated)
-        if (foodDonationsUpdated.length == 0) {
-          return res
-            .status(200)
-            .json({ status: false, desc: "No donation request exists" });
-        }
-
+    if (foodDonationsUpdated.length == 0) {
+      return res
+        .status(200)
+        .json({ status: false, desc: "No donation request exists" });
+    }
 
     return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
@@ -518,7 +514,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
 
     donationRequest.donors = [...donationRequest.donors, donor_obj];
     donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
-      donor_obj.donation_items;
+    donor_obj.donation_items;
     console.log(donationRequest);
     var upDatedReq = await donationRequest.save();
     var ngo = await Ngo.findById(ngoID);

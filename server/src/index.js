@@ -10,7 +10,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 app.use(cors({
-  "origin":"*"
+  "origin": "*"
 }));
 
 app.use(express.json());

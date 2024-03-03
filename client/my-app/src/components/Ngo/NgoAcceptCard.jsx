@@ -43,7 +43,9 @@ function DonorPostCard({
       <Card.Img
         variant="top"
         src={
-         (image.length!==0)?`${image}`:"https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"
+          image.length !== 0
+            ? `${image}`
+            : "https://firebasestorage.googleapis.com/v0/b/daannetwork-b8fe5.appspot.com/o/images%2Fno_image.jpeg?alt=media&token=14799063-3a83-4139-a64a-dca503ac5118"
         }
         style={{ height: "35vh" }}
       />
@@ -57,7 +59,7 @@ function DonorPostCard({
           <strong>Items:</strong>{" "}
           {items.map(
             (item, index) =>
-              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`,
+              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`
           )}
           <br />
           <strong>Total Quantity:</strong> {quantity} kg

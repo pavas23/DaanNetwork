@@ -13,6 +13,7 @@ const DonationDrive = () => {
   let navigate = useNavigate();
 
   const [driveList, setDriveList] = useState([]);
+
   const getData = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/donor/all-donation-drives`, {
       method: "GET",
@@ -24,7 +25,7 @@ const DonationDrive = () => {
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
         swal("Could not fetch donation drives", "Server Error", "error");
-        // localStorage.removeItem("auth-token");
+        localStorage.removeItem("auth-token");
         setTimeout(() => {
           navigate("/donor-posts", { replace: true });
         }, 1500);

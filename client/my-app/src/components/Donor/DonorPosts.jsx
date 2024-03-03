@@ -33,7 +33,7 @@ const DonorPosts = () => {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
         },
-      },
+      }
     );
 
     const json = await response.json();
@@ -42,7 +42,7 @@ const DonorPosts = () => {
         swal(
           "Could not fetch your donation requests",
           "Invalid Session",
-          "error",
+          "error"
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
@@ -52,7 +52,7 @@ const DonorPosts = () => {
         swal(
           "Could not fetch your donation requests",
           `${json.desc} !!`,
-          "error",
+          "error"
         );
       }
     } else {
@@ -90,7 +90,7 @@ const DonorPosts = () => {
           body: JSON.stringify({
             donationRequestNum: num,
           }),
-        },
+        }
       );
 
       const json = await response.json();
@@ -99,7 +99,7 @@ const DonorPosts = () => {
           swal(
             "Could not fetch your donation requests",
             "Invalid Session",
-            "error",
+            "error"
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -109,7 +109,7 @@ const DonorPosts = () => {
           swal(
             "Could not delete your donation request",
             `${json.desc} !!`,
-            "error",
+            "error"
           );
         }
       } else {
@@ -146,11 +146,11 @@ const DonorPosts = () => {
           </h1>
           <Row className="justify-content-center">
             {cards.map((card) => {
-              if(card!==null){
+              if (card !== null) {
                 return (
                   <Col md={4} key={card._id}>
                     <DonorPostCard
-                      image={(card.images.length !== 0) ? card.images[0] : ""}
+                      image={card.images.length !== 0 ? card.images[0] : ""}
                       _id={card._id}
                       donationRequestNum={card.donationRequestNum}
                       accepted={card.accepted}
@@ -163,9 +163,9 @@ const DonorPosts = () => {
                       onEdit={handleEdit}
                     />
                   </Col>
-                )
-              }else {
-                return (<></>)
+                );
+              } else {
+                return <></>;
               }
             })}
           </Row>
@@ -194,19 +194,19 @@ const EditModal = ({
   let navigate = useNavigate();
 
   const [editedDescription, setEditedDescription] = useState(
-    editedCard ? editedCard.description : "",
+    editedCard ? editedCard.description : ""
   );
   const [editedQuantity, setEditedQuantity] = useState(
-    editedCard ? editedCard.quantity : "",
+    editedCard ? editedCard.quantity : ""
   );
   const [editedPickUpLocation, setEditedPickUpLocation] = useState(
-    editedCard ? editedCard.pickUpLocation : "",
+    editedCard ? editedCard.pickUpLocation : ""
   );
   const [editedPickUpDate, setEditedPickUpDate] = useState(
-    editedCard ? editedCard.pickUpDate : "",
+    editedCard ? editedCard.pickUpDate : ""
   );
   const [editedItems, setEditedItems] = useState(
-    editedCard ? editedCard.items : [],
+    editedCard ? editedCard.items : []
   );
 
   const addItems = () => {
@@ -256,7 +256,7 @@ const EditModal = ({
             "Content-type": "application/json",
           },
           body: JSON.stringify(updatedCard),
-        },
+        }
       );
 
       const json = await response.json();
@@ -265,7 +265,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             "Invalid Session",
-            "error",
+            "error"
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -275,7 +275,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             `${json.desc} !!`,
-            "error",
+            "error"
           );
         }
       } else {

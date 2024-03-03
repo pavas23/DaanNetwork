@@ -82,7 +82,7 @@ const NgoDonationDrive = () => {
   const handleUpload = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
-    uploadFile(e.target.files[0])
+    uploadFile(e.target.files[0]);
   };
   const [downloadUrl, setDownloadUrl] = useState("");
   const uploadFile = (file) => {
@@ -139,14 +139,18 @@ const NgoDonationDrive = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (file != null && downloadUrl === "") {
-      swal("Could not send donation request", `Image is uploading, Try again !`, "error");
+      swal(
+        "Could not send donation request",
+        `Image is uploading, Try again !`,
+        "error"
+      );
       return;
     }
     if (formData.endDate <= formData.startDate) {
       swal(
         "Could not add donation drive",
         "Event can not end before or on start date",
-        "error",
+        "error"
       );
       setFlag(1);
       return;
@@ -173,20 +177,14 @@ const NgoDonationDrive = () => {
             "auth-token": localStorage.getItem("auth-token"),
           },
           body: JSON.stringify(req),
-        },
+        }
       );
       var data = await resp.json();
       // console.log(data);
-      if(data.status){
+      if (data.status) {
         swal("Good job", "Successfully registered !!", "success");
-        
-        
-      }else{
-        swal(
-          "Could not add donation drive",
-          "Internal Server Error",
-          "error",
-        );
+      } else {
+        swal("Could not add donation drive", "Internal Server Error", "error");
       }
     } catch (err) {
       console.log(err);
