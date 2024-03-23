@@ -191,6 +191,7 @@ function DonationDriveModal({ donationDrive, closeModal }) {
                         className="form-control"
                         id="name"
                         name="quantity"
+                        min = "0"
                         required
                         value={i.quantity}
                         onChange={(event) => handleItemChange(index, event)}
