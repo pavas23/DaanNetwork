@@ -324,6 +324,8 @@ module.exports.getMyDonationRequests = async (req, res) => {
       .populate("donor")
       .populate("ngo")
       .exec();
+
+    console.log(foodDonations)
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.ngo.emailId == ngoEmailId) return donation.toJSON();
     });
