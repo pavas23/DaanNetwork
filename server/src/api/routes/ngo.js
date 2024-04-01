@@ -126,5 +126,5 @@ router.post(
 );
 router.post("/get-all-drives",ngoVerification, ngoController.getAllDonationDrives);
 router.delete("/delete-donation-drive", ngoController.deleteDonationDrive);
-
+router.get("/get-all-ngos",ngoController.getAllNgo)
 module.exports = router;
