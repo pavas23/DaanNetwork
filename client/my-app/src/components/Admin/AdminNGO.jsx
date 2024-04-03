@@ -28,12 +28,12 @@ function AdminNGO() {
       <div className="container">
         <h1 className="text-center mt-4">List of NGOs</h1>
         <div className="list-group mt-3">
-          {ngos.map((person, index) => (
+          {ngos.map((ngo, index) => (
             <div
               key={index}
               className={styles.list_item + " row mb-3 p-2 rounded"}
               onClick={()=>{
-                navigate("/admin-ngoInfo",{replace:false});
+                navigate("/admin-ngoInfo",{replace:false,state:{ngo:ngo}});
               }}
             >
               <span
@@ -41,14 +41,14 @@ function AdminNGO() {
                   styles.person_name + " col-sm-5 d-flex align-items-center"
                 }
               >
-                {person.name}
+                {ngo.name}
               </span>
               <span
                 className={
                   styles.person_name + " col-sm-6 d-flex align-items-center"
                 }
               >
-                {person.address}
+                {ngo.address}
               </span>
               <div className="col-sm-1 d-flex justify-content-center">
                 <div className={"btn " + styles.blk_btn}>BAN</div>
