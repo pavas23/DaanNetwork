@@ -1,0 +1,28 @@
+/* DonorProfile.module.css */
+
+.main_body {
+  display: flex;
+  justify-content: center;
+  margin-top: -20px; /* Reduce gap between "My Profile" and box */
+}
+
+.profile-card {
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card img {
+  width: 80px;
+}
+
+.profile-card .info-section {
+  padding: 1.25rem;
+}
+
+.profile-card .info-section hr {
+  margin: 0.75rem 0;
+}
+
+.profile-card .info-section .social-links a {
+  margin-right: 1rem;
+}

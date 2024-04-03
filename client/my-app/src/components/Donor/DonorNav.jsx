@@ -49,6 +49,9 @@ const DonorNav = () => {
               <Nav.Link href="/donor-accpted-posts" className={styles.nav_opt}>
                 My Accepted Donations
               </Nav.Link>
+              <Nav.Link href="/donor-profile" className={styles.nav_opt}>
+                My Profile
+              </Nav.Link>
               {/* <Nav.Link href="/donation-drive" className={styles.nav_opt}>
                 Donation Drive
               </Nav.Link> */}
