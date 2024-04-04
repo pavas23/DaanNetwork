@@ -69,29 +69,6 @@ function AdminNGO() {
                   View NGO
                 </div>
               </div> 
-                
-              <div className="col-sm-1 d-flex justify-content-center">
-                <div
-                  onClick={async () => {
-                    var res = await fetch(
-                      `${REACT_APP_APIURL}/admin/blockUser`,
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          emailId: ngo.emailId,
-                        }),
-                      }
-                    );
-                    console.log(res);
-                  }}
-                  className={"btn " + styles.blk_btn}
-                >
-                  BAN NGO
-                </div>
-              </div>
             </div>
           ))}
         </div>

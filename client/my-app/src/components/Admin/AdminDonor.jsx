@@ -69,29 +69,6 @@ function AdminDonor() {
                                     View Donor
                                 </div>
                             </div>
-
-                            <div className="col-sm-1 d-flex justify-content-center">
-                                <div
-                                    onClick={async () => {
-                                        var res = await fetch(
-                                            `${REACT_APP_APIURL}/admin/blockUser`,
-                                            {
-                                                method: "POST",
-                                                headers: {
-                                                    "Content-Type": "application/json",
-                                                },
-                                                body: JSON.stringify({
-                                                    emailId: donor.emailId,
-                                                }),
-                                            }
-                                        );
-                                        console.log(res);
-                                    }}
-                                    className={"btn " + styles.blk_btn}
-                                >
-                                    Block Donor
-                                </div>
-                            </div>
                         </div>
                     ))}
                 </div>

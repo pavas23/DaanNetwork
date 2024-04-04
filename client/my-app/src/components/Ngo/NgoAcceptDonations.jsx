@@ -6,6 +6,7 @@ import NgoNav from "./NgoNav";
 import swal from "sweetalert";
 import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
+import {Slider} from "@mui/material/Slider";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
@@ -13,6 +14,7 @@ const DonorPosts = () => {
   let navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [distance, setDistance] = useState(40);
 
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
@@ -52,7 +54,6 @@ const DonorPosts = () => {
       if (json.foodDonations[0] == null) {
         swal("No donation requests to show", "Empty list", "error");
       }
-      console.log(json.foodDonations);
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
     }
@@ -126,13 +127,31 @@ const DonorPosts = () => {
   const handleSaveChanges = (updatedCard) => {
     handleCloseModal();
   };
+  const handleSliderChange = (e) => {
+    setDistance(e.target.value);
+    // const newCards = foodDonations.filter((card) => card.distance <= e.target.value);
+    // setCards(newCards);
+  }
 
   return (
     <div>
       <NgoNav />
+
       <div className={styles.main_body}>
         <Container>
           <h1 className="text-center mt-3 mb-5">Donation Requests</h1>
+          <div style={{display:"flex",flexDirection:"column"}}>
+            <Form.Label className={styles.sliderLabel}>Filter Using Proximity</Form.Label>
+            <Form.Range 
+            className={styles.Slider} 
+            defaultValue={distance} 
+            onChange={handleSliderChange}
+            min={10}
+            max={200}
+            step={10}
+            name="distanceFilter"
+            />
+          </div>
           <Row className="justify-content-center">
             {cards.map((card) => (
               <Col md={4} key={card._id}>
