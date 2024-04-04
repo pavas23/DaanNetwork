@@ -1,4 +1,5 @@
 import styles from "../../css/Admin/displayNgo.module.css";
+import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 function NGODisplay() {
   const location = useLocation();
@@ -6,6 +7,8 @@ function NGODisplay() {
   const keys = Object.keys(ngo);
   console.log(ngo);
   return (
+    <div>
+    <AdminNav/>
     <div className="d-flex flex-column align-items-center">
       <div className="d-flex justify-content-around">
         <h1 className="mb-3 mt-3">NGO Details</h1>
@@ -48,6 +51,7 @@ function NGODisplay() {
           <div className={"btn col-sm-12 " + styles.verifyBtn}>Verify NGO</div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

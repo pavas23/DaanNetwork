@@ -2,6 +2,7 @@ const Donor = require("../models/donor");
 const Ngo = require("../models/ngo");
 const FoodDonation = require("../models/foodDonation");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
+const BlockedUsers= require("../models/blockedUsers");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
@@ -15,6 +16,10 @@ const { createSecretToken } = require("../helpers/secretToken");
 module.exports.NGOLogin = async (req, res) => {
   try {
     const { emailId, password } = req.body;
+    const blocked= await BlockedUsers.findOne({emailId:emailId});
+    if(blocked){
+      return res.status(400).json({status:false,desc:"You are blocked by admin!!"});
+    }
     const newNGO = await Ngo.findOne({ emailId: emailId });
     if (!newNGO) {
       return res

@@ -7,7 +7,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 115vh;
+  min-height: 105vh;
   padding: 8% 6% 4% 6%;
   box-sizing: content-box;
 }
@@ -19,7 +19,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 10%;
+  margin-top: 5%;
   border: solid 4px #213f17;
   padding: 1.5% 2% 1.5% 2%;
   border-radius: 2rem;
