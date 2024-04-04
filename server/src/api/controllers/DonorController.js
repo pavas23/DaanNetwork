@@ -514,7 +514,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
 
     donationRequest.donors = [...donationRequest.donors, donor_obj];
     donationRequest.donors[donationRequest.donors.length - 1].donation_ītems =
-    donor_obj.donation_items;
+      donor_obj.donation_items;
     console.log(donationRequest);
     var upDatedReq = await donationRequest.save();
     var ngo = await Ngo.findById(ngoID);
@@ -735,7 +735,7 @@ module.exports.deleteApplicationToDrive = async (req, res) => {
 /** donor controller to modify the donation
  *  req user : { donorEmailId }
  *  req body : { donationRequestNum, description, items, quantity, pickUpLocation, pickUpDate }
- *  res : res : { status:boolean, desc:string }
+ *  res : { status:boolean, desc:string }
  */
 module.exports.modifyDonationRequest = async (req, res) => {
   const donorEmailId = req.user.emailId;
@@ -786,3 +786,94 @@ module.exports.modifyDonationRequest = async (req, res) => {
     }
   }
 };
+
+/** donor controller to display user profile
+ * req user : {donorEmailId}
+ * req body : {}
+ * res : { status:boolean, donor:donor_object }
+ */
+module.exports.getMyProfile = async (req, res) => {
+  const donorEmailId = req.user.emailId;
+  try {
+    const donors = await Donor.find({ emailId: donorEmailId });
+
+    // no donor with given email
+    if (donors.length == 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No donor with email ${donorEmailId}` });
+    }
+
+    // do not send password in frontend
+    var donorSend = donors[0];
+    donorSend.password = "";
+
+    return res.status(200).json({ status: true, donor: donorSend });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
+
+/** donor controller to delete user profile
+ * req user : {donorEmailId}
+ * req body : {}
+ * res : { status:boolean, desc:string }
+ */
+module.exports.deleteMyProfile = async (req, res) => {
+  const donorEmailId = req.user.emailId;
+  try {
+    const donors = await Donor.find({ emailId: donorEmailId });
+
+    // no donor with given email
+    if (donors.length == 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No donor with email ${donorEmailId}` });
+    }
+    var donorId = donors[0]._id;
+
+    // delete all food donation requests associated with this donor
+    var foodDonations = await FoodDonation.find({})
+      .populate("donor")
+      .populate("ngo")
+      .exec();
+
+    var foodDonationsIds = [];
+    foodDonationsIds = (foodDonations).map((donation) => {
+      if (donation.donor.emailId == donorEmailId) return donation._id;
+    });
+
+    var foodDonationsIdsUpdated = [];
+    for (var i = 0; i < foodDonationsIds.length; i++) {
+      if (foodDonationsIds[i] != undefined) {
+        foodDonationsIdsUpdated.push(foodDonationsIds[i]);
+      }
+    }
+
+    for (var donationId of foodDonationsIdsUpdated) {
+      await FoodDonation.deleteOne({ _id: donationId });
+    }
+
+    // delete donor details from ngo drives in which donor has participated
+    const filter = {
+      "donors.donor": donorId
+    }
+    const update = {
+      $pull: { donors: { donor: donorId } }
+    };
+    await NgoDonationRequest.updateMany(filter, update);
+
+    // delete donor from donor collection
+    await Donor.deleteOne({ emailId: donorEmailId });
+
+    return res.status(200).send({ status: true, desc: "Donor account deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}

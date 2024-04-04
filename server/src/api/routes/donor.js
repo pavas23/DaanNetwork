@@ -374,4 +374,16 @@ router.post(
   donorController.modifyDonationRequest
 );
 
+router.post(
+  "/my-profile",
+  donorVerification,
+  donorController.getMyProfile
+);
+
+router.post(
+  "/delete-my-profile",
+  donorVerification,
+  donorController.deleteMyProfile
+);
+
 module.exports = router;

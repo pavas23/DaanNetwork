@@ -1,97 +1,307 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { MDBIcon } from "mdb-react-ui-kit";
+import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import profileImage from "../../images/default-avatar.png";
 import DonorNav from "./DonorNav";
 import styles from "../../css/Donor/DonorProfile.module.css";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
-import profileImage from "../../images/default-avatar.png";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-function DonorProfile() {
+const DonorProfile = () => {
   let navigate = useNavigate();
-  const [flag, setFlag] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
       navigate("/donor-login", { replace: true });
     } else {
-      setFlag(false);
+      getData();
     }
-  }, [flag]);
+  }, []);
+
+  const getData = async () => {
+    const response = await fetch(`${REACT_APP_APIURL}/donor/my-profile`, {
+      method: "POST",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
+
+    const json = await response.json();
+    if (!json.status) {
+      if (json.desc == "Please authenticate using a valid token") {
+        swal(
+          "Could not fetch your profile details",
+          "Invalid Session",
+          "error"
+        );
+        localStorage.removeItem("auth-token");
+        setTimeout(() => {
+          navigate("/donor-login", { replace: true });
+        }, 1500);
+      } else {
+        swal(
+          "Could not fetch your profile details",
+          `${json.desc} !!`,
+          "error"
+        );
+      }
+    } else {
+      console.log(json.donor);
+      setUserData(json.donor);
+    }
+  };
+
+  // TODO
+  const handleChange = (e) => {};
+
+  // TODO
+  const handleSubmit = (e) => {};
+
+  const handleDeleteProfile = async () => {
+    const response = await fetch(
+      `${REACT_APP_APIURL}/donor/delete-my-profile`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+      }
+    );
+
+    const json = await response.json();
+    if (!json.status) {
+      if (json.desc == "Please authenticate using a valid token") {
+        swal("Could not delete your profile", "Invalid Session", "error");
+        localStorage.removeItem("auth-token");
+        setTimeout(() => {
+          navigate("/donor-login", { replace: true });
+        }, 1500);
+      } else {
+        swal("Could not delete your profile", `${json.desc} !!`, "error");
+      }
+    } else {
+      swal("Delete", `${json.desc} !!`, "success");
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 1500);
+    }
+    setShowDeleteModal(false);
+  };
 
   return (
     <div>
       <DonorNav />
       <div className={styles.main_body}>
         <Container>
-          <h1 className="text-center mt-3 mb-4">My Profile</h1>
-          <section style={{ backgroundColor: "#f4f5f7" }}>
-            <Container className="py-5">
-              <Row className="justify-content-center align-items-center">
-                <Col lg="6" className="mb-4 mb-lg-0">
-                  <div
-                    className="mb-3"
-                    style={{ borderRadius: ".5rem", textAlign: "center" }}
+          <Row>
+            <Col
+              md={4}
+              className="text-center"
+              style={{
+                marginTop: "30vh",
+              }}
+            >
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="img-fluid rounded-circle mb-3"
+                style={{ width: "200px" }}
+              />
+              <h2>{userData.name}</h2>
+              <p className="text-muted">{userData.email}</p>
+            </Col>
+            <Col md={8}>
+              <h1
+                className="mb-4"
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                My Profile
+              </h1>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formName" className="mb-4">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter name"
+                    name="name"
+                    value={userData.name}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formEmail" className="mb-4">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    name="email"
+                    value={userData.emailId}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formPhone" className="mb-4">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter phone number"
+                    name="phone"
+                    value={userData.phone}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formAlternatePhone" className="mb-4">
+                  <Form.Label>Alternate Phone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter alternate phone number"
+                    name="alternatePhone"
+                    value={userData.alt_phone}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formDob" className="mb-4">
+                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dob"
+                    value={userData.birthdate}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formGender" className="mb-4">
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="gender"
+                    value={userData.gender}
+                    onChange={handleChange}
+                    disabled
                   >
-                    <img
-                      src={profileImage}
-                      alt="Avatar"
-                      className="my-3"
-                      style={{ width: "100px" }} // Reduced image size
-                    />
-                    <h5>Marie Horwitz</h5>
-                    <p>Web Designer</p>
-                    <MDBIcon far icon="edit mb-3" />
-                  </div>
-                  <div className="p-4">
-                    <h6>Information</h6>
-                    <hr className="mt-0 mb-3" />
-                    <Row className="pt-1">
-                      <Col size="6" className="mb-3">
-                        <h6>Email</h6>
-                        <p className="text-muted">info@example.com</p>
-                      </Col>
-                      <Col size="6" className="mb-3">
-                        <h6>Phone</h6>
-                        <p className="text-muted">123 456 789</p>
-                      </Col>
-                    </Row>
+                    {/* <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option> */}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="formAddress" className="mb-4">
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter address"
+                    name="address"
+                    value={userData.address}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="formCity" className="mb-4">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter city"
+                        name="city"
+                        value={userData.city}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="formState" className="mb-4">
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter state"
+                        name="state"
+                        value={userData.state}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Form.Group controlId="formZip" className="mb-4">
+                  <Form.Label>Zip</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter zip code"
+                    name="zip"
+                    value={userData.zip_code}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formCountry" className="mb-4">
+                  <Form.Label>Nationality</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter country"
+                    name="country"
+                    value={userData.nationality}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                {/* <Button
+                  variant="primary"
+                  type="submit"
+                  className="mt-3 mb-5"
+                  style={{
+                    marginRight: "4vw",
+                  }}
+                >
+                  Edit Profile
+                </Button> */}
+                <Button
+                  variant="danger"
+                  className="mt-3 mb-5"
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  Delete Account
+                </Button>
+              </Form>
 
-                    <h6>Information</h6>
-                    <hr className="mt-0 mb-3" />
-                    <Row className="pt-1">
-                      <Col size="6" className="mb-3">
-                        <h6>Email</h6>
-                        <p className="text-muted">info@example.com</p>
-                      </Col>
-                      <Col size="6" className="mb-3">
-                        <h6>Phone</h6>
-                        <p className="text-muted">123 456 789</p>
-                      </Col>
-                    </Row>
-
-                    <div className="d-flex justify-content-start">
-                      <a href="#!">
-                        <MDBIcon fab icon="facebook me-3" size="lg" />
-                      </a>
-                      <a href="#!">
-                        <MDBIcon fab icon="twitter me-3" size="lg" />
-                      </a>
-                      <a href="#!">
-                        <MDBIcon fab icon="instagram me-3" size="lg" />
-                      </a>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </section>
+              {/* delete profile modal */}
+              <Modal
+                show={showDeleteModal}
+                onHide={() => setShowDeleteModal(false)}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Confirm Deletion</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Are you sure you want to delete your account? This action
+                  cannot be undone.
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setShowDeleteModal(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button variant="danger" onClick={handleDeleteProfile}>
+                    Delete
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </Col>
+          </Row>
         </Container>
       </div>
     </div>
   );
-}
+};
 
 export default DonorProfile;

@@ -1,0 +1,28 @@
+.person_name {
+    font-size: larger;
+    font-weight: 600;
+    
+  }
+.list_item{
+  cursor: pointer;
+    transition: transform 0.1s linear, box-shadow 0.1s linear;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }
+  .list_item:hover{
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+
+  .blk_btn{
+    background-color: rgb(255, 0, 0);
+    color: wheat;
+  }
+  .blk_btn:hover{
+    background-color:#ff5900;
+    color: wheat;
+  }
+
+  .blk_btn:active{
+    background-color: red;
+  }

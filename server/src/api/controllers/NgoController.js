@@ -324,6 +324,8 @@ module.exports.getMyDonationRequests = async (req, res) => {
       .populate("donor")
       .populate("ngo")
       .exec();
+
+    console.log(foodDonations)
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.ngo.emailId == ngoEmailId) return donation.toJSON();
     });
@@ -464,3 +466,13 @@ module.exports.deleteDonationDrive = async (req, res) => {
     return res.status(500).json({ status: false, msg: err });
   }
 };
+
+
+module.exports.getAllNgo = async (req,res) => {
+  try{
+    var ngo = await Ngo.find({})
+    return res.status(200).json({status:true,ngo:ngo})
+  }catch(err){
+    return res.status(500).json({status:false,msg:err})
+  }
+}

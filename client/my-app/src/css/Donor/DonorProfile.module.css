@@ -1,28 +1,63 @@
-/* DonorProfile.module.css */
-
 .main_body {
-  display: flex;
-  justify-content: center;
-  margin-top: -20px; /* Reduce gap between "My Profile" and box */
+  background-color: #f5f5f5;
+  /* background-image: url("../../images/watercolour-green-background_78370-1882.avif"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
 
-.profile-card {
-  border-radius: 0.5rem;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+h1 {
+  padding-top: 2vh;
 }
 
-.profile-card img {
-  width: 80px;
+.container {
+  max-width: 90%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 30px;
 }
 
-.profile-card .info-section {
-  padding: 1.25rem;
+.form_label {
+  font-weight: bold;
 }
 
-.profile-card .info-section hr {
-  margin: 0.75rem 0;
+.btn_primary {
+  width: 100%;
+  background-color: #078534;
+  color: white;
 }
 
-.profile-card .info-section .social-links a {
-  margin-right: 1rem;
+.btn_primary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
+}
+
+.form_container {
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.img_fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn_secondary {
+  width: 30%;
+  background-color: #078534;
+  color: white;
+  text-align: center;
+  padding: 0;
+}
+
+.btn_secondary:hover {
+  background-color: rgb(27, 197, 86);
+  color: white;
 }

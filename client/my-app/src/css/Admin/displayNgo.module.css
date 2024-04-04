@@ -1,0 +1,119 @@
+.property_container {
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    width: 60%;
+  }
+  
+  .property {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+    padding-bottom: 1%;
+    border-bottom: 1px solid black;
+  }
+  
+  .property_name {
+    /* flex: 1; */
+    /* width: 20%; */
+    margin-right: 5%;
+    font-weight: bold;
+    font-size: larger;
+    font-family: 'Roboto'
+  }
+  
+  .property_value {
+    text-align: end;
+    width: 60%;
+    word-wrap:break-word;
+    text-wrap: wrap;
+    margin-left: 5%;
+    font-size: larger;
+    
+  }
+
+  .buttonContainer{
+    display: flex;
+    justify-content: space-between ;
+    flex-direction: row;
+    margin-top: 2rem;
+  }
+
+  .banBtn {
+    /* margin-top: 1rem; */
+  width: fit-content;
+    background-color: #ff0000;
+    color: white;
+    margin-right: 2%;
+    font-size: larger  ;
+  }
+  
+  .banBtn:hover {
+    background-color: rgb(250, 79, 79);
+    color: white;
+  }
+
+  .verifyBtn {
+    /* margin-top: 1rem; */
+    font-size: larger  ;
+    width: fit-content;
+    background-color: #078534;
+    color: white;
+    
+  }
+  
+  .verifyBtn:hover {
+    background-color: rgb(27, 197, 86);
+    color: white;
+  }
+
+
+  @media screen and (max-width: 600px) {
+    .property {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2%;
+      padding-bottom: 2%;
+      border: 1px solid black;
+    }
+    .property_value {
+      text-align: center;
+      width: 90%;
+      word-wrap:break-word;
+      text-wrap: wrap;
+      margin-left: 0;
+      font-size: larger;
+      
+    }
+    .property_name {
+      /* flex: 1; */
+      width: 100%;
+      word-wrap:break-word;
+      text-wrap: wrap;
+      margin-right: 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: larger;
+      font-family: 'Roboto'
+    }
+
+    .buttonContainer{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center ;
+    }
+    .verifyBtn{
+      margin-top: 1rem;
+      margin-right: 0;
+    }
+    .banBtn{
+      margin-right: 0;
+      margin-top: 1rem;
+    }
+  }
+  .boxShadow{
+    padding: 5%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }
