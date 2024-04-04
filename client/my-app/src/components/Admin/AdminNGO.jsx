@@ -25,46 +25,72 @@ function AdminNGO() {
   return (
     <div>
       <AdminNav />
-     
-      <div className="container">
 
-  
+      <div className="container">
         <h1 className="text-center mt-4">List of NGOs</h1>
         <div className="list-group mt-3">
           {ngos.map((ngo, index) => (
             <div
               key={index}
-              className={styles.list_item + " row mb-3 p-2 rounded"}
-              onClick={()=>{
-                navigate("/admin-ngoInfo",{replace:false,state:{ngo:ngo}});
-              }}
+              className={
+                styles.list_item +
+                " row mb-3 p-3 rounded align-items-center justify-content-between"
+              }
             >
-              <span
-                className={
-                  styles.person_name + " col-sm-5 d-flex align-items-center"
-                }
+             
+              <div
+                className="col-sm-10 d-flex row"
               >
-                {ngo.name}
-              </span>
-              <span
-                className={
-                  styles.person_name + " col-sm-6 d-flex align-items-center"
-                }
-              >
-                {ngo.address}
-              </span>
+                <span
+                  className={
+                    styles.person_name + " col-sm-4 d-flex align-items-center"
+                  }
+                >
+                  {ngo.name}
+                </span>
+                <span
+                  className={
+                    styles.person_name + " col-sm-8 d-flex align-items-center"
+                  }
+                >
+                  {ngo.address}
+                </span>
+              </div>
               <div className="col-sm-1 d-flex justify-content-center">
-                <div onClick={async()=>{var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
-                                  method: "POST",
-                                  headers: {
-                                  "Content-Type": "application/json",
-                                  },
-                                  body: JSON.stringify({
-                                    emailId: ngo.emailId
-                                    }),});
-                                    console.log(res)
-                                    
-                                    }} className={"btn " + styles.blk_btn}>BAN</div>
+                <div
+                 onClick={() => {
+                  navigate("/admin-ngoInfo", {
+                    replace: false,
+                    state: { ngo: ngo },
+                  });
+                }}
+                  className={"btn " + styles.view_btn}
+                >
+                  View NGO
+                </div>
+              </div> 
+                
+              <div className="col-sm-1 d-flex justify-content-center">
+                <div
+                  onClick={async () => {
+                    var res = await fetch(
+                      `${REACT_APP_APIURL}/admin/blockUser`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          emailId: ngo.emailId,
+                        }),
+                      }
+                    );
+                    console.log(res);
+                  }}
+                  className={"btn " + styles.blk_btn}
+                >
+                  BAN NGO
+                </div>
               </div>
             </div>
           ))}
