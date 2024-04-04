@@ -12,7 +12,7 @@ function AdminNav() {
   .dropdown-item.active, .dropdown-item:active {background-color: #195406 !important; }
     `;
   return (
-    <>
+    <div style={{backgroundColor:"#f9f9f9"}}>
       <style>{x}</style>
       <Navbar collapseOnSelect expand="lg">
         <Container>
@@ -59,7 +59,7 @@ function AdminNav() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </div>
   );
 }
 

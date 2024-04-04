@@ -25,7 +25,10 @@ function AdminNGO() {
   return (
     <div>
       <AdminNav />
+     
       <div className="container">
+
+  
         <h1 className="text-center mt-4">List of NGOs</h1>
         <div className="list-group mt-3">
           {ngos.map((ngo, index) => (
