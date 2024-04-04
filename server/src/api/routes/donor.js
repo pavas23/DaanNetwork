@@ -386,4 +386,6 @@ router.post(
   donorController.deleteMyProfile
 );
 
+router.get("/get-all-donors", donorController.getAllDonors)
+
 module.exports = router;
