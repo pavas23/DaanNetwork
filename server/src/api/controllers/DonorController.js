@@ -2,6 +2,7 @@ const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
 const UploadImage = require("../models/uploadImage");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
+const BlockedUsers = require("../models/blockedUsers");
 const router = require("../routes");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -20,6 +21,10 @@ const { createSecretToken } = require("../helpers/secretToken");
 module.exports.donorLogin = async (req, res) => {
   try {
     const { emailId, password } = req.body;
+    const blocked= await BlockedUsers.findOne({emailId:emailId});
+    if(blocked){
+      return res.status(400).json({status:false,desc:"You are blocked by admin!!"});
+    }
     const donor = await Donor.findOne({ emailId: emailId });
 
     if (!donor) {

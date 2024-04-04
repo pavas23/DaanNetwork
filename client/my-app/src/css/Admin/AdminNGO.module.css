@@ -15,14 +15,31 @@
   
 
   .blk_btn{
-    background-color: rgb(255, 0, 0);
-    color: wheat;
+    background-color: rgb(246, 246, 246);
+    color: #ff5900;
+    /* color: wheat; */
   }
   .blk_btn:hover{
     background-color:#ff5900;
-    color: wheat;
+    color: white;
+    /* color: wheat; */
   }
 
   .blk_btn:active{
     background-color: red;
   }
+
+  .home{
+    background-color: #f0f0f0;
+}
+
+.view_btn{
+  background-color: rgb(246, 246, 246);
+  color: #0ac100;
+  /* color: wheat; */
+}
+.view_btn:hover{
+  background-color:#0ac100;
+  color: white;
+  /* color: wheat; */
+}
