@@ -137,4 +137,6 @@ router.post(
   ngoVerification,
   ngoController.deleteMyProfile
 )
+router.post("/get-address",ngoVerification,ngoController.getAddress)
+
 module.exports = router;
