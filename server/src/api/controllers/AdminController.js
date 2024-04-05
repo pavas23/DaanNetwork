@@ -1,6 +1,7 @@
 const BlockedUsers = require("../models/blockedUsers");
 const { createSecretToken } = require("../helpers/secretToken");
 const admin = require("../models/admin");
+
 module.exports.blockUser = async (req, res) => {
   try {
     const { emailId } = req.body;
