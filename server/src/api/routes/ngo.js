@@ -139,6 +139,14 @@ router.post("/my-profile", ngoVerification, ngoController.getMyProfile);
 router.post(
   "/delete-my-profile",
   ngoVerification,
+<<<<<<< HEAD
   ngoController.deleteMyProfile,
 );
 module.exports = router;
+=======
+  ngoController.deleteMyProfile
+)
+router.post("/get-address",ngoVerification,ngoController.getAddress)
+
+module.exports = router;
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99

@@ -63,9 +63,13 @@ h1 {
 }
 
 .Slider {
-  width: 40%;
+  height: 1.7rem;
+  width: 100%;
+  background: inherit;
+  color:#078534
 }
-.sliderLabel {
+
+.sliderLabel{
   font-weight: bold;
   height: 15%;
 }

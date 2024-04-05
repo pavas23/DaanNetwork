@@ -170,7 +170,6 @@ module.exports.getAllDonationRequests = async (req, res) => {
     foodDonations = (await foodDonations).map((donation) => donation.toJSON());
     return res.status(200).json({ status: true, foodDonations: foodDonations });
   } catch (error) {
-    console.log(error);
     res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
@@ -314,7 +313,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
 module.exports.getMyDonationRequests = async (req, res) => {
   try {
     const ngoEmailId = req.user.emailId;
-    console.log(ngoEmailId);
+    // console.log(ngoEmailId);
 
     // finding ngo by email id
     const ngos = await Ngo.find({ emailId: ngoEmailId });
@@ -332,7 +331,11 @@ module.exports.getMyDonationRequests = async (req, res) => {
       .populate("ngo")
       .exec();
 
+<<<<<<< HEAD
     console.log(foodDonations);
+=======
+    // console.log(foodDonations)
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.ngo.emailId == ngoEmailId) return donation.toJSON();
     });
@@ -369,10 +372,10 @@ module.exports.getMyDonationRequests = async (req, res) => {
  * res:{ description }
  */
 module.exports.createDonationRequest = async (req, res) => {
-  console.log("hello");
+  // console.log("hello");
   const ngoEmail = req.user.emailId;
   const { startDate, endDate, description } = req.body;
-  console.log(description);
+  // console.log(description);
   //for now end is an int which will be added to current date
   // var someDate = new Date();
   // var numberOfDaysToAdd = end;
@@ -402,7 +405,7 @@ module.exports.createDonationRequest = async (req, res) => {
       donors: [],
       createdAt: Date.now(),
     });
-    console.log(newDonation);
+    // console.log(newDonation);
     res
       .status(201)
       .json({ status: true, desc: "Request created successfully" });
@@ -573,4 +576,26 @@ module.exports.deleteMyProfile = async (req, res) => {
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
+<<<<<<< HEAD
 };
+=======
+}
+
+module.exports.getAddress = async (req,res) => {
+  try{
+    const emailId=req.user.emailId
+    var ngo = await Ngo.find({emailId:emailId})
+    if(ngo.length==0){
+      return res.status(400).json({status:false,msg:"No ngo with this email"})
+    }
+    var address=ngo[0].address
+    return res.status(200).json({status:true,address:address})
+  }
+  catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99

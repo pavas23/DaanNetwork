@@ -3,6 +3,7 @@ import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DonorDisplay() {
+<<<<<<< HEAD
   const location = useLocation();
   const donor = location.state.donor;
   const keys = Object.keys(donor);
@@ -21,11 +22,33 @@ function DonorDisplay() {
     res = await res.json();
     setFlag(res.status);
   };
+=======
+    const location = useLocation();
+    const donor = location.state.donor;
+    const keys = Object.keys(donor);
+    const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+    const [flag, setFlag] = useState(false);
+    const isBlocked = async () => {
+        var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
+            method: "POST",
+            headers: {
+                "auth-token": localStorage.getItem("auth-token"),
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify({
+                emailId: donor.emailId,
+            }),
+        });
+        res = await res.json();
+        setFlag(res.status)
+    }
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
 
   useEffect(() => {
     isBlocked();
   }, [flag]);
 
+<<<<<<< HEAD
   const blockUsers = async (emailId) => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
       method: "POST",
@@ -53,6 +76,37 @@ function DonorDisplay() {
     console.log(res);
     setFlag(false);
   };
+=======
+    const blockUsers = async (emailId) => {
+        var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
+            method: "POST",
+            headers: {
+                "auth-token": localStorage.getItem("auth-token"),
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify({
+                emailId: emailId,
+            }),
+        });
+        console.log(res);
+        setFlag(true);
+    }
+
+    const unblockUsers = async (emailId) => {
+        var res = await fetch(`${REACT_APP_APIURL}/admin/unblockUser`, {
+            method: "POST",
+            headers: {
+                "auth-token": localStorage.getItem("auth-token"),
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify({
+                emailId: emailId,
+            }),
+        });
+        console.log(res);
+        setFlag(false);
+    }
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
 
   return (
     <div>

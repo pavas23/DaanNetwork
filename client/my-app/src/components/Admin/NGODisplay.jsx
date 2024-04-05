@@ -12,6 +12,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -30,6 +31,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -44,6 +46,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/unblockUser`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -61,6 +64,7 @@ function NGODisplay() {
         <div className="d-flex justify-content-around">
           <h1 className="mb-3 mt-3">NGO Details</h1>
         </div>
+<<<<<<< HEAD
         <div className={styles.property_container}>
           <div className={styles.boxShadow}>
             {keys.map((key, index) => {
@@ -122,6 +126,16 @@ function NGODisplay() {
               Verify NGO
             </div>
           </div>
+=======
+       </div>
+       {/* <PDFViewer path={`C:\\Users\\Dev Gala\\Desktop\\Acads\\Year3\\Sem2\\Software Engineering\\Project\\DaanNetwork\\server\\src\\registration-certificates\\1234567890.pdf`}/> */}
+        <div className={styles.buttonContainer}>
+          <div onClick={async()=>  {flag? unblockUsers(ngo.emailId): blockUsers(ngo.emailId)
+                                    }}
+
+          className={"btn col-sm-12 " + styles.banBtn} style={flag?{backgroundColor:'blue'}:{backgroundColor:'red'}}>{flag ? "Unban NGO": "Ban NGO"}</div>
+          <div className={"btn col-sm-12 " + styles.verifyBtn}>Verify NGO</div>
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
         </div>
       </div>
     </div>
