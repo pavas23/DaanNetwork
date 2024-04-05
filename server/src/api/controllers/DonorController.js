@@ -277,8 +277,6 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
       if (donation.donor.emailId == donorEmailId) return donation.toJSON();
     });
 
-    console.log(foodDonations);
-
     // removing null objects
     foodDonationsUpdated = [];
     for (var i = 0; i < foodDonations.length; i++) {
