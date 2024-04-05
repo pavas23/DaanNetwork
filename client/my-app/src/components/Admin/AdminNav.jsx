@@ -6,7 +6,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import styles from "../../css/Admin/AdminNav.module.css";
 import { Link } from "react-router-dom";
 
-
 function AdminNav() {
   const x = `#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;font-weight:semi-bold;}
   .dropdown-item.active, .dropdown-item:active {background-color: #195406 !important; }

@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import profileImage from "../../images/default-avatar.png";
-import DonorNav from "./DonorNav";
+import NgoNavBar from "./NgoNav";
 import styles from "../../css/Donor/DonorProfile.module.css";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
-const DonorProfile = () => {
+const NgoProfile = () => {
   let navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
-      navigate("/donor-login", { replace: true });
+      navigate("/ngo-login", { replace: true });
     } else {
       getData();
     }
   }, []);
 
   const getData = async () => {
-    const response = await fetch(`${REACT_APP_APIURL}/donor/my-profile`, {
+    const response = await fetch(`${REACT_APP_APIURL}/ngo/my-profile`, {
       method: "POST",
       headers: {
         "auth-token": localStorage.getItem("auth-token"),
       },
     });
-
     const json = await response.json();
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
@@ -39,7 +38,7 @@ const DonorProfile = () => {
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
-          navigate("/donor-login", { replace: true });
+          navigate("/ngo-login", { replace: true });
         }, 1500);
       } else {
         swal(
@@ -49,8 +48,8 @@ const DonorProfile = () => {
         );
       }
     } else {
-      console.log(json.donor);
-      setUserData(json.donor);
+      console.log(json.ngo);
+      setUserData(json.ngo);
     }
   };
 
@@ -61,15 +60,12 @@ const DonorProfile = () => {
   const handleSubmit = (e) => {};
 
   const handleDeleteProfile = async () => {
-    const response = await fetch(
-      `${REACT_APP_APIURL}/donor/delete-my-profile`,
-      {
-        method: "POST",
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-      }
-    );
+    const response = await fetch(`${REACT_APP_APIURL}/ngo/delete-my-profile`, {
+      method: "POST",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
 
     const json = await response.json();
     if (!json.status) {
@@ -94,24 +90,24 @@ const DonorProfile = () => {
   const getTopMargin = () => {
     // Check screen width and return appropriate top margin
     if (window.innerWidth <= 768) {
-      return "5vh"; // Adjust the margin value for smaller screens
+      return '5vh'; // Adjust the margin value for smaller screens
     } else {
-      return "30vh"; // Default margin value
+      return '30vh'; // Default margin value
     }
   };
 
   return (
     <div>
-      <DonorNav />
+      <NgoNavBar />
       <div className={styles.main_body}>
         <Container>
           <Row>
-            <Col
+          <Col
               md={4}
               className="text-center"
               id="top-div"
               style={{
-                marginTop: getTopMargin(),
+                marginTop:getTopMargin()
               }}
             >
               <img
@@ -156,33 +152,12 @@ const DonorProfile = () => {
                   />
                 </Form.Group>
                 <Form.Group controlId="formPhone" className="mb-4">
-                  <Form.Label>Phone</Form.Label>
+                  <Form.Label>Name of Head</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter phone number"
                     name="phone"
-                    value={userData.phone}
-                    onChange={handleChange}
-                    disabled
-                  />
-                </Form.Group>
-                <Form.Group controlId="formAlternatePhone" className="mb-4">
-                  <Form.Label>Alternate Phone</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter alternate phone number"
-                    name="alternatePhone"
-                    value={userData.alt_phone}
-                    onChange={handleChange}
-                    disabled
-                  />
-                </Form.Group>
-                <Form.Group controlId="formDob" className="mb-4">
-                  <Form.Label>Date of Birth</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="dob"
-                    value={userData.birthdate}
+                    value={userData.nameOfHead}
                     onChange={handleChange}
                     disabled
                   />
@@ -202,13 +177,35 @@ const DonorProfile = () => {
                     <option value="other">Other</option> */}
                   </Form.Control>
                 </Form.Group>
+                <Form.Group controlId="formAlternatePhone" className="mb-4">
+                  <Form.Label>Pan Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter alternate phone number"
+                    name="alternatePhone"
+                    value={userData.panNumber}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group controlId="formDob" className="mb-4">
+                  <Form.Label>GST Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="dob"
+                    value={userData.gstnumber}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </Form.Group>
+
                 <Form.Group controlId="formAddress" className="mb-4">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label>Contact Number</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter address"
                     name="address"
-                    value={userData.address}
+                    value={userData.contactNumber}
                     onChange={handleChange}
                     disabled
                   />
@@ -216,25 +213,12 @@ const DonorProfile = () => {
                 <Row>
                   <Col>
                     <Form.Group controlId="formCity" className="mb-4">
-                      <Form.Label>City</Form.Label>
+                      <Form.Label>Registration Number</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter city"
                         name="city"
-                        value={userData.city}
-                        onChange={handleChange}
-                        disabled
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="formState" className="mb-4">
-                      <Form.Label>State</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter state"
-                        name="state"
-                        value={userData.state}
+                        value={userData.regnumber}
                         onChange={handleChange}
                         disabled
                       />
@@ -242,23 +226,22 @@ const DonorProfile = () => {
                   </Col>
                 </Row>
                 <Form.Group controlId="formZip" className="mb-4">
-                  <Form.Label>Zip</Form.Label>
+                  <Form.Label>Address</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter zip code"
                     name="zip"
-                    value={userData.zip_code}
+                    value={userData.address}
                     onChange={handleChange}
                     disabled
                   />
                 </Form.Group>
                 <Form.Group controlId="formCountry" className="mb-4">
-                  <Form.Label>Nationality</Form.Label>
+                  <Form.Label>Website</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter country"
                     name="country"
-                    value={userData.nationality}
+                    value={userData.website}
                     onChange={handleChange}
                     disabled
                   />
@@ -314,4 +297,4 @@ const DonorProfile = () => {
   );
 };
 
-export default DonorProfile;
+export default NgoProfile;
