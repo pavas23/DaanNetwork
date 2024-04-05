@@ -2,6 +2,13 @@
   font-size: larger;
   font-weight: 600;
 }
+
+.list_item {
+  cursor: pointer;
+  transition: transform 0.1s linear, box-shadow 0.1s linear;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
 .list_item {
   cursor: pointer;
   transition:
@@ -9,6 +16,7 @@
     box-shadow 0.1s linear;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
 .list_item:hover {
   transform: translateY(-5px);
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
@@ -42,4 +50,21 @@
   background-color: #0ac100;
   color: white;
   /* color: wheat; */
+}
+.verified_badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: green;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.not_verified_badge {
+  display: inline-block;
+  padding: 4px;
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
 }

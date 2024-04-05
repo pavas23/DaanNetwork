@@ -3,10 +3,12 @@ import styles from "../../css/Admin/AdminNGO.module.css";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+
 function AdminNGO() {
   const [ngos, setNgos] = useState([]);
   let navigate = useNavigate();
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
   const getNGO = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/ngo/get-all-ngos`, {
       method: "GET",
@@ -19,9 +21,11 @@ function AdminNGO() {
       setNgos(json.ngo);
     }
   };
+
   useEffect(() => {
     getNGO();
   }, []);
+
   return (
     <div>
       <AdminNav />
@@ -38,18 +42,10 @@ function AdminNGO() {
               }
             >
               <div className="col-sm-10 d-flex row">
-                <span
-                  className={
-                    styles.person_name + " col-sm-4 d-flex align-items-center"
-                  }
-                >
+                <span className={styles.person_name + " col-sm-4 d-flex align-items-center"}>
                   {ngo.name}
                 </span>
-                <span
-                  className={
-                    styles.person_name + " col-sm-8 d-flex align-items-center"
-                  }
-                >
+                <span className={styles.person_name + " col-sm-8 d-flex align-items-center"}>
                   {ngo.address}
                 </span>
               </div>
@@ -66,6 +62,15 @@ function AdminNGO() {
                   View NGO
                 </div>
               </div>
+
+              <div className="col-sm-1">
+                {ngo.isVerified ? (
+                  <span className={styles.verified_badge}>Verified</span>
+                ) : (
+                  <span className={styles.not_verified_badge}>Not Verified</span>
+                )}
+              </div>
+
             </div>
           ))}
         </div>
