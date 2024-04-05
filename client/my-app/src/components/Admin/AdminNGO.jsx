@@ -37,10 +37,7 @@ function AdminNGO() {
                 " row mb-3 p-3 rounded align-items-center justify-content-between"
               }
             >
-             
-              <div
-                className="col-sm-10 d-flex row"
-              >
+              <div className="col-sm-10 d-flex row">
                 <span
                   className={
                     styles.person_name + " col-sm-4 d-flex align-items-center"
@@ -58,17 +55,17 @@ function AdminNGO() {
               </div>
               <div className="col-sm-1 d-flex justify-content-center">
                 <div
-                 onClick={() => {
-                  navigate("/admin-ngoInfo", {
-                    replace: false,
-                    state: { ngo: ngo },
-                  });
-                }}
+                  onClick={() => {
+                    navigate("/admin-ngoInfo", {
+                      replace: false,
+                      state: { ngo: ngo },
+                    });
+                  }}
                   className={"btn " + styles.view_btn}
                 >
                   View NGO
                 </div>
-              </div> 
+              </div>
             </div>
           ))}
         </div>

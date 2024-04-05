@@ -67,7 +67,7 @@ const DonationForm = () => {
           console.log();
           setDownloadUrl(downloadURL);
         });
-      }
+      },
     );
   };
 
@@ -142,7 +142,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         `Image is uploading, Try again !`,
-        "error"
+        "error",
       );
       return;
     }
@@ -151,7 +151,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         "Pick up date can not be null !",
-        "error"
+        "error",
       );
       return;
     }
@@ -160,7 +160,7 @@ const DonationForm = () => {
       swal(
         "Could not send donation request",
         "Item list can not be empty !",
-        "error"
+        "error",
       );
       return;
     }
@@ -172,7 +172,7 @@ const DonationForm = () => {
         swal(
           "Could not send donation request",
           "Item list can not contain items having empty name or 0 quantity !",
-          "error"
+          "error",
         );
         return;
       }

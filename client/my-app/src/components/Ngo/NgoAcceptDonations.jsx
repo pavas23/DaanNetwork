@@ -6,7 +6,7 @@ import NgoNav from "./NgoNav";
 import swal from "sweetalert";
 import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
-import {Slider} from "@mui/material/Slider";
+import { Slider } from "@mui/material/Slider";
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
@@ -36,7 +36,7 @@ const DonorPosts = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const json = await response.json();
@@ -90,7 +90,7 @@ const DonorPosts = () => {
             donationRequestNum: num,
             donorEmailId: donorId,
           }),
-        }
+        },
       );
 
       const json = await response.json();
@@ -131,7 +131,7 @@ const DonorPosts = () => {
     setDistance(e.target.value);
     // const newCards = foodDonations.filter((card) => card.distance <= e.target.value);
     // setCards(newCards);
-  }
+  };
 
   return (
     <div>
@@ -140,16 +140,18 @@ const DonorPosts = () => {
       <div className={styles.main_body}>
         <Container>
           <h1 className="text-center mt-3 mb-5">Donation Requests</h1>
-          <div style={{display:"flex",flexDirection:"column"}}>
-            <Form.Label className={styles.sliderLabel}>Filter Using Proximity</Form.Label>
-            <Form.Range 
-            className={styles.Slider} 
-            defaultValue={distance} 
-            onChange={handleSliderChange}
-            min={10}
-            max={200}
-            step={10}
-            name="distanceFilter"
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Label className={styles.sliderLabel}>
+              Filter Using Proximity
+            </Form.Label>
+            <Form.Range
+              className={styles.Slider}
+              defaultValue={distance}
+              onChange={handleSliderChange}
+              min={10}
+              max={200}
+              step={10}
+              name="distanceFilter"
             />
           </div>
           <Row className="justify-content-center">

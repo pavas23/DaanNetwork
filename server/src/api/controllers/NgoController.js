@@ -18,7 +18,9 @@ module.exports.NGOLogin = async (req, res) => {
     const { emailId, password } = req.body;
     const blocked = await BlockedUsers.findOne({ emailId: emailId });
     if (blocked) {
-      return res.status(400).json({ status: false, desc: "You are blocked by admin!!" });
+      return res
+        .status(400)
+        .json({ status: false, desc: "You are blocked by admin!!" });
     }
     const newNGO = await Ngo.findOne({ emailId: emailId });
     if (!newNGO) {
@@ -288,7 +290,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
         donationRequestNum: donationRequestNum,
       },
       { $set: foodDonation[0] },
-      { new: true }
+      { new: true },
     );
 
     // send mail to donor
@@ -330,7 +332,7 @@ module.exports.getMyDonationRequests = async (req, res) => {
       .populate("ngo")
       .exec();
 
-    console.log(foodDonations)
+    console.log(foodDonations);
     foodDonations = (await foodDonations).map((donation) => {
       if (donation.ngo.emailId == ngoEmailId) return donation.toJSON();
     });
@@ -348,7 +350,9 @@ module.exports.getMyDonationRequests = async (req, res) => {
         .json({ status: false, desc: "No donation request exists" });
     }
 
-    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
+    return res
+      .status(200)
+      .json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (error) {
     if (error) {
       console.log(error);
@@ -436,7 +440,7 @@ module.exports.getAllDonationDrives = async (req, res) => {
     for (let i = 0; i < donation_drives.length; i++) {
       for (let j = 0; j < donation_drives[i].donors.length; j++) {
         var donor_details = await Donor.findById(
-          donation_drives[i].donors[j].donor
+          donation_drives[i].donors[j].donor,
         );
         donation_drives[i].donors[j]["donor_details"] = {
           name: donor_details.name,
@@ -472,15 +476,14 @@ module.exports.deleteDonationDrive = async (req, res) => {
   }
 };
 
-
 module.exports.getAllNgo = async (req, res) => {
   try {
-    var ngo = await Ngo.find({})
-    return res.status(200).json({ status: true, ngo: ngo })
+    var ngo = await Ngo.find({});
+    return res.status(200).json({ status: true, ngo: ngo });
   } catch (err) {
-    return res.status(500).json({ status: false, msg: err })
+    return res.status(500).json({ status: false, msg: err });
   }
-}
+};
 
 /** ngo controller to get profile details of a given ngo
  * req user : {ngoEmailId}
@@ -510,7 +513,7 @@ module.exports.getMyProfile = async (req, res) => {
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};
 
 /** ngo controller to delete user profile
  * req user : {ngoEmailId}
@@ -531,7 +534,9 @@ module.exports.deleteMyProfile = async (req, res) => {
     var ngoId = ngos[0]._id;
 
     // delete all ngo donation drives associated with this ngo
-    var ngoDonationRequests = await NgoDonationRequest.find({}).populate('ngo').exec();
+    var ngoDonationRequests = await NgoDonationRequest.find({})
+      .populate("ngo")
+      .exec();
 
     var ngoDonationIds = [];
     for (var donation of ngoDonationRequests) {
@@ -549,22 +554,23 @@ module.exports.deleteMyProfile = async (req, res) => {
     console.log(foodDonations);
 
     const filter = {
-      "ngo": ngoId
+      ngo: ngoId,
     };
     const update = {
-      $set: { accepted: false, ngo: null }
-    }
+      $set: { accepted: false, ngo: null },
+    };
     await FoodDonation.updateMany(filter, update);
 
     // delete ngo account from ngo collection
     await Ngo.deleteOne({ emailId: ngoEmailId });
 
-    return res.status(200).send({ status: true, desc: "Ngo deleted successfully !!" });
-
+    return res
+      .status(200)
+      .send({ status: true, desc: "Ngo deleted successfully !!" });
   } catch (err) {
     console.log(err);
     return res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};

@@ -9,9 +9,11 @@ const specs = require("../src/config/swagger/index");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-app.use(cors({
-  "origin": "*"
-}));
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
 
 app.use(express.json());
 
@@ -22,7 +24,6 @@ const PORT = process.env.PORT || 5004;
 
 // use express router
 app.use("/", require("./api/routes"));
-
 
 app.listen(PORT, (err) => {
   if (err) {
