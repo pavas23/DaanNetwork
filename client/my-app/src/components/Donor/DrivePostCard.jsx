@@ -25,7 +25,7 @@ function DrivePostCard({ donationDrive }) {
         }
         alt={"Alt"}
       />
-      
+
       <Card.Body>
         {/* <Card.Title>{title}</Card.Title> */}
         <Card.Text className="text-center">

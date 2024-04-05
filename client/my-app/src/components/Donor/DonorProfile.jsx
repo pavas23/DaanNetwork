@@ -35,7 +35,7 @@ const DonorProfile = () => {
         swal(
           "Could not fetch your profile details",
           "Invalid Session",
-          "error"
+          "error",
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
@@ -45,7 +45,7 @@ const DonorProfile = () => {
         swal(
           "Could not fetch your profile details",
           `${json.desc} !!`,
-          "error"
+          "error",
         );
       }
     } else {
@@ -68,7 +68,7 @@ const DonorProfile = () => {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
         },
-      }
+      },
     );
 
     const json = await response.json();
@@ -148,7 +148,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -162,7 +162,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -176,7 +176,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -192,7 +192,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -207,7 +207,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -220,7 +220,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   >
                     {/* <option value="">Select</option>
@@ -239,7 +239,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -257,7 +257,7 @@ const DonorProfile = () => {
                         onChange={handleChange}
                         disabled
                         style={{
-                          backgroundColor:'white'
+                          backgroundColor: "white",
                         }}
                       />
                     </Form.Group>
@@ -275,7 +275,7 @@ const DonorProfile = () => {
                         onChange={handleChange}
                         disabled
                         style={{
-                          backgroundColor:'white'
+                          backgroundColor: "white",
                         }}
                       />
                     </Form.Group>
@@ -291,7 +291,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -307,7 +307,7 @@ const DonorProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>

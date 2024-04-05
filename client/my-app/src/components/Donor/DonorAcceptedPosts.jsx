@@ -14,31 +14,23 @@ const DonorAcceptedPosts = () => {
   let navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [donor,setDonor] = useState(null)
+  const [donor, setDonor] = useState(null);
   const getDonor = async () => {
-    const response = await fetch(
-      `${REACT_APP_APIURL}/donor/my-profile`,
-      {
-        method: "POST",
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-      }
-    );
+    const response = await fetch(`${REACT_APP_APIURL}/donor/my-profile`, {
+      method: "POST",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
 
     const json = await response.json();
-    if(!json.status)
-    {
-      swal(
-        "Error Occured",
-        "",
-        "error"
-      );
-    }else{
-      console.log(json.donor)
-      setDonor(json.donor)
+    if (!json.status) {
+      swal("Error Occured", "", "error");
+    } else {
+      console.log(json.donor);
+      setDonor(json.donor);
     }
-  }
+  };
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
       navigate("/donor-login", { replace: true });

@@ -47,7 +47,6 @@ module.exports.unblockUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ status: false, desc: "User not blocked" });
     }
-<<<<<<< HEAD
     await BlockedUsers.deleteOne({ emailId: emailId });
     return res
       .status(200)
@@ -59,39 +58,35 @@ module.exports.unblockUser = async (req, res) => {
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
 };
-=======
-};
 
-module.exports.adminLogin = async (req,res) =>{
-    try {
-      
-        const { emailId, password } = req.body;
-        console.log(emailId,password)
-        const newNGO = await admin.findOne({emailId:emailId});
-        console.log(password,newNGO.password,newNGO)
-        if (!newNGO) {
-          return res
-            .status(400)
-            .json({ status: false, desc: "Incorrect Password or Email-id" });
-        }
-        const validPassword = (password===newNGO.password)
-        if (!validPassword) {
-          return res
-            .status(400)
-            .json({ status: false, desc: "Incorrect Password or Email-id" });
-        }
-        const token = createSecretToken(newNGO._id);
-    
-        res.status(201).json({
-          status: true,
-          token: token,
-          message: "User logged in successfully",
-        });
-      } catch (err) {
-        console.log(err);
-        return res
-          .status(500)
-          .json({ status: false, desc: "Internal Server Error Occured" });
-      }
-}
->>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
+module.exports.adminLogin = async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    console.log(emailId, password);
+    const newNGO = await admin.findOne({ emailId: emailId });
+    console.log(password, newNGO.password, newNGO);
+    if (!newNGO) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
+    }
+    const validPassword = password === newNGO.password;
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ status: false, desc: "Incorrect Password or Email-id" });
+    }
+    const token = createSecretToken(newNGO._id);
+
+    res.status(201).json({
+      status: true,
+      token: token,
+      message: "User logged in successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};

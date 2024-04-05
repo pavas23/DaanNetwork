@@ -31,7 +31,7 @@ const DonationDrive = () => {
     const keyWords = queryString
       .split(" ")
       .filter((word) => word.trim() !== "");
-    console.log("key:", keyWords);
+    // console.log("key:", keyWords);
 
     const queryAns = foodItems.filter((item) => {
       for (var key of keyWords) {
@@ -94,7 +94,7 @@ const DonationDrive = () => {
     if (window.innerWidth <= 768) {
       return "20vh";
     } else {
-      return "45vh";
+      return "50vh";
     }
   };
 

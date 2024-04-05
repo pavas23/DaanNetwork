@@ -34,7 +34,7 @@ const NgoProfile = () => {
         swal(
           "Could not fetch your profile details",
           "Invalid Session",
-          "error"
+          "error",
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
@@ -44,7 +44,7 @@ const NgoProfile = () => {
         swal(
           "Could not fetch your profile details",
           `${json.desc} !!`,
-          "error"
+          "error",
         );
       }
     } else {
@@ -144,7 +144,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -158,7 +158,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -174,7 +174,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -187,7 +187,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   >
                     {/* <option value="">Select</option>
@@ -208,7 +208,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -223,7 +223,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -240,7 +240,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -258,7 +258,7 @@ const NgoProfile = () => {
                         onChange={handleChange}
                         disabled
                         style={{
-                          backgroundColor:'white'
+                          backgroundColor: "white",
                         }}
                       />
                     </Form.Group>
@@ -274,7 +274,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
@@ -287,7 +287,7 @@ const NgoProfile = () => {
                     onChange={handleChange}
                     disabled
                     style={{
-                      backgroundColor:'white'
+                      backgroundColor: "white",
                     }}
                   />
                 </Form.Group>
