@@ -6,7 +6,7 @@ import NgoNav from "./NgoNav";
 import swal from "sweetalert";
 import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
-const axios = require('axios');
+import axios from 'axios'
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 

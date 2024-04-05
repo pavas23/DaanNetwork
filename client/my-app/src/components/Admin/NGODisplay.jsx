@@ -2,7 +2,6 @@ import styles from "../../css/Admin/displayNgo.module.css";
 import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect,useState } from "react";
-import PDFViewer from "../Util/PDFViewer";
 function NGODisplay() {
   const location = useLocation();
   const ngo = location.state.ngo;
