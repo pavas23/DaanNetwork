@@ -6,7 +6,11 @@ import NgoNav from "./NgoNav";
 import swal from "sweetalert";
 import styles from "../../css/Donor/DonorPosts.module.css";
 import { useNavigate } from "react-router";
-const axios = require('axios');
+<<<<<<< HEAD
+import { Slider } from "@mui/material/Slider";
+=======
+import axios from 'axios'
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
 
 const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
 
@@ -42,7 +46,7 @@ const DonorPosts = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     const json = await response.json();
     if (!json.status) {
@@ -122,7 +126,7 @@ const DonorPosts = () => {
             donationRequestNum: num,
             donorEmailId: donorId,
           }),
-        }
+        },
       );
 
       const json = await response.json();
@@ -221,11 +225,18 @@ const DonorPosts = () => {
   }
 
   const handleSliderChange = (e) => {
+<<<<<<< HEAD
+    setDistance(e.target.value);
+    // const newCards = foodDonations.filter((card) => card.distance <= e.target.value);
+    // setCards(newCards);
+  };
+=======
     setLimit(e.target.value);
   }
   useEffect(() => {
     filterCards();
   }, [limit]);
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
 
   return (
     <div>
@@ -233,6 +244,20 @@ const DonorPosts = () => {
       <div className={styles.main_body}>
         <Container>
           <h1 className="text-center mt-3 mb-5">Donation Requests</h1>
+<<<<<<< HEAD
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Form.Label className={styles.sliderLabel}>
+              Filter Using Proximity
+            </Form.Label>
+            <Form.Range
+              className={styles.Slider}
+              defaultValue={distance}
+              onChange={handleSliderChange}
+              min={10}
+              max={200}
+              step={10}
+              name="distanceFilter"
+=======
           <div style={{display:"flex",flexDirection:"column", width:"40%"}}>
             <Form.Label className={styles.sliderLabel}>Filter Using Proximity</Form.Label>
             <input type="range"
@@ -244,6 +269,7 @@ const DonorPosts = () => {
             step={10}
             name="distanceFilter"
             list="tickmarks"
+>>>>>>> 02e0b22c7394406af993d0f092bf5d11b7c6ad99
             />
             <datalist id="tickmarks" style={{display:"flex", justifyContent:"space-between"}}>
               <option value="10" label="10 km"/>

@@ -14,11 +14,36 @@ const DonorAcceptedPosts = () => {
   let navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [donor,setDonor] = useState(null)
+  const getDonor = async () => {
+    const response = await fetch(
+      `${REACT_APP_APIURL}/donor/my-profile`,
+      {
+        method: "POST",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+      }
+    );
 
+    const json = await response.json();
+    if(!json.status)
+    {
+      swal(
+        "Error Occured",
+        "",
+        "error"
+      );
+    }else{
+      console.log(json.donor)
+      setDonor(json.donor)
+    }
+  }
   useEffect(() => {
     if (!localStorage.getItem("auth-token")) {
       navigate("/donor-login", { replace: true });
     } else {
+      getDonor();
       getData();
       setFlag(false);
     }
@@ -34,7 +59,7 @@ const DonorAcceptedPosts = () => {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
         },
-      }
+      },
     );
 
     const json = await response.json();
@@ -43,7 +68,7 @@ const DonorAcceptedPosts = () => {
         swal(
           "Could not fetch your accepted donation requests",
           "Invalid Session",
-          "error"
+          "error",
         );
         localStorage.removeItem("auth-token");
         setTimeout(() => {
@@ -53,7 +78,7 @@ const DonorAcceptedPosts = () => {
         swal(
           "Could not fetch your accepted donation requests",
           `${json.desc} !!`,
-          "error"
+          "error",
         );
       }
     } else {
@@ -83,7 +108,7 @@ const DonorAcceptedPosts = () => {
           body: JSON.stringify({
             donationRequestNum: donationRequestNum[0],
           }),
-        }
+        },
       );
 
       const json = await response.json();
@@ -92,7 +117,7 @@ const DonorAcceptedPosts = () => {
           swal(
             "Could not fetch your donation requests",
             "Invalid Session",
-            "error"
+            "error",
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -102,7 +127,7 @@ const DonorAcceptedPosts = () => {
           swal(
             "Could not delete your donation request",
             `${json.desc} !!`,
-            "error"
+            "error",
           );
         }
       } else {
@@ -157,6 +182,7 @@ const DonorAcceptedPosts = () => {
                   ngo_website={card.ngo.website}
                   onDelete={handleDelete}
                   onEdit={handleEdit}
+                  donor={donor}
                 />
               </Col>
             ))}
@@ -186,19 +212,19 @@ const EditModal = ({
   let navigate = useNavigate();
 
   const [editedDescription, setEditedDescription] = useState(
-    editedCard ? editedCard.description : ""
+    editedCard ? editedCard.description : "",
   );
   const [editedQuantity, setEditedQuantity] = useState(
-    editedCard ? editedCard.quantity : ""
+    editedCard ? editedCard.quantity : "",
   );
   const [editedPickUpLocation, setEditedPickUpLocation] = useState(
-    editedCard ? editedCard.pickUpLocation : ""
+    editedCard ? editedCard.pickUpLocation : "",
   );
   const [editedPickUpDate, setEditedPickUpDate] = useState(
-    editedCard ? editedCard.pickUpDate : ""
+    editedCard ? editedCard.pickUpDate : "",
   );
   const [editedItems, setEditedItems] = useState(
-    editedCard ? editedCard.items : []
+    editedCard ? editedCard.items : [],
   );
 
   const addItems = () => {
@@ -248,7 +274,7 @@ const EditModal = ({
             "Content-type": "application/json",
           },
           body: JSON.stringify(updatedCard),
-        }
+        },
       );
 
       const json = await response.json();
@@ -257,7 +283,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             "Invalid Session",
-            "error"
+            "error",
           );
           localStorage.removeItem("auth-token");
           setTimeout(() => {
@@ -267,7 +293,7 @@ const EditModal = ({
           swal(
             "Could not modify your donation request",
             `${json.desc} !!`,
-            "error"
+            "error",
           );
         }
       } else {

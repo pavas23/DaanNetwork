@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Modal } from "react-bootstrap";
 import styles from "../../css/Donor/DonorPostCard.module.css";
+import PDFGenerator from "./PDFGenerator";
 
 function DonorAcceptedPostCard({
   id,
@@ -19,6 +20,7 @@ function DonorAcceptedPostCard({
   ngo_contactNumber,
   ngo_emailId,
   ngo_website,
+  donor,
 }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -58,7 +60,7 @@ function DonorAcceptedPostCard({
           <strong>Items:</strong>{" "}
           {items.map(
             (item, index) =>
-              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`
+              `${item.name} (${item.quantity} kg)${index !== items.length - 1 ? ", " : ""}`,
           )}
           <br />
           <strong>Total Quantity:</strong> {quantity} kg
@@ -80,6 +82,18 @@ function DonorAcceptedPostCard({
           <strong>NGO Website:</strong> {ngo_website}
           <br />
         </Card.Text>
+        <PDFGenerator
+          donor={donor}
+          ngo_name={ngo_name}
+          ngo_website={ngo_website}
+          ngo_emailId={ngo_emailId}
+          ngo_contactNumber={ngo_contactNumber}
+          items={items}
+          total_quantity={quantity}
+          pickUpLocation={pickUpLocation}
+          pickUpDate={new Date(pickUpDate).toLocaleString().split(",")[0]}
+          description={description}
+        />
       </Card.Body>
 
       <Modal show={showConfirmationModal} onHide={handleCancelDelete}>

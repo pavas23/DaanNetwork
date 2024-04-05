@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
-import profileImage from "../../images/default-avatar.png";
+import profileImage from "../../images/profile-default.png";
 import NgoNavBar from "./NgoNav";
 import styles from "../../css/Donor/DonorProfile.module.css";
 import { useNavigate } from "react-router";
@@ -90,9 +90,9 @@ const NgoProfile = () => {
   const getTopMargin = () => {
     // Check screen width and return appropriate top margin
     if (window.innerWidth <= 768) {
-      return '5vh'; // Adjust the margin value for smaller screens
+      return "5vh"; // Adjust the margin value for smaller screens
     } else {
-      return '30vh'; // Default margin value
+      return "30vh"; // Default margin value
     }
   };
 
@@ -100,14 +100,14 @@ const NgoProfile = () => {
     <div>
       <NgoNavBar />
       <div className={styles.main_body}>
-        <Container>
+        <Container style={{ backgroundColor: "#fffff8" }}>
           <Row>
-          <Col
+            <Col
               md={4}
               className="text-center"
               id="top-div"
               style={{
-                marginTop:getTopMargin()
+                marginTop: getTopMargin(),
               }}
             >
               <img
@@ -119,7 +119,12 @@ const NgoProfile = () => {
               <h2>{userData.name}</h2>
               <p className="text-muted">{userData.email}</p>
             </Col>
-            <Col md={8}>
+            <Col
+              md={8}
+              style={{
+                marginBottom: "30px",
+              }}
+            >
               <h1
                 className="mb-4"
                 style={{
@@ -128,9 +133,9 @@ const NgoProfile = () => {
               >
                 My Profile
               </h1>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className={styles.form_container}>
                 <Form.Group controlId="formName" className="mb-4">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label className={styles.form_label}>Name</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter name"
@@ -138,10 +143,13 @@ const NgoProfile = () => {
                     value={userData.name}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formEmail" className="mb-4">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label className={styles.form_label}>Email</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
@@ -149,10 +157,15 @@ const NgoProfile = () => {
                     value={userData.emailId}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formPhone" className="mb-4">
-                  <Form.Label>Name of Head</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Name of Head
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter phone number"
@@ -160,16 +173,22 @@ const NgoProfile = () => {
                     value={userData.nameOfHead}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formGender" className="mb-4">
-                  <Form.Label>Gender</Form.Label>
+                  <Form.Label className={styles.form_label}>Gender</Form.Label>
                   <Form.Control
                     type="text"
                     name="gender"
                     value={userData.gender}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   >
                     {/* <option value="">Select</option>
                     <option value="male">Male</option>
@@ -178,7 +197,9 @@ const NgoProfile = () => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="formAlternatePhone" className="mb-4">
-                  <Form.Label>Pan Number</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Pan Number
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter alternate phone number"
@@ -186,21 +207,31 @@ const NgoProfile = () => {
                     value={userData.panNumber}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formDob" className="mb-4">
-                  <Form.Label>GST Number</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    GST Number
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="dob"
                     value={userData.gstnumber}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formAddress" className="mb-4">
-                  <Form.Label>Contact Number</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Contact Number
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter address"
@@ -208,12 +239,17 @@ const NgoProfile = () => {
                     value={userData.contactNumber}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Row>
                   <Col>
                     <Form.Group controlId="formCity" className="mb-4">
-                      <Form.Label>Registration Number</Form.Label>
+                      <Form.Label className={styles.form_label}>
+                        Registration Number
+                      </Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter city"
@@ -221,12 +257,15 @@ const NgoProfile = () => {
                         value={userData.regnumber}
                         onChange={handleChange}
                         disabled
+                        style={{
+                          backgroundColor:'white'
+                        }}
                       />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group controlId="formZip" className="mb-4">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label className={styles.form_label}>Address</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter zip code"
@@ -234,16 +273,22 @@ const NgoProfile = () => {
                     value={userData.address}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formCountry" className="mb-4">
-                  <Form.Label>Website</Form.Label>
+                  <Form.Label className={styles.form_label}>Website</Form.Label>
                   <Form.Control
                     type="text"
                     name="country"
                     value={userData.website}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 {/* <Button

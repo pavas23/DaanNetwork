@@ -30,7 +30,7 @@ function DrivePostCard({ donationDrive }) {
           <br />
         </Card.Text>
         <Card.Text>
-          <strong>Reccomended Items:</strong>
+          <strong>Recommended Items:</strong>
           <ul style={{ padding: "0" }}>
             {donationDrive.description.items.map((item) => {
               return (

@@ -62,6 +62,7 @@ function AdminNGO() {
                   View NGO
                 </div>
               </div>
+
               <div className="col-sm-1">
                 {ngo.isVerified ? (
                   <span className={styles.verified_badge}>Verified</span>
@@ -69,6 +70,7 @@ function AdminNGO() {
                   <span className={styles.not_verified_badge}>Not Verified</span>
                 )}
               </div>
+
             </div>
           ))}
         </div>

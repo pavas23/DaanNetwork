@@ -1,63 +1,74 @@
 .main_body {
-  background-color: #f5f5f5;
-  /* background-image: url("../../images/watercolour-green-background_78370-1882.avif"); */
+  /* background-color: #f5f5f5; */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100%;
+  min-height: 100vh; /* Set a minimum height to cover the entire viewport */
+  display: flex;
+  align-items: center;
+  /* background-image: url(../../images/bg-profile-donor.jpeg);
+  background-color: rgba(
+    245,
+    245,
+    245,
+    0.8
+  ); Lighter background color with opacity */
+  /* background:#b2ed9e Green background with 30% opacity */
 }
 
 h1 {
-  padding-top: 2vh;
+  padding-top: 2rem; /* Increase the padding for better spacing */
+  text-align: center; /* Center the heading */
 }
 
 .container {
-  max-width: 90%;
+  max-width: 800px; /* Adjust the max-width for better readability */
   margin: auto;
   border-radius: 10px;
   padding: 30px;
+  background-color: #fff; /* Set a background color for the container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
 .form_label {
   font-weight: bold;
+  color: #333; /* Adjust the color for better visibility */
 }
 
 .btn_primary {
   width: 100%;
-  background-color: #078534;
+  background-color: #007bff; /* Change the primary button color */
   color: white;
+  border: none;
+  margin-top: 1rem; /* Add some top margin for better spacing */
 }
 
 .btn_primary:hover {
-  background-color: rgb(27, 197, 86);
-  color: white;
+  background-color: #0056b3; /* Darken the hover color */
 }
 
 .form_container {
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
   padding: 20px;
-  box-shadow:
-    rgba(0, 0, 0, 0.16) 0px 3px 6px,
-    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fully transparent */
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .img_fluid {
-  max-width: 100%;
+  max-width: 200px; /* Increase the maximum width of the image */
   height: auto;
+  margin-bottom: 1rem; /* Add bottom margin for better spacing */
 }
 
 .btn_secondary {
-  width: 30%;
-  background-color: #078534;
+  width: 100px; /* Adjust the width of the secondary button */
+  background-color: #dc3545; /* Change the secondary button color */
   color: white;
-  text-align: center;
-  padding: 0;
+  border: none;
+  margin-left: auto; /* Align the button to the right */
 }
 
 .btn_secondary:hover {
-  background-color: rgb(27, 197, 86);
-  color: white;
+  background-color: #c82333; /* Darken the hover color */
 }

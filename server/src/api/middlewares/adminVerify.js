@@ -1,8 +1,8 @@
-const Donor = require("../models/donor");
+const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-module.exports.donorVerification = async (req, res, next) => {
+module.exports.adminVerification = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
     return res
@@ -17,7 +17,7 @@ module.exports.donorVerification = async (req, res, next) => {
           desc: "Please authenticate using a valid token",
         });
       } else {
-        const user = await Donor.findById(data.id);
+        const user = await Admin.findById(data.id);
         if (user) {
           req.user = user;
           next();

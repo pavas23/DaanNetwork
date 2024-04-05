@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
-import profileImage from "../../images/default-avatar.png";
+import profileImage from "../../images/profile-default.png";
 import DonorNav from "./DonorNav";
 import styles from "../../css/Donor/DonorProfile.module.css";
 import { useNavigate } from "react-router";
@@ -104,7 +104,7 @@ const DonorProfile = () => {
     <div>
       <DonorNav />
       <div className={styles.main_body}>
-        <Container>
+        <Container style={{ backgroundColor: "#fffff8" }}>
           <Row>
             <Col
               md={4}
@@ -123,7 +123,12 @@ const DonorProfile = () => {
               <h2>{userData.name}</h2>
               <p className="text-muted">{userData.email}</p>
             </Col>
-            <Col md={8}>
+            <Col
+              md={8}
+              style={{
+                marginBottom: "20px",
+              }}
+            >
               <h1
                 className="mb-4"
                 style={{
@@ -132,9 +137,9 @@ const DonorProfile = () => {
               >
                 My Profile
               </h1>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className={styles.form_container}>
                 <Form.Group controlId="formName" className="mb-4">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label className={styles.form_label}>Name</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter name"
@@ -142,10 +147,13 @@ const DonorProfile = () => {
                     value={userData.name}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formEmail" className="mb-4">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label className={styles.form_label}>Email</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
@@ -153,10 +161,13 @@ const DonorProfile = () => {
                     value={userData.emailId}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formPhone" className="mb-4">
-                  <Form.Label>Phone</Form.Label>
+                  <Form.Label className={styles.form_label}>Phone</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter phone number"
@@ -164,10 +175,15 @@ const DonorProfile = () => {
                     value={userData.phone}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formAlternatePhone" className="mb-4">
-                  <Form.Label>Alternate Phone</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Alternate Phone
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter alternate phone number"
@@ -175,26 +191,37 @@ const DonorProfile = () => {
                     value={userData.alt_phone}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formDob" className="mb-4">
-                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Date of Birth
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     name="dob"
                     value={userData.birthdate}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formGender" className="mb-4">
-                  <Form.Label>Gender</Form.Label>
+                  <Form.Label className={styles.form_label}>Gender</Form.Label>
                   <Form.Control
                     type="text"
                     name="gender"
                     value={userData.gender}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   >
                     {/* <option value="">Select</option>
                     <option value="male">Male</option>
@@ -203,7 +230,7 @@ const DonorProfile = () => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="formAddress" className="mb-4">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label className={styles.form_label}>Address</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter address"
@@ -211,12 +238,17 @@ const DonorProfile = () => {
                     value={userData.address}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Row>
                   <Col>
                     <Form.Group controlId="formCity" className="mb-4">
-                      <Form.Label>City</Form.Label>
+                      <Form.Label className={styles.form_label}>
+                        City
+                      </Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter city"
@@ -224,12 +256,17 @@ const DonorProfile = () => {
                         value={userData.city}
                         onChange={handleChange}
                         disabled
+                        style={{
+                          backgroundColor:'white'
+                        }}
                       />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formState" className="mb-4">
-                      <Form.Label>State</Form.Label>
+                      <Form.Label className={styles.form_label}>
+                        State
+                      </Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter state"
@@ -237,12 +274,15 @@ const DonorProfile = () => {
                         value={userData.state}
                         onChange={handleChange}
                         disabled
+                        style={{
+                          backgroundColor:'white'
+                        }}
                       />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group controlId="formZip" className="mb-4">
-                  <Form.Label>Zip</Form.Label>
+                  <Form.Label className={styles.form_label}>Zip</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter zip code"
@@ -250,10 +290,15 @@ const DonorProfile = () => {
                     value={userData.zip_code}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 <Form.Group controlId="formCountry" className="mb-4">
-                  <Form.Label>Nationality</Form.Label>
+                  <Form.Label className={styles.form_label}>
+                    Nationality
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter country"
@@ -261,6 +306,9 @@ const DonorProfile = () => {
                     value={userData.nationality}
                     onChange={handleChange}
                     disabled
+                    style={{
+                      backgroundColor:'white'
+                    }}
                   />
                 </Form.Group>
                 {/* <Button
