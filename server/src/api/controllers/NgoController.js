@@ -2,7 +2,7 @@ const Donor = require("../models/donor");
 const Ngo = require("../models/ngo");
 const FoodDonation = require("../models/foodDonation");
 const NgoDonationRequest = require("../models/ngoDonationRequest");
-const BlockedUsers= require("../models/blockedUsers");
+const BlockedUsers = require("../models/blockedUsers");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
@@ -16,9 +16,9 @@ const { createSecretToken } = require("../helpers/secretToken");
 module.exports.NGOLogin = async (req, res) => {
   try {
     const { emailId, password } = req.body;
-    const blocked= await BlockedUsers.findOne({emailId:emailId});
-    if(blocked){
-      return res.status(400).json({status:false,desc:"You are blocked by admin!!"});
+    const blocked = await BlockedUsers.findOne({ emailId: emailId });
+    if (blocked) {
+      return res.status(400).json({ status: false, desc: "You are blocked by admin!!" });
     }
     const newNGO = await Ngo.findOne({ emailId: emailId });
     if (!newNGO) {
@@ -472,12 +472,99 @@ module.exports.deleteDonationDrive = async (req, res) => {
 };
 
 
-module.exports.getAllNgo = async (req,res) => {
-  try{
+module.exports.getAllNgo = async (req, res) => {
+  try {
     var ngo = await Ngo.find({})
-    return res.status(200).json({status:true,ngo:ngo})
-  }catch(err){
-    return res.status(500).json({status:false,msg:err})
+    return res.status(200).json({ status: true, ngo: ngo })
+  } catch (err) {
+    return res.status(500).json({ status: false, msg: err })
+  }
+}
+
+/** ngo controller to get profile details of a given ngo
+ * req user : {ngoEmailId}
+ * req body : {}
+ * res : { status:boolean, ngo:ngo_object }
+ */
+module.exports.getMyProfile = async (req, res) => {
+  const ngoEmailId = req.user.emailId;
+  try {
+    const ngos = await Ngo.find({ emailId: ngoEmailId });
+
+    // no ngo with given email id
+    if (ngos.length === 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No ngo with email ${ngoEmailId}` });
+    }
+
+    // do not send password in frontend
+    var ngoSend = ngos[0];
+    ngoSend.password = "";
+
+    return res.status(200).json({ status: true, ngo: ngoSend });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
+
+/** ngo controller to delete user profile
+ * req user : {ngoEmailId}
+ * req body : {}
+ * res : { status:boolean, desc:string }
+ */
+module.exports.deleteMyProfile = async (req, res) => {
+  const ngoEmailId = req.user.emailId;
+  try {
+    const ngos = await Ngo.find({ emailId: ngoEmailId });
+
+    // no ngo with given email id
+    if (ngos.length === 0) {
+      return res
+        .status(400)
+        .json({ status: false, desc: `No ngo with email ${ngoEmailId}` });
+    }
+    var ngoId = ngos[0]._id;
+
+    // delete all ngo donation drives associated with this ngo
+    var ngoDonationRequests = await NgoDonationRequest.find({}).populate('ngo').exec();
+
+    var ngoDonationIds = [];
+    for (var donation of ngoDonationRequests) {
+      if (donation.ngo.emailId === ngoEmailId) {
+        ngoDonationIds.push(donation._id);
+      }
+    }
+
+    for (var donationId of ngoDonationIds) {
+      await NgoDonationRequest.deleteOne({ _id: donationId });
+    }
+
+    // unaccept the donor donation requests which this ngo has accepted, and remove ngo ref from that donation
+    var foodDonations = await FoodDonation.find({ accepted: true });
+    console.log(foodDonations);
+
+    const filter = {
+      "ngo": ngoId
+    };
+    const update = {
+      $set: { accepted: false, ngo: null }
+    }
+    await FoodDonation.updateMany(filter, update);
+
+    // delete ngo account from ngo collection
+    await Ngo.deleteOne({ emailId: ngoEmailId });
+
+    return res.status(200).send({ status: true, desc: "Ngo deleted successfully !!" });
+
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
   }
 }
 

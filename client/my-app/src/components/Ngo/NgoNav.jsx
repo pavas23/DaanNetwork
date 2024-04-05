@@ -42,6 +42,9 @@ const NgoNavBar = () => {
               <Nav.Link href="/ngo-history" className={styles.nav_opt}>
                 Profile History
               </Nav.Link>
+              <Nav.Link href="/ngo-profile" className={styles.nav_opt}>
+                My Profile
+              </Nav.Link>
               {/* <Nav.Link href='#contactPage' className={styles.nav_opt}></Nav.Link> */}
             </Nav>
             <Nav>
