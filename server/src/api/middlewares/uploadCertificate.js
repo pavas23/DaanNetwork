@@ -4,7 +4,7 @@ const multer = require("multer");
 
 const store = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.resolve("../src/registration-certificates"));
+    cb(null, path.resolve("../../client/my-app/public/registration-certificates"));
   },
   filename: (req, file, cb) => {
     cb(null, req.body.regnumber + path.extname(file.originalname));
