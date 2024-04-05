@@ -2,6 +2,7 @@ import styles from "../../css/Admin/displayNgo.module.css";
 import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect,useState } from "react";
+import PDFViewer from "../Util/PDFViewer";
 function NGODisplay() {
   const location = useLocation();
   const ngo = location.state.ngo;
@@ -94,6 +95,7 @@ function NGODisplay() {
         <div className={"btn col-sm-12 " + styles.verifyBtn + ' ' + styles.property_value}>Certificate</div>
         </div>
        </div>
+       {/* <PDFViewer path={`C:\\Users\\Dev Gala\\Desktop\\Acads\\Year3\\Sem2\\Software Engineering\\Project\\DaanNetwork\\server\\src\\registration-certificates\\1234567890.pdf`}/> */}
         <div className={styles.buttonContainer}>
           <div onClick={async()=>  {flag? unblockUsers(ngo.emailId): blockUsers(ngo.emailId)
                                     }}
