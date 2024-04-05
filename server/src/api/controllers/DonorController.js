@@ -21,9 +21,9 @@ const { createSecretToken } = require("../helpers/secretToken");
 module.exports.donorLogin = async (req, res) => {
   try {
     const { emailId, password } = req.body;
-    const blocked= await BlockedUsers.findOne({emailId:emailId});
-    if(blocked){
-      return res.status(400).json({status:false,desc:"You are blocked by admin!!"});
+    const blocked = await BlockedUsers.findOne({ emailId: emailId });
+    if (blocked) {
+      return res.status(400).json({ status: false, desc: "You are blocked by admin!!" });
     }
     const donor = await Donor.findOne({ emailId: emailId });
 
@@ -880,5 +880,14 @@ module.exports.deleteMyProfile = async (req, res) => {
     return res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
+
+module.exports.getAllDonors = async (req, res) => {
+  try {
+    var donor = await Donor.find({})
+    return res.status(200).json({ status: true, donor: donor })
+  } catch (err) {
+    return res.status(500).json({ status: false, msg: err })
   }
 }
