@@ -45,6 +45,10 @@ const ngoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Ngo = mongoose.model("ngo", ngoSchema);
