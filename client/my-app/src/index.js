@@ -54,9 +54,9 @@ const router = createBrowserRouter(
       <Route path="admin-donorInfo" element={<DonorDisplay />} />
       <Route path="admin-login" element={<AdminLogin />} />
       <Route path="ngo-profile" element={<NgoProfile />} />
-      <Route path="impact-story" element={<HomeImpactStory />} />
-      <Route path="donor-forgot-password" element={<DonorForgotPassword />} />
-      <Route path="donor-reset-password" element={<DonorResetPassword />} />
+      {/* <Route path="impact-story" element={<HomeImpactStory />} /> */}
+      {/* <Route path="donor-forgot-password" element={<DonorForgotPassword />} /> */}
+      {/* <Route path="donor-reset-password" element={<DonorResetPassword />} /> */}
     </Route>,
   ),
 );
