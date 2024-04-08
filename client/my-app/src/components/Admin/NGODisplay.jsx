@@ -3,6 +3,7 @@ import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function NGODisplay() {
   const location = useLocation();
@@ -16,6 +17,11 @@ function NGODisplay() {
 
   console.log(ngo.isVerified + " haah");
   console.log(isVerified + " hh");
+  let navigate = useNavigate();
+
+  useEffect(() => {
+      isBlocked();
+  }, [flag]);
 
   const isBlocked = async () => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
@@ -30,11 +36,6 @@ function NGODisplay() {
     res = await res.json();
     setFlag(res.status)
   }
-
-  useEffect(() => {
-    isBlocked()
-  }, [flag]);
-
 
   const setNgoToVerified = async () => {
     try {

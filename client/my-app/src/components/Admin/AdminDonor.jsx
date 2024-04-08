@@ -3,9 +3,19 @@ import styles from "../../css/Admin/AdminNGO.module.css";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+
 function AdminDonor() {
   const [donors, setDonors] = useState([]);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("auth-token")) {
+      navigate("/admin-login", { replace: true });
+    } else {
+      getDonors();
+    }
+  }, []);
+
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const getDonors = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/donor/get-all-donors`, {
@@ -19,9 +29,7 @@ function AdminDonor() {
       setDonors(json.donor);
     }
   };
-  useEffect(() => {
-    getDonors();
-  }, []);
+
   return (
     <div>
       <AdminNav />

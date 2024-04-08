@@ -2,12 +2,23 @@ import styles from "../../css/Admin/displayNgo.module.css";
 import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function DonorDisplay() {
+  let navigate = useNavigate();
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+      isBlocked();
+  }, [flag]);
+
   const location = useLocation();
   const donor = location.state.donor;
   const keys = Object.keys(donor);
+
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
-  const [flag, setFlag] = useState(false);
+
+
   const isBlocked = async () => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
       method: "POST",
@@ -22,10 +33,6 @@ function DonorDisplay() {
     res = await res.json();
     setFlag(res.status);
   };
-
-  useEffect(() => {
-    isBlocked();
-  }, [flag]);
 
   const blockUsers = async (emailId) => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {

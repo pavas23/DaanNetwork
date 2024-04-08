@@ -7,7 +7,16 @@ import { useNavigate } from "react-router-dom";
 function AdminNGO() {
   const [ngos, setNgos] = useState([]);
   let navigate = useNavigate();
+
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
+  useEffect(() => {
+    if (!localStorage.getItem("auth-token")) {
+      navigate("/admin-login", { replace: true });
+    } else {
+      getNGO();
+    }
+  }, []);
 
   const getNGO = async () => {
     const resp = await fetch(`${REACT_APP_APIURL}/ngo/get-all-ngos`, {
@@ -21,10 +30,6 @@ function AdminNGO() {
       setNgos(json.ngo);
     }
   };
-
-  useEffect(() => {
-    getNGO();
-  }, []);
 
   return (
     <div>

@@ -15,6 +15,7 @@ function AdminNav() {
     localStorage.removeItem("auth-token");
     navigate("/admin-login", { replace: true });
   };
+
   return (
     <div style={{ backgroundColor: "#f9f9f9" }}>
       <style>{x}</style>
@@ -28,7 +29,7 @@ function AdminNav() {
               fontSize: "160%",
               paddingRight: "2%",
             }}
-            href="/admin-home"
+            href="/admin-donor"
           >
             DaanNetwork
           </Navbar.Brand>

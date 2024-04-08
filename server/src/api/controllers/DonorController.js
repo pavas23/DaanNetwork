@@ -399,7 +399,7 @@ module.exports.getAllDonations = async (req, res) => {
 /** function to notify donor about their successful application to donation drive
  * params: (drive, donor)
  */
-var notifyNewDonorForDrive = async (drive, donor) => {};
+var notifyNewDonorForDrive = async (drive, donor) => { };
 
 var notifySuccessfulDriveApplication = async (drive, application, donor) => {
   let transporter = nodemailer.createTransport({
