@@ -28,7 +28,7 @@ function AdminNav() {
               fontSize: "160%",
               paddingRight: "2%",
             }}
-            href="/admin-home"
+            href="/admin-dashboard"
           >
             DaanNetwork
           </Navbar.Brand>
