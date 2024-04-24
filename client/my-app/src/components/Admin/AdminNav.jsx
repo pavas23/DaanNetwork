@@ -11,12 +11,13 @@ function AdminNav() {
   const x = `#basic-nav-dropdown::after{ display: none; } .navbar-nav .nav-link.active{color:#53a937;font-weight:semi-bold;}
   .dropdown-item.active, .dropdown-item:active {background-color: #195406 !important; }
     `;
-    const handleLogout = () => {
-      localStorage.removeItem("auth-token");
-      navigate("/admin-login", { replace: true });
-    };
+  const handleLogout = () => {
+    localStorage.removeItem("auth-token");
+    navigate("/admin-login", { replace: true });
+  };
+
   return (
-    <div style={{backgroundColor:"#f9f9f9"}}>
+    <div style={{ backgroundColor: "#f9f9f9" }}>
       <style>{x}</style>
       <Navbar collapseOnSelect expand="lg">
         <Container>
@@ -54,8 +55,9 @@ function AdminNav() {
                   justifyContent: "center",
                 }}
               >
-                <span className={styles.logout_btn} onClick={handleLogout}>Logout</span>
-                
+                <span className={styles.logout_btn} onClick={handleLogout}>
+                  Logout
+                </span>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

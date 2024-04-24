@@ -139,7 +139,7 @@ router.post("/donor-login", donorController.donorLogin);
 router.post(
   "/donation-request",
   donorVerification,
-  donorController.createDonationRequest
+  donorController.createDonationRequest,
 );
 
 /**
@@ -166,7 +166,7 @@ router.post(
 router.delete(
   "/delete-donation-request",
   donorVerification,
-  donorController.deleteDonationRequest
+  donorController.deleteDonationRequest,
 );
 
 /**
@@ -194,7 +194,7 @@ router.delete(
 router.post(
   "/my-accepted-donation-requests",
   donorVerification,
-  donorController.getAllAcceptedDonationRequests
+  donorController.getAllAcceptedDonationRequests,
 );
 
 /**
@@ -244,7 +244,7 @@ router.get("/render-upload-page", donorController.renderUploadImageTemplate);
 router.post(
   "/get-donation-history",
   donorVerification,
-  donorController.getAllDonations
+  donorController.getAllDonations,
 );
 
 /**
@@ -281,7 +281,7 @@ router.post(
 router.post(
   "/apply-for-donation-drive",
   donorVerification,
-  donorController.applyForDonationDrive
+  donorController.applyForDonationDrive,
 );
 
 /**
@@ -307,7 +307,7 @@ router.post(
 router.post(
   "/upload-images",
   uploadImage.single("image"),
-  donorController.uploadDonationImages
+  donorController.uploadDonationImages,
 );
 
 /**
@@ -365,27 +365,23 @@ router.post("/my-donation-drives", donorController.getAllAppliedDrives);
  */
 router.post(
   "/delete-drive-application",
-  donorController.deleteApplicationToDrive
+  donorController.deleteApplicationToDrive,
 );
 
 router.post(
   "/modify-donation-request",
   donorVerification,
-  donorController.modifyDonationRequest
+  donorController.modifyDonationRequest,
 );
 
-router.post(
-  "/my-profile",
-  donorVerification,
-  donorController.getMyProfile
-);
+router.post("/my-profile", donorVerification, donorController.getMyProfile);
 
 router.post(
   "/delete-my-profile",
   donorVerification,
-  donorController.deleteMyProfile
+  donorController.deleteMyProfile,
 );
 
-router.get("/get-all-donors", donorController.getAllDonors)
+router.get("/get-all-donors", donorController.getAllDonors);
 
 module.exports = router;

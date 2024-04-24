@@ -70,7 +70,7 @@ function DonationDriveModal({ donationDrive, closeModal }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(donationDetails),
-      }
+      },
     );
     const json = await response.json();
     if (!json.status) {
@@ -123,27 +123,27 @@ function DonationDriveModal({ donationDrive, closeModal }) {
             <div className="border p-4">
               <div class="row justify-content-center mb-1">
                 <div class="col">
-                  <strong>Start Date:</strong>
+                  <strong>Start Date: </strong>
                 </div>
                 <div class="col">{donationDrive.startDate.slice(0, 10)}</div>
               </div>
               <div class="row justify-content-center mb-1">
                 <div class="col">
-                  <strong>End Date:</strong>
+                  <strong>End Date: </strong>
                 </div>
                 <div class="col">{donationDrive.endDate.slice(0, 10)}</div>
               </div>
-              <strong>Reccomended Items</strong>
+              <strong>Recommended Items</strong>
               <ul style={{ padding: "0" }}>
                 {donationDrive.description.items.map((item) => {
                   return (
                     <div class="row justify-content-center mb-1">
                       <div class="col">
-                        <strong>Item:</strong>
+                        <strong>Item: </strong>
                         {item.name}
                       </div>
                       <div class="col">
-                        <strong>Quantity:</strong>
+                        <strong>Quantity: </strong>
                         {item.quantity}
                       </div>
                     </div>
@@ -191,7 +191,7 @@ function DonationDriveModal({ donationDrive, closeModal }) {
                         className="form-control"
                         id="name"
                         name="quantity"
-                        min = "0"
+                        min="0"
                         required
                         value={i.quantity}
                         onChange={(event) => handleItemChange(index, event)}

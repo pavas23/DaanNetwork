@@ -23,7 +23,9 @@ module.exports.donorLogin = async (req, res) => {
     const { emailId, password } = req.body;
     const blocked = await BlockedUsers.findOne({ emailId: emailId });
     if (blocked) {
-      return res.status(400).json({ status: false, desc: "You are blocked by admin!!" });
+      return res
+        .status(400)
+        .json({ status: false, desc: "You are blocked by admin!!" });
     }
     const donor = await Donor.findOne({ emailId: emailId });
 
@@ -198,8 +200,14 @@ module.exports.createDonor = async (req, res) => {
  */
 module.exports.createDonationRequest = async (req, res) => {
   try {
-    const { quantity, pickUpDate, description, pickUpLocation, items, imageUrl } =
-      req.body;
+    const {
+      quantity,
+      pickUpDate,
+      description,
+      pickUpLocation,
+      items,
+      imageUrl,
+    } = req.body;
 
     const donorEmailId = req.user.emailId;
 
@@ -291,7 +299,9 @@ module.exports.getAllAcceptedDonationRequests = async (req, res) => {
         .json({ status: false, desc: "No donation request exists" });
     }
 
-    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
+    return res
+      .status(200)
+      .json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
     console.log(err);
     return res
@@ -375,7 +385,9 @@ module.exports.getAllDonations = async (req, res) => {
         .json({ status: false, desc: "No donation request exists" });
     }
 
-    return res.status(200).json({ status: true, foodDonations: foodDonationsUpdated });
+    return res
+      .status(200)
+      .json({ status: true, foodDonations: foodDonationsUpdated });
   } catch (err) {
     console.log(err);
     return res
@@ -461,8 +473,7 @@ var notifyDonorApplicationNGO = async (drive, application, donor) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: drive.ngo.emailId,
-    subject:
-      `Donor has applied to ${drive.description.name}`,
+    subject: `Donor has applied to ${drive.description.name}`,
     context: {
       title: "Successfully Applied to Donation Drive",
       email: donor.emailId,
@@ -544,9 +555,7 @@ module.exports.applyForDonationDrive = async (req, res) => {
       donor[0].toObject(),
     );
 
-    notifyDonorApplicationNGO(
-      tempDriveObj, donor_obj, donor[0].toObject()
-    );
+    notifyDonorApplicationNGO(tempDriveObj, donor_obj, donor[0].toObject());
     res.status(200).json({ status: true, msg: upDatedReq });
   } catch (err) {
     return res
@@ -845,7 +854,7 @@ module.exports.deleteMyProfile = async (req, res) => {
       .exec();
 
     var foodDonationsIds = [];
-    foodDonationsIds = (foodDonations).map((donation) => {
+    foodDonationsIds = foodDonations.map((donation) => {
       if (donation.donor.emailId == donorEmailId) return donation._id;
     });
 
@@ -862,30 +871,32 @@ module.exports.deleteMyProfile = async (req, res) => {
 
     // delete donor details from ngo drives in which donor has participated
     const filter = {
-      "donors.donor": donorId
-    }
+      "donors.donor": donorId,
+    };
     const update = {
-      $pull: { donors: { donor: donorId } }
+      $pull: { donors: { donor: donorId } },
     };
     await NgoDonationRequest.updateMany(filter, update);
 
     // delete donor from donor collection
     await Donor.deleteOne({ emailId: donorEmailId });
 
-    return res.status(200).send({ status: true, desc: "Donor account deleted successfully" });
+    return res
+      .status(200)
+      .send({ status: true, desc: "Donor account deleted successfully" });
   } catch (err) {
     console.log(err);
     return res
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};
 
 module.exports.getAllDonors = async (req, res) => {
   try {
-    var donor = await Donor.find({})
-    return res.status(200).json({ status: true, donor: donor })
+    var donor = await Donor.find({});
+    return res.status(200).json({ status: true, donor: donor });
   } catch (err) {
-    return res.status(500).json({ status: false, msg: err })
+    return res.status(500).json({ status: false, msg: err });
   }
-}
+};

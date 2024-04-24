@@ -33,7 +33,7 @@ const NgoDonationsAcceptedView = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const json = await response.json();

@@ -132,7 +132,7 @@ const NgoDonationDrive = () => {
           console.log();
           setDownloadUrl(downloadURL);
         });
-      }
+      },
     );
   };
 
@@ -142,7 +142,7 @@ const NgoDonationDrive = () => {
       swal(
         "Could not send donation request",
         `Image is uploading, Try again !`,
-        "error"
+        "error",
       );
       return;
     }
@@ -150,7 +150,7 @@ const NgoDonationDrive = () => {
       swal(
         "Could not add donation drive",
         "Event can not end before or on start date",
-        "error"
+        "error",
       );
       setFlag(1);
       return;
@@ -177,7 +177,7 @@ const NgoDonationDrive = () => {
             "auth-token": localStorage.getItem("auth-token"),
           },
           body: JSON.stringify(req),
-        }
+        },
       );
       var data = await resp.json();
       // console.log(data);
