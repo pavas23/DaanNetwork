@@ -65,7 +65,7 @@ module.exports.adminLogin = async (req, res) => {
     const { emailId, password } = req.body;
     console.log(emailId, password);
     const newNGO = await admin.findOne({ emailId: emailId });
-    console.log(password, newNGO.password, newNGO);
+    console.log(password, newNGO);
     if (!newNGO) {
       return res
         .status(400)
