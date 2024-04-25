@@ -11,6 +11,12 @@
 .topContainer{
     max-width: 20%;
 }
+
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 @media screen and (max-width: 420px) {
     .topRow{
         flex-direction: column;

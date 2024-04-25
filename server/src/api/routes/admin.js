@@ -12,4 +12,5 @@ router.get("/getNgoCount",adminVerification,adminController.getNgoCount);
 router.get("/getDonationDriveCount",adminVerification,adminController.getDonationDriveCount);
 router.get("/getAvgAcceptTime",adminVerification,adminController.getAvgAcceptTime);
 router.get("/getAvgDonors",adminVerification,adminController.getAvgDonorsPerDrive);
+router.get("/getVerifiedNGOCount",adminController.getCountOfVerifiedNGO);
 module.exports = router;
