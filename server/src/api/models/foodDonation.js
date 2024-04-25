@@ -54,6 +54,10 @@ const foodDonationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "ngo",
   },
+  acceptedDate: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 // will make combination of donationRequestNum and donor object as unique

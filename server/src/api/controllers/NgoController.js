@@ -280,6 +280,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
 
     // marking request as accepted
     foodDonation[0].accepted = true;
+    foodDonation[0].acceptedDate = Date.now()
     // ref. ngo with this request
     foodDonation[0].ngo = ngos[0]._id;
 
