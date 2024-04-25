@@ -1,6 +1,10 @@
 const BlockedUsers = require("../models/blockedUsers");
 const { createSecretToken } = require("../helpers/secretToken");
 const admin = require("../models/admin");
+const Ngo = require("../models/ngo");
+const Donor = require("../models/donor");
+const FoodDonation = require("../models/foodDonation");
+const BlockedUser = require("../models/blockedUsers");
 
 module.exports.blockUser = async (req, res) => {
   try {
