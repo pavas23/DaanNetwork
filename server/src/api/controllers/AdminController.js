@@ -227,3 +227,89 @@ module.exports.getCountOfVerifiedNGO = async (req,res) => {
     .json({ status: false, desc: "Internal Server Error Occured" });
   }
 }
+
+module.exports.getNumberOfCompleteDrives = async (req,res) =>{
+  try{
+    const drives = await DonationDrive.find({})
+    if(!drives){
+      return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+    }
+    var inComplete = 0
+    for(var d of drives){
+      if(d.endDate > Date.now()) inComplete++;
+    }
+    return res.status(200).json({status:true,completeDrives:[inComplete,drives.length-inComplete]})
+  } catch (err) {
+    return res
+    .status(500)
+    .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
+
+module.exports.getDonationStat = async (req,res) => {
+  try{
+    const donations = await FoodDonation.find({})
+    if(!donations){
+      return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+    }
+    var accepted = 0;
+
+    for(var v of donations){
+      if(v.accepted) accepted++;
+    }
+    return res.status(200).json({status:true,acceptedDonations:[donations.length - accepted ,accepted]})
+
+  } catch (err){
+    return res
+    .status(500)
+    .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
+
+function formatDate(date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
+module.exports.getDonationReqTimeSeries = async (req,res) => {
+  try{
+    const donationReq = await FoodDonation.find({})
+    const hashmap = new Map();
+    if(!donationReq){
+      return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+    }
+    console.log(donationReq)
+    for(var v of donationReq){
+      
+      if(hashmap.has(formatDate(v.createdAt)))
+      hashmap[formatDate(v.createdAt)] = hashmap[formatDate(v.createdAt)] + 1
+      else hashmap[formatDate(v.createdAt)] = 1;
+    }
+     console.log(hashmap)
+     var time = []
+     for(var key in hashmap){
+      time.push(key)
+     }
+      time.sort();
+      var values = [];
+      for(var i of time){
+        values.push(hashmap[i])
+      }
+    console.log(time,values)
+    return res.status(200).json({status:true,time:time,value:values})
+    
+  }catch(err){
+    return res
+    .status(500)
+    .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashboardCard from "./DashboardCard";
 import styles from "../../css/Admin/AdminDashboard.module.css";
 import PieChart from "./PieChart";
+import TimeSeriesChart from "./Timeline";
 const AdminDashboard = () => {
   const [donorCount, setDonorCount] = useState(0);
   const [ngoCount, setNgoCount] = useState(0);
@@ -29,6 +30,19 @@ const AdminDashboard = () => {
       },
     ],
   });
+
+  const [acceptedDonationData, setAcceptedDonations] = useState({
+    labels: ["Red", "Green"],
+    datasets: [
+      {
+        data: [50,50],
+        backgroundColor: ["#FF6384", "#84ff63 "],
+        hoverBackgroundColor: ["#FF6384", "#84ff63 "],
+      },
+    ],
+  });
+
+  const [donationreqTS,setDonationReqTS] = useState({time:[],value:[]})
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const getData = async () => {
     const donor_resp = await fetch(`${REACT_APP_APIURL}/admin/getDonorCount`, {
@@ -95,8 +109,39 @@ const AdminDashboard = () => {
     });
 
     const verifiedNGO = await verifedNGO_resp.json()
-    console.log(donor, ngo, donationDrive, avTime, avDonor,verifiedNGO);
-    if (!donor.status || !ngo.status || !donationDrive.status || !avTime.status || !avDonor.status || !verifiedNGO.status)
+
+    const completedDrives_resp = await fetch(`${REACT_APP_APIURL}/admin/getCompletedDrives`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+        "Content-Type": "application/json",
+      },
+    });
+    const completedDrives = await completedDrives_resp.json()
+
+    const acceptedDonations_resp = await fetch(`${REACT_APP_APIURL}/admin/getAcceptedDonations`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+        "Content-Type": "application/json",
+      },
+    });
+
+
+    const acceptedDonations = await acceptedDonations_resp.json()
+
+    const donationReqTS_resp = await  await fetch(`${REACT_APP_APIURL}/admin/getDonationReqTimeSeries`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+        "Content-Type": "application/json",
+      },
+    });
+
+    const donationReqs = await donationReqTS_resp.json()
+
+    console.log(donor, ngo, donationDrive, avTime, avDonor,verifiedNGO,completedDrives,acceptedDonations,donationReqs);
+    if (!donor.status || !ngo.status || !donationDrive.status || !avTime.status || !avDonor.status || !verifiedNGO.status|| !completedDrives.status || !acceptedDonations.status || !donationReqs.status)
       return;
     setDonorCount(donor.donors);
     setNgoCount(ngo.ngos);
@@ -104,7 +149,7 @@ const AdminDashboard = () => {
     setAvgTimeAccept(avTime.avgAcceptTime);
     setAvgDonor(avDonor.avgDonors);
     setVerifiedNGOData({
-      labels: ["Unverified", "Verified"],
+      labels: ["Unverified NGO", "Verified NGO"],
       datasets: [
         {
           data: verifiedNGO.verifiedNgoData,
@@ -113,7 +158,32 @@ const AdminDashboard = () => {
         },
       ],
     })
+
+    setCompletedDonationData({
+      labels: ["Incomplete Drives", "Complete Drives"],
+      datasets: [
+        {
+          data: completedDrives.completeDrives,
+          backgroundColor: ["#FF6384", "#84ff63 "],
+          hoverBackgroundColor: ["#FF6384", "#84ff63 "],
+        },
+      ],
+    })
+
+    setAcceptedDonations({
+      labels: ["Pending Requests", "Accepted Requests"],
+      datasets: [
+        {
+          data: acceptedDonations.acceptedDonations,
+          backgroundColor: ["#FF6384", "#84ff63 "],
+          hoverBackgroundColor: ["#FF6384", "#84ff63 "],
+        },
+      ],
+    })
+    setDonationReqTS({time:donationReqs.time,value:donationReqs.value})
   };
+
+
   useEffect(() => {
     getData();
   }, []);
@@ -128,14 +198,18 @@ const AdminDashboard = () => {
         />
         <DashboardCard
           x={avgTimeAccept}
-          statistic="Avg. Minutes to Accept Donation"
+          statistic="Avg. Mins. to Accept Donation"
         />
         <DashboardCard x={avgDonor} statistic="Avg. Donors per Drive" />
       </div>
-      <div className={styles.topRow} style={{ justifyContent: "center" }}>
+      <div className={styles.topRow} style={{ justifyContent: "space-around" }}>
         <PieChart data={verifiedNGOData}/>
-        <PieChart data={verifiedNGOData}/>
+        <PieChart data={completedDonationData}/>
+        <PieChart data={acceptedDonationData}/>
       </div>
+     <div className={styles.topRow} style={{justifyContent:'center'}}>
+     <TimeSeriesChart time={donationreqTS.time} value={donationreqTS.value}/>
+     </div>
     </div>
   );
 };
