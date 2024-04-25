@@ -205,3 +205,25 @@ module.exports.getAvgDonorsPerDrive = async (req,res) => {
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
 }
+
+module.exports.getCountOfVerifiedNGO = async (req,res) => {
+  try{
+    const ngo = await Ngo.find({})
+    var verif = 0
+    if(!ngo){
+      return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+    }
+    for(var n of ngo){
+      if(n.isVerified){
+        verif++;
+      }
+    }
+    return res.status(200).json({status:true,verifiedNgoData:[ngo.length-verif,verif]})
+  } catch (err){
+    return res
+    .status(500)
+    .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+}
