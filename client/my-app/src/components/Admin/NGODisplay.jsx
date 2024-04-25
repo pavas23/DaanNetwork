@@ -27,6 +27,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -52,6 +53,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -79,6 +81,7 @@ function NGODisplay() {
     var res = await fetch(`${REACT_APP_APIURL}/admin/unblockUser`, {
       method: "POST",
       headers: {
+        "auth-token": localStorage.getItem("auth-token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
