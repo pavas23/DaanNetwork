@@ -9,7 +9,7 @@ function DonorDisplay() {
   const [flag, setFlag] = useState(false);
 
   useEffect(() => {
-      isBlocked();
+    isBlocked();
   }, [flag]);
 
   const location = useLocation();
@@ -17,7 +17,6 @@ function DonorDisplay() {
   const keys = Object.keys(donor);
 
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
-
 
   const isBlocked = async () => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/isBlocked`, {
@@ -45,7 +44,7 @@ function DonorDisplay() {
         emailId: emailId,
       }),
     });
-    console.log(res);
+    // console.log(res);
     setFlag(true);
   };
 
@@ -60,7 +59,7 @@ function DonorDisplay() {
         emailId: emailId,
       }),
     });
-    console.log(res);
+    // console.log(res);
     setFlag(false);
   };
 

@@ -53,7 +53,7 @@ const NgoDonationsAcceptedView = () => {
         <Row className="justify-content-center">
           {driveList.map((drive) => (
             <Col md={4}>
-              {console.log(drive)}
+              {/* {console.log(drive)} */}
               <DriveCard donationDrive={drive} />
             </Col>
           ))}

@@ -29,7 +29,7 @@ function AdminNav() {
               fontSize: "160%",
               paddingRight: "2%",
             }}
-            href="/admin-dashboard"
+            href="/admin-home"
           >
             DaanNetwork
           </Navbar.Brand>
@@ -41,6 +41,9 @@ function AdminNav() {
               </Nav.Link>
               <Nav.Link href="admin-ngo" className={styles.nav_opt}>
                 NGOs
+              </Nav.Link>
+              <Nav.Link href="admin-impact-story" className={styles.nav_opt}>
+                AddImpactStory
               </Nav.Link>
             </Nav>
             <Nav>

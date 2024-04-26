@@ -58,7 +58,7 @@ const DonorPosts = () => {
     } else {
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
-      console.log(json.foodDonations);
+      // console.log(json.foodDonations);
     }
   };
 

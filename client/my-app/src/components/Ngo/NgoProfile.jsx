@@ -48,7 +48,7 @@ const NgoProfile = () => {
         );
       }
     } else {
-      console.log(json.ngo);
+      // console.log(json.ngo);
       setUserData(json.ngo);
     }
   };

@@ -25,7 +25,7 @@ function AdminDonor() {
     if (!json.status) {
       swal("Internal Server Error", json.msg, "error");
     } else {
-      console.log(json);
+      // console.log(json);
       setDonors(json.donor);
     }
   };

@@ -2,10 +2,70 @@ import styles from "../../css/Ngo/NgoSignup.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import swal from "sweetalert";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../../firebase";
 
 function NGOsignup() {
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   let navigate = useNavigate();
+
+  const [downloadUrl, setDownloadUrl] = useState("");
+
+  const uploadFile = (file) => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, "reg_certificates/" + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        switch (snapshot.state) {
+          case "paused":
+            // console.log("Upload is paused");
+            break;
+          case "running":
+            // console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        // console.log(error);
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            // console.log(error);
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          // console.log("DownloadURL - ", downloadURL);
+          // console.log();
+          setDownloadUrl(downloadURL);
+        });
+      },
+    );
+  };
 
   const initialValues = {
     ngo_name: "",
@@ -54,6 +114,18 @@ function NGOsignup() {
       formData.append("gstnumber", formValues.gst);
       formData.append("regnumber", formValues.reg_no);
       formData.append("reg_certificate", file);
+
+      // console.log(file);
+      if (file != null && downloadUrl === "") {
+        swal(
+          "Could not send request",
+          `File is uploading, Try again !`,
+          "error",
+        );
+        return;
+      }
+      formData.append("fileUrl", downloadUrl);
+
       var res = await fetch(`${REACT_APP_APIURL}/ngo/create-ngo`, {
         method: "POST",
         body: formData,
@@ -67,6 +139,8 @@ function NGOsignup() {
           navigate("/ngo-login", { replace: true });
         }, 1500);
         setFormValues(initialValues);
+        setFile(null);
+        setDownloadUrl("");
       }
     }
   };
@@ -75,6 +149,7 @@ function NGOsignup() {
     e.preventDefault();
     formValues.file = e.target.files[0];
     setFile(e.target.files[0]);
+    uploadFile(e.target.files[0]);
   };
 
   const validateForm = (values) => {
