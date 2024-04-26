@@ -77,7 +77,7 @@ function AdminImpactStory() {
         style={{ maxWidth: "90%", margin: "auto", padding: "30px" }}
       >
         <h1 className="text-center display-3 fw-bold text-success mt-5 mb-4">
-          Share Impact Stories
+          Share Impact Story
         </h1>
         <div
           className="container rounded border border-success shadow p-4 mt-4"

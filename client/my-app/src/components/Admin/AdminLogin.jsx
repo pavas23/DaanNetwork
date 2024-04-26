@@ -53,7 +53,7 @@ const AdminLogin = () => {
         setFormErrors({ error: res.desc });
       } else {
         localStorage.setItem("auth-token", res.token);
-        navigate("/admin-donor", { replace: true });
+        navigate("/admin-home", { replace: true });
         setFormValues(initialValues);
       }
     }
