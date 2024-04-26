@@ -21,9 +21,9 @@ export default function Home() {
       method: "GET",
     });
     const json = await resp.json();
-    console.log(json);
+    // console.log(json);
     setStoryList(json.impactStories);
-    console.log(json.impactStories);
+    // console.log(json.impactStories);
   }
 
   useEffect(() => {

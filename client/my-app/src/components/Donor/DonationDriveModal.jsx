@@ -40,8 +40,8 @@ function DonationDriveModal({ donationDrive, closeModal }) {
 
   const handleStartDateChange = (e) => {
     const { name, value } = e.target;
-    console.log(typeof value);
-    console.log(value);
+    // console.log(typeof value);
+    // console.log(value);
     setForm({
       ...formData,
       [name]: value,
@@ -50,8 +50,8 @@ function DonationDriveModal({ donationDrive, closeModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log(items);
+    // console.log(formData);
+    // console.log(items);
     var donationDetails = {
       donationRequestId: donationDrive._id,
       donationDetails: {

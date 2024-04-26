@@ -25,12 +25,12 @@ function AdminImpactStory() {
 
     if (formVal.title.length === 0) {
       // title can't be empty
-      swal("Title can not be empty");
+      swal("Could not add impact story","Title can not be empty","error");
       return;
     }
     if (formVal.description.length === 0) {
       // desc can't be empty
-      swal("Description can not be empty");
+      swal("Could not add impact story","Description can not be empty","error");
       return;
     }
 
@@ -48,7 +48,7 @@ function AdminImpactStory() {
     const json = await response.json();
     if (!json.status) {
       if (json.desc == "Please authenticate using a valid token") {
-        swal("Could not send donation request", "Invalid Session", "error");
+        swal("Could not add impact story", "Invalid Session", "error");
         localStorage.removeItem("auth-token");
         setTimeout(() => {
           navigate("/admin-login", { replace: true });

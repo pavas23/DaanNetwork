@@ -32,8 +32,8 @@ const NgoDonationDrive = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(typeof value);
-    console.log(value);
+    // console.log(typeof value);
+    // console.log(value);
     setFormData({
       ...formData,
       [name]: value,
@@ -42,9 +42,9 @@ const NgoDonationDrive = () => {
 
   const handleStartDateChange = (e) => {
     const { name, value } = e.target;
-    console.log(typeof value);
-    console.log(value);
-    console.log(new Date(value));
+    // console.log(typeof value);
+    // console.log(value);
+    // console.log(new Date(value));
     setFormData({
       ...formData,
       [name]: value,
@@ -53,9 +53,9 @@ const NgoDonationDrive = () => {
 
   const handleEndDateChange = (e) => {
     const { name, value } = e.target;
-    console.log(typeof value);
-    console.log(value);
-    console.log(new Date(value));
+    // console.log(typeof value);
+    // console.log(value);
+    // console.log(new Date(value));
     setFormData({
       ...formData,
       [name]: value,
@@ -99,21 +99,21 @@ const NgoDonationDrive = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         switch (snapshot.state) {
           case "paused":
-            console.log("Upload is paused");
+            // console.log("Upload is paused");
             break;
           case "running":
-            console.log("Upload is running");
+            // console.log("Upload is running");
             break;
           default:
             break;
         }
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
         switch (error.code) {
           case "storage/unauthorized":
             // User doesn't have permission to access the object
-            console.log(error);
+            // console.log(error);
             break;
           case "storage/canceled":
             // User canceled the upload
@@ -128,8 +128,8 @@ const NgoDonationDrive = () => {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("DownloadURL - ", downloadURL);
-          console.log();
+          // console.log("DownloadURL - ", downloadURL);
+          // console.log();
           setDownloadUrl(downloadURL);
         });
       },
@@ -156,7 +156,7 @@ const NgoDonationDrive = () => {
       return;
     }
 
-    console.log(formData);
+    // console.log(formData);
     var req = {
       startDate: formData.startDate,
       endDate: formData.endDate,
@@ -187,7 +187,7 @@ const NgoDonationDrive = () => {
         swal("Could not add donation drive", "Internal Server Error", "error");
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
 
     setFlag(0);

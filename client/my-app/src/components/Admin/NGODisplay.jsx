@@ -15,8 +15,8 @@ function NGODisplay() {
   const [isJpeg, setIsJpeg] = useState(null);
   const [isVerified, setIsVerified] = useState(ngo.isVerified);
 
-  console.log(ngo.isVerified + " haah");
-  console.log(isVerified + " hh");
+  // console.log(ngo.isVerified + " haah");
+  // console.log(isVerified + " hh");
   let navigate = useNavigate();
 
   useEffect(() => {

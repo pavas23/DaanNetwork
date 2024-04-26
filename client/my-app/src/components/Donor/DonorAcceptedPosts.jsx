@@ -27,7 +27,7 @@ const DonorAcceptedPosts = () => {
     if (!json.status) {
       swal("Error Occured", "", "error");
     } else {
-      console.log(json.donor);
+      // console.log(json.donor);
       setDonor(json.donor);
     }
   };
@@ -76,7 +76,7 @@ const DonorAcceptedPosts = () => {
     } else {
       setFoodDonations(json.foodDonations);
       setCards(json.foodDonations);
-      console.log(json.foodDonations);
+      // console.log(json.foodDonations);
     }
   };
 

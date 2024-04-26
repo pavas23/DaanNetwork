@@ -26,7 +26,7 @@ function AdminNGO() {
     if (!json.status) {
       swal("Internal Server Error", json.msg, "error");
     } else {
-      console.log(json);
+      // console.log(json);
       setNgos(json.ngo);
     }
   };

@@ -157,10 +157,10 @@ const DonorPosts = () => {
   };
 
   const filterCards = async () => {
-    console.log(limit);
+    // console.log(limit);
 
     if (limit == 200) {
-      console.log("h1");
+      // console.log("h1");
       setCards(initialCards);
     } else {
       var newCards = [];
@@ -170,7 +170,7 @@ const DonorPosts = () => {
           newCards.push(card);
         }
       }
-      console.log("h1");
+      // console.log("h1");
       setCards(newCards);
     }
   };
@@ -195,7 +195,7 @@ const DonorPosts = () => {
         const { lat, lon } = response.data[0];
         return { lat, lon };
       } else {
-        console.log("No results found");
+        // console.log("No results found");
         setCards(initialCards);
       }
     } catch (error) {
@@ -210,7 +210,7 @@ const DonorPosts = () => {
       let distance = await haservine(lat1, lon1, lat2, lon2);
       return distance;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

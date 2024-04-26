@@ -69,7 +69,7 @@ const MyDocument = (prp) => {
 };
 
 const PDFGenerator = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <div>
       {/* Component to generate PDF and download */}

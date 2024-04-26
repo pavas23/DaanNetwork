@@ -49,7 +49,7 @@ const DonorProfile = () => {
         );
       }
     } else {
-      console.log(json.donor);
+      // console.log(json.donor);
       setUserData(json.donor);
     }
   };

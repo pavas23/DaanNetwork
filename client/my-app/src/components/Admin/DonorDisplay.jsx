@@ -44,7 +44,7 @@ function DonorDisplay() {
         emailId: emailId,
       }),
     });
-    console.log(res);
+    // console.log(res);
     setFlag(true);
   };
 
@@ -59,7 +59,7 @@ function DonorDisplay() {
         emailId: emailId,
       }),
     });
-    console.log(res);
+    // console.log(res);
     setFlag(false);
   };
 

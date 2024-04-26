@@ -152,17 +152,17 @@ const AdminDashboard = () => {
 
     const donationReqs = await donationReqTS_resp.json();
 
-    console.log(
-      donor,
-      ngo,
-      donationDrive,
-      avTime,
-      avDonor,
-      verifiedNGO,
-      completedDrives,
-      acceptedDonations,
-      donationReqs,
-    );
+    // console.log(
+    //   donor,
+    //   ngo,
+    //   donationDrive,
+    //   avTime,
+    //   avDonor,
+    //   verifiedNGO,
+    //   completedDrives,
+    //   acceptedDonations,
+    //   donationReqs,
+    // );
     if (
       !donor.status ||
       !ngo.status ||
