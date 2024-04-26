@@ -3,11 +3,6 @@ const { createSecretToken } = require("../helpers/secretToken");
 const admin = require("../models/admin");
 const Ngo = require("../models/ngo");
 const Donor = require("../models/donor");
-const FoodDonation = require("../models/foodDonation");
-const BlockedUser = require("../models/blockedUsers");
-const Donor = require('../models/donor')
-const Ngo = require("../models/ngo")
-const DonationDrive = require("../models/ngoDonationRequest")
 const FoodDonation = require('../models/foodDonation')
 module.exports.blockUser = async (req, res) => {
   try {
