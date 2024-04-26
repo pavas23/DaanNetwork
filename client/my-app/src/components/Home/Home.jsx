@@ -9,8 +9,27 @@ import {
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+
+  const [storyList, setStoryList] = useState([]);
+
+  const getData = async () => {
+    const resp = await fetch(`${REACT_APP_APIURL}/admin/getImpactStory`, {
+      method: "GET",
+    });
+    const json = await resp.json();
+    console.log(json);
+    setStoryList(json.impactStories);
+    console.log(json.impactStories);
+  }
+
+  useEffect(() => {
+    getData();
+  },[]);
+
   return (
     <div>
       <HomeNav />
@@ -76,6 +95,19 @@ export default function Home() {
           >
             Impact Stories
           </h2>
+          <div className={styles.writeUp}>
+            <p>
+              {storyList.map((item) => {
+                return(
+                  <>
+                    <b>{item.title}</b>
+                    <p>{item.description}</p>
+                  </>
+                )
+              })}
+            </p>
+          </div>
+
         </div>
         <div className={styles.line}></div>
         <div className={styles.contact} id="contactPage">

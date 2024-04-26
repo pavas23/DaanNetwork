@@ -64,5 +64,14 @@ router.get(
   adminVerification,
   adminController.getVerifiedNgoStates,
 );
+router.post(
+  "/addImpactStory",
+  adminVerification,
+  adminController.addImpactStory,
+)
+router.get(
+  "/getImpactStory",
+  adminController.getImpactStory,
+)
 
 module.exports = router;

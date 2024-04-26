@@ -6,6 +6,7 @@ const Donor = require("../models/donor");
 const FoodDonation = require("../models/foodDonation");
 const BlockedUser = require("../models/blockedUsers");
 const DonationDrive = require("../models/ngoDonationRequest");
+const ImpactStory = require("../models/impactStory");
 
 module.exports.blockUser = async (req, res) => {
   try {
@@ -441,6 +442,52 @@ module.exports.getDonationReqTimeSeries = async (req, res) => {
     }
     console.log(time, values);
     return res.status(200).json({ status: true, time: time, value: values });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
+
+module.exports.addImpactStory = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+
+    // add this story to db
+    let newImpactStory = await ImpactStory.create({
+      title: title,
+      description: description
+    });
+
+    res.status(201).json({ status: true, desc: "Impact Story added successfully" });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ status: false, desc: "Internal Server Error Occured" });
+  }
+};
+
+module.exports.getImpactStory = async (req, res) => {
+  try {
+    var impactStories = await ImpactStory.find({});
+    if (impactStories.length === 0) {
+      return res
+        .status(200)
+        .json({ status: false, desc: "No impact story exists" });
+    }
+    if (impactStories.length <= 3) {
+      res.status(201).json({ status: true, impactStories: impactStories });
+    } else {
+      // sending any random 3 stories
+      // shuffle array
+      for (let i = impactStories.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [impactStories[i], impactStories[j]] = [impactStories[j], impactStories[i]];
+      }
+      const shuffledArray = impactStories.slice();
+      const randomArray = shuffledArray.slice(0, 3);
+      res.status(201).json({ status: true, impactStories: randomArray });
+    }
   } catch (err) {
     return res
       .status(500)

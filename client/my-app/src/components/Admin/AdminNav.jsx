@@ -42,6 +42,9 @@ function AdminNav() {
               <Nav.Link href="admin-ngo" className={styles.nav_opt}>
                 NGOs
               </Nav.Link>
+              <Nav.Link href="admin-impact-story" className={styles.nav_opt}>
+                AddImpactStory
+              </Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link

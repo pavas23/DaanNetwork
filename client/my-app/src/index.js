@@ -27,11 +27,11 @@ import DonorDisplay from "./components/Admin/DonorDisplay";
 import AdminDonor from "./components/Admin/AdminDonor";
 import NgoProfile from "./components/Ngo/NgoProfile";
 import AdminLogin from "./components/Admin/AdminLogin";
-import HomeImpactStory from "./components/Home/HomeImpactStory";
 import DonorForgotPassword from "./components/Donor/DonorForgotPassword";
 import DonorResetPassword from "./components/Donor/DonorResetPassword";
 import RegionalData from "./components/Admin/RegionalData";
 import AdminDashboard from "./components/Admin/AdminDashboard";
+import AdminImpactStory from "./components/Admin/AdminImpactStory";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +58,7 @@ const router = createBrowserRouter(
       <Route path="ngo-profile" element={<NgoProfile />} />
       <Route path="regional-data" element={<RegionalData />} />
       <Route path="admin-dashboard" element={<AdminDashboard />} />
-      {/* <Route path="impact-story" element={<HomeImpactStory />} /> */}
+      <Route path="admin-impact-story" element={<AdminImpactStory />} />
       {/* <Route path="donor-forgot-password" element={<DonorForgotPassword />} /> */}
       {/* <Route path="donor-reset-password" element={<DonorResetPassword />} /> */}
     </Route>,
