@@ -3,6 +3,7 @@ import DashboardCard from "./DashboardCard";
 import styles from "../../css/Admin/AdminDashboard.module.css";
 import PieChart from "./PieChart";
 import TimeSeriesChart from "./Timeline";
+
 const AdminDashboard = () => {
   const [donorCount, setDonorCount] = useState(0);
   const [ngoCount, setNgoCount] = useState(0);
@@ -13,7 +14,7 @@ const AdminDashboard = () => {
     labels: ["Red", "Green"],
     datasets: [
       {
-        data: [50,50],
+        data: [50, 50],
         backgroundColor: ["#FF6384", "#84ff63 "],
         hoverBackgroundColor: ["#FF6384", "#84ff63 "],
       },
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
     labels: ["Red", "Green"],
     datasets: [
       {
-        data: [50,50],
+        data: [50, 50],
         backgroundColor: ["#FF6384", "#84ff63 "],
         hoverBackgroundColor: ["#FF6384", "#84ff63 "],
       },
@@ -35,14 +36,14 @@ const AdminDashboard = () => {
     labels: ["Red", "Green"],
     datasets: [
       {
-        data: [50,50],
+        data: [50, 50],
         backgroundColor: ["#FF6384", "#84ff63 "],
         hoverBackgroundColor: ["#FF6384", "#84ff63 "],
       },
     ],
   });
 
-  const [donationreqTS,setDonationReqTS] = useState({time:[],value:[]})
+  const [donationreqTS, setDonationReqTS] = useState({ time: [], value: [] });
   const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const getData = async () => {
     const donor_resp = await fetch(`${REACT_APP_APIURL}/admin/getDonorCount`, {
@@ -73,7 +74,7 @@ const AdminDashboard = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const donationDrive = await donationDrive_resp.json();
@@ -86,7 +87,7 @@ const AdminDashboard = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const avTime = await avTime_resp.json();
@@ -100,48 +101,79 @@ const AdminDashboard = () => {
     });
     const avDonor = await avDonor_resp.json();
 
-    const verifedNGO_resp = await fetch(`${REACT_APP_APIURL}/admin/getVerifiedNGOCount`, {
-      method: "GET",
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-        "Content-Type": "application/json",
+    const verifedNGO_resp = await fetch(
+      `${REACT_APP_APIURL}/admin/getVerifiedNGOCount`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
-    const verifiedNGO = await verifedNGO_resp.json()
+    const verifiedNGO = await verifedNGO_resp.json();
 
-    const completedDrives_resp = await fetch(`${REACT_APP_APIURL}/admin/getCompletedDrives`, {
-      method: "GET",
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-        "Content-Type": "application/json",
+    const completedDrives_resp = await fetch(
+      `${REACT_APP_APIURL}/admin/getCompletedDrives`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
       },
-    });
-    const completedDrives = await completedDrives_resp.json()
+    );
+    const completedDrives = await completedDrives_resp.json();
 
-    const acceptedDonations_resp = await fetch(`${REACT_APP_APIURL}/admin/getAcceptedDonations`, {
-      method: "GET",
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-        "Content-Type": "application/json",
+    const acceptedDonations_resp = await fetch(
+      `${REACT_APP_APIURL}/admin/getAcceptedDonations`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
+    const acceptedDonations = await acceptedDonations_resp.json();
 
-    const acceptedDonations = await acceptedDonations_resp.json()
-
-    const donationReqTS_resp = await  await fetch(`${REACT_APP_APIURL}/admin/getDonationReqTimeSeries`, {
-      method: "GET",
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-        "Content-Type": "application/json",
+    const donationReqTS_resp = await await fetch(
+      `${REACT_APP_APIURL}/admin/getDonationReqTimeSeries`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
-    const donationReqs = await donationReqTS_resp.json()
+    const donationReqs = await donationReqTS_resp.json();
 
-    console.log(donor, ngo, donationDrive, avTime, avDonor,verifiedNGO,completedDrives,acceptedDonations,donationReqs);
-    if (!donor.status || !ngo.status || !donationDrive.status || !avTime.status || !avDonor.status || !verifiedNGO.status|| !completedDrives.status || !acceptedDonations.status || !donationReqs.status)
+    console.log(
+      donor,
+      ngo,
+      donationDrive,
+      avTime,
+      avDonor,
+      verifiedNGO,
+      completedDrives,
+      acceptedDonations,
+      donationReqs,
+    );
+    if (
+      !donor.status ||
+      !ngo.status ||
+      !donationDrive.status ||
+      !avTime.status ||
+      !avDonor.status ||
+      !verifiedNGO.status ||
+      !completedDrives.status ||
+      !acceptedDonations.status ||
+      !donationReqs.status
+    )
       return;
     setDonorCount(donor.donors);
     setNgoCount(ngo.ngos);
@@ -157,7 +189,7 @@ const AdminDashboard = () => {
           hoverBackgroundColor: ["#FF6384", "#84ff63 "],
         },
       ],
-    })
+    });
 
     setCompletedDonationData({
       labels: ["Incomplete Drives", "Complete Drives"],
@@ -168,7 +200,7 @@ const AdminDashboard = () => {
           hoverBackgroundColor: ["#FF6384", "#84ff63 "],
         },
       ],
-    })
+    });
 
     setAcceptedDonations({
       labels: ["Pending Requests", "Accepted Requests"],
@@ -179,14 +211,14 @@ const AdminDashboard = () => {
           hoverBackgroundColor: ["#FF6384", "#84ff63 "],
         },
       ],
-    })
-    setDonationReqTS({time:donationReqs.time,value:donationReqs.value})
+    });
+    setDonationReqTS({ time: donationReqs.time, value: donationReqs.value });
   };
-
 
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.topRow}>
@@ -203,13 +235,16 @@ const AdminDashboard = () => {
         <DashboardCard x={avgDonor} statistic="Avg. Donors per Drive" />
       </div>
       <div className={styles.topRow} style={{ justifyContent: "space-around" }}>
-        <PieChart data={verifiedNGOData}/>
-        <PieChart data={completedDonationData}/>
-        <PieChart data={acceptedDonationData}/>
+        <PieChart data={verifiedNGOData} />
+        <PieChart data={completedDonationData} />
+        <PieChart data={acceptedDonationData} />
       </div>
-     <div className={styles.topRow} style={{justifyContent:'center'}}>
-     <TimeSeriesChart time={donationreqTS.time} value={donationreqTS.value}/>
-     </div>
+      <div className={styles.topRow} style={{ justifyContent: "center" }}>
+        <TimeSeriesChart
+          time={donationreqTS.time}
+          value={donationreqTS.value}
+        />
+      </div>
     </div>
   );
 };

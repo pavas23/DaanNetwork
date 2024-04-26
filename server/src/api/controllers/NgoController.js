@@ -104,9 +104,11 @@ module.exports.addNGO = async (req, res) => {
     address,
     gstnumber,
     regnumber,
+    fileUrl,
   } = req.body;
 
   try {
+    console.log(fileUrl);
     var exists = await Ngo.find({ emailId: emailId });
     if (exists.length > 0) {
       return res
@@ -142,6 +144,7 @@ module.exports.addNGO = async (req, res) => {
       address: address,
       gstnumber: gstnumber,
       regnumber: regnumber,
+      fileUrl: fileUrl,
     });
 
     //send mail to ngo
@@ -280,7 +283,7 @@ module.exports.acceptDonationRequest = async (req, res) => {
 
     // marking request as accepted
     foodDonation[0].accepted = true;
-    foodDonation[0].acceptedDate = Date.now()
+    foodDonation[0].acceptedDate = Date.now();
     // ref. ngo with this request
     foodDonation[0].ngo = ngos[0]._id;
 
@@ -593,7 +596,7 @@ module.exports.getAddress = async (req, res) => {
       .status(500)
       .json({ status: false, desc: "Internal Server Error Occured" });
   }
-}
+};
 module.exports.verifyNGO = async (req, res) => {
   const regnumber = req.body.regnumber;
 
@@ -601,16 +604,16 @@ module.exports.verifyNGO = async (req, res) => {
     const ngo = await Ngo.findOne({ regnumber });
 
     if (!ngo) {
-      return res.status(404).json({ error: 'NGO not found' });
+      return res.status(404).json({ error: "NGO not found" });
     }
 
     ngo.isVerified = true;
 
     await ngo.save();
 
-    return res.json({ message: 'NGO verified successfully', ngo });
+    return res.json({ message: "NGO verified successfully", ngo });
   } catch (error) {
-    console.error('Error verifying NGO:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error("Error verifying NGO:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

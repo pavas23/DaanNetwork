@@ -47,10 +47,18 @@ function AdminNGO() {
               }
             >
               <div className="col-sm-10 d-flex row">
-                <span className={styles.person_name + " col-sm-4 d-flex align-items-center"}>
+                <span
+                  className={
+                    styles.person_name + " col-sm-4 d-flex align-items-center"
+                  }
+                >
                   {ngo.name}
                 </span>
-                <span className={styles.person_name + " col-sm-8 d-flex align-items-center"}>
+                <span
+                  className={
+                    styles.person_name + " col-sm-8 d-flex align-items-center"
+                  }
+                >
                   {ngo.address}
                 </span>
               </div>
@@ -72,10 +80,11 @@ function AdminNGO() {
                 {ngo.isVerified ? (
                   <span className={styles.verified_badge}>Verified</span>
                 ) : (
-                  <span className={styles.not_verified_badge}>Not Verified</span>
+                  <span className={styles.not_verified_badge}>
+                    Not Verified
+                  </span>
                 )}
               </div>
-
             </div>
           ))}
         </div>

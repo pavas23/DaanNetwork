@@ -5,7 +5,9 @@
 
 .list_item {
   cursor: pointer;
-  transition: transform 0.1s linear, box-shadow 0.1s linear;
+  transition:
+    transform 0.1s linear,
+    box-shadow 0.1s linear;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 

@@ -48,7 +48,10 @@ const ngoSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false,
-  }
+  },
+  fileUrl: {
+    type: String,
+  },
 });
 
 const Ngo = mongoose.model("ngo", ngoSchema);

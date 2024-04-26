@@ -2,7 +2,7 @@ import styles from "../../css/Admin/displayNgo.module.css";
 import AdminNav from "./AdminNav";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function NGODisplay() {
@@ -20,7 +20,7 @@ function NGODisplay() {
   let navigate = useNavigate();
 
   useEffect(() => {
-      isBlocked();
+    isBlocked();
   }, [flag]);
 
   const isBlocked = async () => {
@@ -35,19 +35,21 @@ function NGODisplay() {
       }),
     });
     res = await res.json();
-    setFlag(res.status)
-  }
+    setFlag(res.status);
+  };
 
   const setNgoToVerified = async () => {
     try {
-      const response = await axios.post(`${REACT_APP_APIURL}/ngo/verify-ngo`, { regnumber: ngo.regnumber });
+      const response = await axios.post(`${REACT_APP_APIURL}/ngo/verify-ngo`, {
+        regnumber: ngo.regnumber,
+      });
       setIsVerified(true);
       ngo.isVerified = true;
       console.log("NGO is now verified");
     } catch (error) {
-      console.error('Error verifying NGO:', error.response.data.error);
+      console.error("Error verifying NGO:", error.response.data.error);
     }
-  }
+  };
 
   const blockUsers = async (emailId) => {
     var res = await fetch(`${REACT_APP_APIURL}/admin/blockUser`, {
@@ -62,19 +64,20 @@ function NGODisplay() {
     });
     console.log(res);
     setFlag(true);
-  }
+  };
 
   const checkFileExists = (fileName) => {
     const img = new Image();
     img.onload = function () {
-      console.log("jpg file exists")
+      console.log("jpg file exists");
       setIsJpeg(true);
     };
     img.onerror = function () {
       setIsJpeg(false);
       console.log("jpg file does NOT exist, its pdf");
     };
-    img.src = `/registration-certificates/${fileName}`;
+    img.src = fileName;
+    console.log(img.src);
   };
 
   const unblockUsers = async (emailId) => {
@@ -90,12 +93,13 @@ function NGODisplay() {
     });
     console.log(res);
     setFlag(false);
-  }
+  };
   console.log(ngo);
 
   const openCertificateModal = () => {
     setCertificateModalOpen(true);
-    const fileName = ngo.regnumber + ".jpg";
+    // const fileName = ngo.regnumber + ".jpg";
+    const fileName = ngo.fileUrl;
     checkFileExists(fileName);
   };
 
@@ -108,26 +112,38 @@ function NGODisplay() {
     <div>
       <AdminNav />
       {certificateModalOpen && (
-        <div className="modal" tabIndex="-1" style={{ display: certificateModalOpen ? 'block' : 'none' }}>
+        <div
+          className="modal"
+          tabIndex="-1"
+          style={{ display: certificateModalOpen ? "block" : "none" }}
+        >
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Registration Certificate</h5>
-                <button type="button" className="close" onClick={closeCertificateModal}>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={closeCertificateModal}
+                >
                   <span>&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                {isJpeg &&
+                {isJpeg && (
                   <img
                     src={`/registration-certificates/${ngo.regnumber}.jpg`}
                     alt={ngo.regnumber + ".jpeg"}
                     className="img-fluid"
                   />
-                }
-                {!isJpeg &&
-                  <iframe src={`/registration-certificates/${ngo.regnumber}.pdf`} width="100%" height="500px" />
-                }
+                )}
+                {!isJpeg && (
+                  <iframe
+                    src={`/registration-certificates/${ngo.regnumber}.pdf`}
+                    width="100%"
+                    height="500px"
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -145,13 +161,16 @@ function NGODisplay() {
                 key === "password" ||
                 key === "isVerified" ||
                 key === "__v" ||
+                key === "fileUrl" ||
                 ngo[key] === ""
               ) {
                 return <></>;
               } else {
                 return (
                   <div key={index} className={styles.property}>
-                    <div className={styles.property_name}>{key.toUpperCase()}</div>
+                    <div className={styles.property_name}>
+                      {key.toUpperCase()}
+                    </div>
                     <div className={styles.property_value}>
                       {key === "website" ? (
                         <a href={`https://${ngo[key]}`} target="blank">
@@ -161,27 +180,47 @@ function NGODisplay() {
                         ngo[key]
                       )}
                     </div>
-
                   </div>
                 );
               }
             })}
             <div className={styles.property}>
-              <div className={styles.property_name}>View Registration Certificate</div>
-              <div onClick={openCertificateModal} className={"btn col-sm-12 " + styles.verifyBtn + ' ' + styles.property_value}>Certificate</div>
+              <div className={styles.property_name}>
+                View Registration Certificate
+              </div>
+              <div
+                onClick={openCertificateModal}
+                className={
+                  "btn col-sm-12 " +
+                  styles.verifyBtn +
+                  " " +
+                  styles.property_value
+                }
+              >
+                Certificate
+              </div>
             </div>
           </div>
           <div className={styles.buttonContainer}>
-            <div onClick={async () => {
-              flag ? unblockUsers(ngo.emailId) : blockUsers(ngo.emailId)
-            }}
-
-              className={"btn col-sm-12 " + styles.banBtn} style={flag ? { backgroundColor: 'blue' } : { backgroundColor: 'red' }}>{flag ? "Unban NGO" : "Ban NGO"}</div>
-            {!isVerified &&
-              <div onClick={setNgoToVerified} className={"btn col-sm-12 " + styles.verifyBtn}>
+            <div
+              onClick={async () => {
+                flag ? unblockUsers(ngo.emailId) : blockUsers(ngo.emailId);
+              }}
+              className={"btn col-sm-12 " + styles.banBtn}
+              style={
+                flag ? { backgroundColor: "blue" } : { backgroundColor: "red" }
+              }
+            >
+              {flag ? "Unban NGO" : "Ban NGO"}
+            </div>
+            {!isVerified && (
+              <div
+                onClick={setNgoToVerified}
+                className={"btn col-sm-12 " + styles.verifyBtn}
+              >
                 Verify NGO
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
