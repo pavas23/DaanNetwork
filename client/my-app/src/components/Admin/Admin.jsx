@@ -6,8 +6,7 @@ import AdminDashboardMerged from "./AdminDashboardMerged";
 function AdminHome() {
   return (
     <div>
-      <AdminNav />
-      <AdminDashboardMerged/>
+      <AdminDashboardMerged />
     </div>
   );
 }

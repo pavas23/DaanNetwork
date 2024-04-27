@@ -175,7 +175,7 @@ const AdminDashboard = () => {
       !donationReqs.status
     )
       return;
-      console.log(donationReqs)
+    console.log(donationReqs);
     setDonorCount(donor.donors);
     setNgoCount(ngo.ngos);
     setDonationDrive(donationDrive.donationDrives);

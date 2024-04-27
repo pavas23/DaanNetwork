@@ -295,7 +295,7 @@ module.exports.getAvgAcceptTime = async (req, res) => {
         new Date(d.createdAt).getTime();
     }
     console.log(av);
-    av = av / (1000 * 60*60*24* donations.length);
+    av = av / (1000 * 60 * 60 * 24 * donations.length);
     console.log(av);
 
     return res.status(200).json({ status: true, avgAcceptTime: av });
@@ -368,12 +368,10 @@ module.exports.getNumberOfCompleteDrives = async (req, res) => {
     for (var d of drives) {
       if (d.endDate > Date.now()) inComplete++;
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        completeDrives: [inComplete, drives.length - inComplete],
-      });
+    return res.status(200).json({
+      status: true,
+      completeDrives: [inComplete, drives.length - inComplete],
+    });
   } catch (err) {
     return res
       .status(500)
@@ -394,12 +392,10 @@ module.exports.getDonationStat = async (req, res) => {
     for (var v of donations) {
       if (v.accepted) accepted++;
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        acceptedDonations: [donations.length - accepted, accepted],
-      });
+    return res.status(200).json({
+      status: true,
+      acceptedDonations: [donations.length - accepted, accepted],
+    });
   } catch (err) {
     return res
       .status(500)
@@ -426,19 +422,18 @@ module.exports.getDonationReqTimeSeries = async (req, res) => {
     }
     // console.log(donationReq);
     for (var v of donationReq) {
-      if (hashmap.has(formatDate(v.createdAt))){
-        hashmap.set(formatDate(v.createdAt),hashmap.get(formatDate(v.createdAt)) + 1);
-
+      if (hashmap.has(formatDate(v.createdAt))) {
+        hashmap.set(
+          formatDate(v.createdAt),
+          hashmap.get(formatDate(v.createdAt)) + 1,
+        );
+      } else {
+        hashmap.set(formatDate(v.createdAt), 1);
       }
-      else{
-        
-        hashmap.set(formatDate(v.createdAt), 1)
-      } 
     }
-    
+
     var time = [];
     for (var key of hashmap.keys()) {
-  
       time.push(key);
     }
     time.sort();
@@ -462,10 +457,12 @@ module.exports.addImpactStory = async (req, res) => {
     // add this story to db
     let newImpactStory = await ImpactStory.create({
       title: title,
-      description: description
+      description: description,
     });
 
-    res.status(201).json({ status: true, desc: "Impact Story added successfully" });
+    res
+      .status(201)
+      .json({ status: true, desc: "Impact Story added successfully" });
   } catch (err) {
     return res
       .status(500)
@@ -479,7 +476,11 @@ module.exports.getImpactStory = async (req, res) => {
     if (impactStories.length === 0) {
       return res
         .status(200)
-        .json({ status: false, desc: "No impact story exists", impactStories:[] });
+        .json({
+          status: false,
+          desc: "No impact story exists",
+          impactStories: [],
+        });
     }
     if (impactStories.length <= 3) {
       res.status(201).json({ status: true, impactStories: impactStories });
@@ -488,7 +489,10 @@ module.exports.getImpactStory = async (req, res) => {
       // shuffle array
       for (let i = impactStories.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [impactStories[i], impactStories[j]] = [impactStories[j], impactStories[i]];
+        [impactStories[i], impactStories[j]] = [
+          impactStories[j],
+          impactStories[i],
+        ];
       }
       const shuffledArray = impactStories.slice();
       const randomArray = shuffledArray.slice(0, 3);

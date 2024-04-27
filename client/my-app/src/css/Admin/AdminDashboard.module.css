@@ -31,3 +31,18 @@
     max-width: 80%;
   }
 }
+
+/* Increase specificity for canvas inside .chart */
+.chart canvas {
+  height: 400px !important; /* Adjust height as needed */
+  width: 100% !important; /* Adjust width as needed */
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .chart canvas {
+    width: 200px  !important;
+    height: 150px !important; /* Adjust height for smaller screens */
+  }
+}
+

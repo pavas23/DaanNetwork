@@ -493,6 +493,7 @@ const AdminDashboardMerged = () => {
 
   return (
     <>
+      <AdminNav />
       <div>
         {/* cards */}
         <div className={styles.topRow}>
@@ -511,6 +512,7 @@ const AdminDashboardMerged = () => {
 
         {/* pie charts */}
         <div
+          className={styles.topRow}
           style={{
             alignItems: "center",
             display: "flex",
@@ -538,28 +540,43 @@ const AdminDashboardMerged = () => {
           /> */}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <div style={{ width: "45%" }}>
+        <div
+          style={{ display: "flex", justifyContent: "space-evenly" }}
+          className={styles.topRow}
+        >
+          <div
+            style={{ width: "45%" }}
+            className={`${styles.chart} ${styles.topRow}`}
+          >
             <Bar
               data={stateBarChartNGOData}
               options={stateBarChartNGOOptions}
             />
           </div>
-          <div style={{ width: "45%" }}>
+          <div
+            style={{ width: "45%" }}
+            className={`${styles.chart} ${styles.topRow}`}
+          >
             <Bar
               data={stateBarChartDonorData}
               options={stateBarChartDonorOptions}
             />
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <div
+          style={{ display: "flex", justifyContent: "space-evenly" }}
+          className={`${styles.chart} ${styles.topRow}`}
+        >
           <div style={{ width: "45%" }}>
             <Bar
               data={stateBarChartFoodDonationData}
               options={stateBarChartFoodDonationOptions}
             />
           </div>
-          <div style={{ width: "45%" }}>
+          <div
+            style={{ width: "45%" }}
+            className={`${styles.chart} ${styles.topRow}`}
+          >
             <Bar
               data={stateBarChartBlockedUsersData}
               options={stateBarChartBlockedUsersOptions}

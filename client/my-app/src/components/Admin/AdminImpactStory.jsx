@@ -25,12 +25,16 @@ function AdminImpactStory() {
 
     if (formVal.title.length === 0) {
       // title can't be empty
-      swal("Could not add impact story","Title can not be empty","error");
+      swal("Could not add impact story", "Title can not be empty", "error");
       return;
     }
     if (formVal.description.length === 0) {
       // desc can't be empty
-      swal("Could not add impact story","Description can not be empty","error");
+      swal(
+        "Could not add impact story",
+        "Description can not be empty",
+        "error",
+      );
       return;
     }
 

@@ -24,11 +24,11 @@ export default function Home() {
     // console.log(json);
     setStoryList(json.impactStories);
     // console.log(json.impactStories);
-  }
+  };
 
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -108,21 +108,28 @@ export default function Home() {
             </p>
           </div> */}
 
-<div className={styles.writeUp}>
-  {storyList.length > 0 && (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      {storyList.map((item, index) => (
-        <div key={index} style={{ marginRight: '20px', borderRight: index !== storyList.length - 1 ? '1px solid #000' : 'none', paddingRight: '20px' }}>
-          <b>{item.title}</b>
-          <p>{item.description}</p>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
-
-
-
+          <div className={styles.writeUp}>
+            {storyList.length > 0 && (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {storyList.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      marginRight: "20px",
+                      borderRight:
+                        index !== storyList.length - 1
+                          ? "1px solid #000"
+                          : "none",
+                      paddingRight: "20px",
+                    }}
+                  >
+                    <b>{item.title}</b>
+                    <p>{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <div className={styles.line}></div>
         <div className={styles.contact} id="contactPage">

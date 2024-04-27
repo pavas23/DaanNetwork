@@ -68,10 +68,7 @@ router.post(
   "/addImpactStory",
   adminVerification,
   adminController.addImpactStory,
-)
-router.get(
-  "/getImpactStory",
-  adminController.getImpactStory,
-)
+);
+router.get("/getImpactStory", adminController.getImpactStory);
 
 module.exports = router;
