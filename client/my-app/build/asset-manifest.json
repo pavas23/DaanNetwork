@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9367166a.css",
-    "main.js": "/static/js/main.5fea7074.js",
+    "main.css": "/static/css/main.a4567348.css",
+    "main.js": "/static/js/main.271ea53a.js",
     "static/media/group.jpg": "/static/media/group.309a94938807544707f3.jpg",
     "static/media/donor-page-bg.jpeg": "/static/media/donor-page-bg.018d6571f4e4fb1fcdd2.jpeg",
     "static/media/signup_bg_1.jpg": "/static/media/signup_bg_1.28cb23758a7d86bba37e.jpg",
@@ -15,9 +15,7 @@
     "static/media/foodaaaa.jpg": "/static/media/foodaaaa.1c01a0919af5390da474.jpg",
     "static/media/dsignup.jpg": "/static/media/dsignup.2b1678c17dd94dca71a2.jpg",
     "static/media/ngo-drive.jpeg": "/static/media/ngo-drive.7d3b491b1912a8fbb6dc.jpeg",
-    "index.html": "/index.html",
-    "main.9367166a.css.map": "/static/css/main.9367166a.css.map",
-    "main.5fea7074.js.map": "/static/js/main.5fea7074.js.map"
+    "index.html": "/index.html"
   },
-  "entrypoints": ["static/css/main.9367166a.css", "static/js/main.5fea7074.js"]
+  "entrypoints": ["static/css/main.a4567348.css", "static/js/main.271ea53a.js"]
 }

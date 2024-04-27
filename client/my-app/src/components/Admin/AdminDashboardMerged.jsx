@@ -72,7 +72,7 @@ const AdminDashboardMerged = () => {
     BarElement,
     Title,
     ArcElement,
-    Legend
+    Legend,
   );
 
   const getData = async () => {
@@ -104,7 +104,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const donationDrive = await donationDrive_resp.json();
@@ -117,7 +117,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const avTime = await avTime_resp.json();
@@ -139,7 +139,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const verifiedNGO = await verifedNGO_resp.json();
@@ -152,7 +152,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     const completedDrives = await completedDrives_resp.json();
 
@@ -164,7 +164,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const acceptedDonations = await acceptedDonations_resp.json();
@@ -177,7 +177,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const donationReqs = await donationReqTS_resp.json();
@@ -301,7 +301,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     const json = await resp.json();
     if (!json.status) {
@@ -320,7 +320,7 @@ const AdminDashboardMerged = () => {
           "auth-token": localStorage.getItem("auth-token"),
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     const json = await resp.json();
     if (!json.status) {

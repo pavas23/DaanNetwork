@@ -41,8 +41,7 @@
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
   .chart canvas {
-    width: 200px  !important;
+    width: 200px !important;
     height: 150px !important; /* Adjust height for smaller screens */
   }
 }
-

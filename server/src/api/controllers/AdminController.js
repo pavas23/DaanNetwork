@@ -474,13 +474,11 @@ module.exports.getImpactStory = async (req, res) => {
   try {
     var impactStories = await ImpactStory.find({});
     if (impactStories.length === 0) {
-      return res
-        .status(200)
-        .json({
-          status: false,
-          desc: "No impact story exists",
-          impactStories: [],
-        });
+      return res.status(200).json({
+        status: false,
+        desc: "No impact story exists",
+        impactStories: [],
+      });
     }
     if (impactStories.length <= 3) {
       res.status(201).json({ status: true, impactStories: impactStories });
