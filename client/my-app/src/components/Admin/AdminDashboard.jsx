@@ -175,6 +175,7 @@ const AdminDashboard = () => {
       !donationReqs.status
     )
       return;
+      console.log(donationReqs)
     setDonorCount(donor.donors);
     setNgoCount(ngo.ngos);
     setDonationDrive(donationDrive.donationDrives);
@@ -230,7 +231,7 @@ const AdminDashboard = () => {
         />
         <DashboardCard
           x={avgTimeAccept}
-          statistic="Avg. Mins. to Accept Donation"
+          statistic="Avg. Days. to Accept Donation"
         />
         <DashboardCard x={avgDonor} statistic="Avg. Donors per Drive" />
       </div>

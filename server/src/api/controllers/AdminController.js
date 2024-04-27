@@ -295,7 +295,7 @@ module.exports.getAvgAcceptTime = async (req, res) => {
         new Date(d.createdAt).getTime();
     }
     console.log(av);
-    av = av / (1000 * 60 * donations.length);
+    av = av / (1000 * 60*60*24* donations.length);
     console.log(av);
 
     return res.status(200).json({ status: true, avgAcceptTime: av });
@@ -424,21 +424,27 @@ module.exports.getDonationReqTimeSeries = async (req, res) => {
         .status(500)
         .json({ status: false, desc: "Internal Server Error Occured" });
     }
-    console.log(donationReq);
+    // console.log(donationReq);
     for (var v of donationReq) {
-      if (hashmap.has(formatDate(v.createdAt)))
-        hashmap[formatDate(v.createdAt)] = hashmap[formatDate(v.createdAt)] + 1;
-      else hashmap[formatDate(v.createdAt)] = 1;
+      if (hashmap.has(formatDate(v.createdAt))){
+        hashmap.set(formatDate(v.createdAt),hashmap.get(formatDate(v.createdAt)) + 1);
+
+      }
+      else{
+        
+        hashmap.set(formatDate(v.createdAt), 1)
+      } 
     }
-    console.log(hashmap);
+    
     var time = [];
-    for (var key in hashmap) {
+    for (var key of hashmap.keys()) {
+  
       time.push(key);
     }
     time.sort();
     var values = [];
     for (var i of time) {
-      values.push(hashmap[i]);
+      values.push(hashmap.get(i));
     }
     console.log(time, values);
     return res.status(200).json({ status: true, time: time, value: values });
