@@ -511,26 +511,32 @@ const AdminDashboardMerged = () => {
 
         {/* pie charts */}
         <div
-  style={{
-    alignItems: "center",
-    display: "flex",
-    width: "90vw", // Adjusted width to leave some space on both sides
-    margin: "0 auto", // Center the container horizontally
-    paddingLeft: "5vw", // Increase space from the left corner
-    paddingRight: "5vw", // Increase space from the right corner
-  }}
->
-  <PieChart data={stateBarChartVerifiedNgoData} style={{ width: "25%", margin: "0" }} />
-  <PieChart data={verifiedNGOData} style={{ width: "25%", margin: "0" }} />
-  <PieChart data={completedDonationData} style={{ width: "25%", margin: "0" }} />
-  <PieChart data={acceptedDonationData} style={{ width: "25%", margin: "0" }} />
-</div>
-
-
-
-
-
-
+          style={{
+            alignItems: "center",
+            display: "flex",
+            width: "90vw", // Adjusted width to leave some space on both sides
+            margin: "0 auto", // Center the container horizontally
+            paddingLeft: "5vw", // Increase space from the left corner
+            paddingRight: "5vw", // Increase space from the right corner
+          }}
+        >
+          <PieChart
+            data={stateBarChartVerifiedNgoData}
+            style={{ width: "25%", margin: "0" }}
+          />
+          <PieChart
+            data={verifiedNGOData}
+            style={{ width: "25%", margin: "0" }}
+          />
+          <PieChart
+            data={completedDonationData}
+            style={{ width: "25%", margin: "0" }}
+          />
+          {/* <PieChart
+            data={acceptedDonationData}
+            style={{ width: "25%", margin: "0" }}
+          /> */}
+        </div>
 
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>
           <div style={{ width: "45%" }}>
