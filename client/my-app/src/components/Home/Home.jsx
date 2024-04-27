@@ -95,9 +95,9 @@ export default function Home() {
           >
             Impact Stories
           </h2>
-          <div className={styles.writeUp}>
+          {/* <div className={styles.writeUp}>
             <p>
-              {storyList.map((item) => {
+              {storyList.length >0 && storyList.map((item) => {
                 return(
                   <>
                     <b>{item.title}</b>
@@ -106,7 +106,22 @@ export default function Home() {
                 )
               })}
             </p>
-          </div>
+          </div> */}
+
+<div className={styles.writeUp}>
+  {storyList.length > 0 && (
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      {storyList.map((item, index) => (
+        <div key={index} style={{ marginRight: '20px', borderRight: index !== storyList.length - 1 ? '1px solid #000' : 'none', paddingRight: '20px' }}>
+          <b>{item.title}</b>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
 
         </div>
         <div className={styles.line}></div>

@@ -132,14 +132,16 @@ function NGODisplay() {
               <div className="modal-body">
                 {isJpeg && (
                   <img
-                    src={`/registration-certificates/${ngo.regnumber}.jpg`}
+                    // src={`/registration-certificates/${ngo.regnumber}.jpg`}
+                    src={ngo.fileUrl}
                     alt={ngo.regnumber + ".jpeg"}
                     className="img-fluid"
                   />
                 )}
                 {!isJpeg && (
                   <iframe
-                    src={`/registration-certificates/${ngo.regnumber}.pdf`}
+                    // src={`/registration-certificates/${ngo.regnumber}.pdf`}
+                    src={ngo.fileUrl}
                     width="100%"
                     height="500px"
                   />

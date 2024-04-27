@@ -473,7 +473,7 @@ module.exports.getImpactStory = async (req, res) => {
     if (impactStories.length === 0) {
       return res
         .status(200)
-        .json({ status: false, desc: "No impact story exists" });
+        .json({ status: false, desc: "No impact story exists", impactStories:[] });
     }
     if (impactStories.length <= 3) {
       res.status(201).json({ status: true, impactStories: impactStories });

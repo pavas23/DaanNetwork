@@ -276,7 +276,7 @@ const RegionalData = () => {
 
   return (
     <div>
-      <AdminNav />
+      {/* <AdminNav /> */}
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <div style={{ width: "45%" }}>
           <Bar data={stateBarChartNGOData} options={stateBarChartNGOOptions} />

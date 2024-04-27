@@ -37,28 +37,31 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="ngo-signup" element={<NGOsignup />} />
+      {/* donor routes */}
       <Route path="donor-post" element={<DonationForm />} />
-      <Route path="donor-signup" element={<DonorSignup />} />
-      <Route path="ngo-drive" element={<NgoDonationDrive />} />
+      <Route path="donor-profile" element={<DonorProfile />} />
       <Route path="donor-login" element={<DonorLogin />} />
-      <Route path="ngo-login" element={<NGOLogin />} />
+      <Route path="donor-signup" element={<DonorSignup />} />
       <Route path="donor-posts" element={<DonorPosts />} />
-      <Route path="donation-drive" element={<DonationDrive />} />
       <Route path="donor-accpted-posts" element={<DonorAcceptedPosts />} />
+      <Route path="donation-drive" element={<DonationDrive />} />
+      {/* ngo routes */}
+      <Route path="ngo-login" element={<NGOLogin />} />
+      <Route path="ngo-signup" element={<NGOsignup />} />
+      <Route path="ngo-drive" element={<NgoDonationDrive />} />
       <Route path="ngo-donations" element={<NgoAcceptDonations />} />
+      <Route path="ngo-profile" element={<NgoProfile />} />
       <Route path="ngo-history" element={<NgoHistory />} />
+      {/* admin routes */}
       <Route path="admin-home" element={<AdminHome />} />
       <Route path="admin-ngo" element={<AdminNGO />} />
       <Route path="admin-ngoInfo" element={<NGODisplay />} />
-      <Route path="donor-profile" element={<DonorProfile />} />
       <Route path="admin-donor" element={<AdminDonor />} />
       <Route path="admin-donorInfo" element={<DonorDisplay />} />
       <Route path="admin-login" element={<AdminLogin />} />
-      <Route path="ngo-profile" element={<NgoProfile />} />
       <Route path="regional-data" element={<RegionalData />} />
-      <Route path="admin-dashboard" element={<AdminDashboard />} />
       <Route path="admin-impact-story" element={<AdminImpactStory />} />
+
       {/* <Route path="donor-forgot-password" element={<DonorForgotPassword />} /> */}
       {/* <Route path="donor-reset-password" element={<DonorResetPassword />} /> */}
     </Route>,
