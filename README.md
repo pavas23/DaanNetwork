@@ -42,6 +42,8 @@ This is a web based application connecting donors with NGOs for donation request
 </br> </br>
 <img width="1145" alt="DonorPost" src="https://github.com/pavas23/DaanNetwork/assets/97559428/176ac62e-0090-4ac8-9c07-5484c481a67b">
 </br> </br>
+<img width="1145" alt="DonorPost" src="https://github.com/pavas23/DaanNetwork/assets/97559428/fcb24b88-4d0e-401b-97ec-2888d05b6e84">
+</br> </br>
 
 ## Run Frontend App
 
