@@ -7,7 +7,43 @@
 
 We have followed the ```Scrum framework``` throughout this project. All the scrum project reports are available in the scrum/ directory.
 
-The complete project was divided into 3 sprints lasting 3 weeks each. Each sprint had six scrum meets, including sprint planning and sprint retrospective meets.
+The complete project was divided into 3 sprints lasting 3 weeks each. Each sprint had six scrum meets, including sprint planning and sprint retrospective meets. `Pivotal Tracker` was used for project management and `Mockaroo` for dummy data generation.
+
+### `Product Backlog`
+<p align="center"> 
+<img width="900" alt="product-backlog" src="https://github.com/pavas23/DaanNetwork/assets/97559428/c2d0731a-64b4-4f07-bea6-54887507882c">
+</p>
+
+### `Use Case Diagram`
+<details><summary>View</summary>
+<p align="center"> 
+<img width="900" alt="product-backlog" src="https://github.com/pavas23/DaanNetwork/assets/97559428/17b0aabf-8c6d-40f1-bf55-00894574a91e">
+</p>
+</details>
+
+### `Class Diagram`
+<details><summary>View</summary>
+<p align="center"> 
+<img width="900" alt="product-backlog" src="https://github.com/pavas23/DaanNetwork/assets/97559428/08a06d06-81a6-4eca-bf88-d723880f9ee1">
+</p>
+</details>
+
+
+### `System Architecture`
+<details><summary>View</summary>
+<p align="center"> 
+<img width="900" alt="product-backlog" src="https://github.com/pavas23/DaanNetwork/assets/97559428/16201bfa-b1d8-43d5-903b-1f413a5a8956">
+</p>
+</details>
+
+
+### `Project Management`
+<details><summary>View</summary>
+<p align="center"> 
+<img width="900" alt="product-backlog" src="https://github.com/pavas23/DaanNetwork/assets/97559428/8759cfa5-4c1c-4c49-b650-a98d3ea83333">
+</p>
+</details>
+
 
 This is a web based application connecting donors with NGOs for donation requests and responses.
 
